@@ -46,7 +46,7 @@
       			<p style="text-align:justify; margin-top:5px;">Buscamos oferecer ferramentas para que a sociedade possa conhecer melhor a temática do orçamento público, exercer o controle e fiscalização dos gastos realizados em equipamentos públicos da cidade e promover ações concretas no seu bairro. Por este motivo, o projeto foi batizado de <strong>Cuidando do meu Bairro</strong></span>.</p>
       		</div>
       		<div id="hero-unit-pic" style="float:right;">
-      			<a href="map.php?year=2012"><img title="Ir para a visualização de 2012" class="img-rounded" src="img/hero-unit-pic.png" width="350" height="250"></img></a>
+      			<a href="map.php?year=2013"><img title="Ir para a visualização de 2013" class="img-rounded" src="img/hero-unit-pic.png" width="350" height="250"></img></a>
       		</div>
       	</div> <!--Row-->
       </div> <!--Hero-Unit-->
