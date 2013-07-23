@@ -2,7 +2,7 @@ import json
 
 from leitorPlanilhas import ler_planilha
 
-lido = ler_planilha("../resources/data/stripped/2012.csv")
+lido = ler_planilha("../../resources/data/raw/2013.csv")
 
 data = []
 saida = {
@@ -24,6 +24,10 @@ for l in lido:
     linha['atualizado'] = l["Vl_Atualizado"]
     if l["Vl_Atualizado"].strip() == "-":
         linha['atualizado'] = "0,00"
+
+    #if linha['atualizado'] == linha['orcado']:
+    #    linha['atualizado'] = "0,00"
+
     linha['subfuncao'] = l["Ds_SubFuncao"]
     linha['programa'] = l["Ds_Programa"]
     linha['orgao'] = l["Ds_Orgao"]
@@ -37,5 +41,5 @@ for l in lido:
     id += 1
     data.append(linha)
 
-arq = open("2013.json","w")
+arq = open("../../resources/data/json/2013.json","w")
 json.dump(data, arq)
