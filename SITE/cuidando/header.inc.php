@@ -9,7 +9,7 @@
 			<a class="brand" href="index.php">Cuidando do meu Bairro</a>
 			<div class="nav-collapse" id="main-menu">
 				<ul class="nav">
-					<li><a href="index.html">Home</a></li>
+					<li><a href="index.php">Home</a></li>
 					<li><a href="#about">Sobre</a></li>
 					<li><a href="contact.php">Contato</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Anos <b class="caret"></b></a>
