@@ -234,6 +234,49 @@ window.onload = function() {
 
 function gotoMarker(i) {
 	map.setCenter(new google.maps.LatLng(markersArray[i].position.lat(), markersArray[i].position.lng()));
+        map.setZoom(16);
 	google.maps.event.trigger(markersArray[i], 'click');
 	$('html, body').animate({ scrollTop: $('#map-wrapper').offset().top }, 'slow' );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+var bounds;
+
+
+var geocoder;
+function initialize() {
+  geocoder = new google.maps.Geocoder();
+
+   var ne = new google.maps.LatLng(-19.779320,-44.160561);
+   var sw = new google.maps.LatLng(-25.250469,-53.109612);
+   var bounds = new google.maps.LatLngBounds(sw, ne);
+}
+
+function codeAddress() {
+  var address = document.getElementById('address').value;
+  geocoder.geocode( { 'address': address+'+"são paulo, sp"', 'bounds': bounds }, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setCenter(results[0].geometry.location);
+      map.setZoom(16);
+//      var marker = new google.maps.Marker({
+//          map: map,
+//          position: results[0].geometry.location
+//      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+

@@ -40,24 +40,9 @@
 		<!--Google APIs-->
 		<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 		<script src="https://www.google.com/jsapi"></script>
-		<script src="js/build-map-visualization.min.js"></script>
+		<script src="js/build-map-visualization.js"></script>
 	</head>
 
-	<!-- Piwik -->
-	<script type="text/javascript">
-	  var _paq = _paq || [];
-		_paq.push(["trackPageView"]);
-		_paq.push(["enableLinkTracking"]);
-
-	  (function() {
-		var u=(("https:" == document.location.protocol) ? "https" : "http") + "://www.gpopai.usp.br/piwik/";
-		_paq.push(["setTrackerUrl", u+"piwik.php"]);
-		_paq.push(["setSiteId", "1"]);
-		var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-		g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-	  })();
-	</script>
-	<!-- End Piwik Code -->
 	<body class="preview">
 		<?php include("header.inc.php"); ?>
 
@@ -99,6 +84,23 @@
 			  <div class="page-header" style>
 			    <h2>Mapa</h2>
 				</div>
+
+<form class="form">
+      <input id="address" class="input-medium search-query" type="text" style="width: 400px;" placeholder="Coloque aqui um endereço para procurar no mapa">
+      <button id="btnSearch" class="btn btn-primary" type="button" value="Localizar" onclick="codeAddress()">Localizar</button>
+
+			<script>
+				$("#address").keypress(function(event){
+					if(event.keyCode == 13){
+						event.preventDefault();
+						codeAddress();
+						  return false;
+					}
+				});
+			</script>
+
+</form>
+
 				<div class="well">
 					<div id="map-wrapper"></div>
 				</div>
