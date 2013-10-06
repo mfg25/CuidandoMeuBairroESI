@@ -207,7 +207,7 @@ sub geocode_entities {
 
   for my $entry (@{$data}) {
     $current++;
-    print "\r$current of $total.";
+	print "\r$current of $total.";
 	$entry->{entidades} = CSV2JSON->extract_entities($entry->{descricao});
 	my $entities = $entry->{entidades};
     my $coordinates = {};
@@ -232,6 +232,7 @@ sub geocode_entities {
       $coordinates->{$tag} = \@coordinates_of_tag;
     }
     $entry->{coordenadas} = $coordinates;
+	#print Dumper($coordinates);
   }
   print "\n";
 }

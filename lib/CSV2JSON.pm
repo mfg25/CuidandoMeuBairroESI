@@ -53,8 +53,9 @@ sub extract_row_type {
 
 sub extract_entities {
   my $string = shift;
+  my $string2 = shift;
   my $extractor = EntityExtractor->new;
-  my ($result, $debug) = $extractor->extract_entities($string);
+  my ($result, $debug) = $extractor->extract_entities($string2);
   return $result;
 }
 
