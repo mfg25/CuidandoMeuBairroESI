@@ -14,6 +14,7 @@
 					<li><a href="contact.php">Contato</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Anos <b class="caret"></b></a>
 						<ul class="dropdown-menu">
+							<li><a href="map.php?year=2014">2014</a></li>
 							<li><a href="map.php?year=2013">2013</a></li>
 							<li><a href="map.php?year=2012">2012</a></li>
 							<li><a href="map.php?year=2011">2011</a></li>

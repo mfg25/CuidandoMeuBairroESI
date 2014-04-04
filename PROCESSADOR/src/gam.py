@@ -2,7 +2,7 @@ import json
 
 from leitorPlanilhas import ler_planilha
 
-lido = ler_planilha("../resources/data/raw/2013.csv")
+lido = ler_planilha("../resources/data/raw/2014.csv")
 
 data = []
 saida = {
@@ -44,5 +44,5 @@ for l in lido:
     id += 1
     data.append(linha)
 
-arq = open("../resources/data/json/2013.json","w")
+arq = open("../resources/data/json/2014.json","w")
 json.dump(data, arq)
