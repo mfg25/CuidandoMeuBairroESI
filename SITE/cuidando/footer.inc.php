@@ -43,7 +43,7 @@
 			<div class="span3">
 				Cuidando do meu Bairro:
 				<ul>
-					<li><a href="#">Sobre</a></li>
+					<li><a href="sobre.php">Sobre</a></li>
 					<li><a href="contact.php">Contato</a></li>
 					<li><a href="#">TODO</a></li>
 				</ul>
