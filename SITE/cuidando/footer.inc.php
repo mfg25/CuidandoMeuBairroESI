@@ -21,6 +21,7 @@
 				<ul>
 					<li>Fernando Ferreira Diniz de Moraes</li>
 					<li>Profª. Drª. Gisele da Silva Craveiro</li>
+					<li>Andrés M. R. Martano</li>
 				</ul>
 				Colaboração:
 				<ul>
