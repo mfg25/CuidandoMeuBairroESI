@@ -17,6 +17,7 @@
 		<link href="css/table.css" rel="stylesheet">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 		<link href="css/docs.css" rel="stylesheet">
 		<style type="text/css">
 			#map-wrapper {width:100%;height:500px;margin:0 auto;padding-top:0px;}
@@ -25,7 +26,7 @@
 		<!--END OF CSS Styles-->
 		
 		<!--Javascript-->
-	  <!--JQuery-->
+	    <!--JQuery-->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 		<!--Year-->
@@ -36,11 +37,16 @@
 		<!--Bootstrap-->
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/application.js"></script>
+
+		<!--HighCharts-->
+		<script src="http://code.highcharts.com/highcharts.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
 		
-		<!--Google APIs-->
-		<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-		<script src="https://www.google.com/jsapi"></script>
+		<!--Leaflet APIs-->
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<script src="http://jawj.github.io/OverlappingMarkerSpiderfier-Leaflet/bin/oms.min.js"></script>
 		<script src="js/build-map-visualization.js"></script>
+
 	</head>
 
 	<body class="preview">
@@ -118,19 +124,19 @@
 							  <th scope="col">Significado</th>
 							</tr>
 							<tr>
-							  <th scope="row" class="spec" style="text-align: center"><img src="img/pin-red.png" width="22" height="32"></img></th>
+							  <th scope="row" class="spec" style="text-align: center"><img src="img/vermelho.png" width="22" height="32"></img></th>
 				  			<td>A despesa foi apenas <b>orçada</b>.</td>
 							</tr>
 							<tr>
-							  <th scope="row" class="specalt" style="text-align: center"><img src="img/pin-yellow.png" width="22" height="32"></img></th>
+							  <th scope="row" class="specalt" style="text-align: center"><img src="img/amarelo.png" width="22" height="32"></img></th>
 							  <td class="alt">A despesa teve alguma <b>atualização</b> no valor orçado.</td>
 							</tr>
 							<tr>
-							  <th scope="row" class="spec" style="text-align: center"><img src="img/pin-green.png" width="22" height="32"></img></th>
+							  <th scope="row" class="spec" style="text-align: center"><img src="img/verde.png" width="22" height="32"></img></th>
 							  <td>Parte ou todo montante orçado foi <b>empenhado</b>.</td>
 							</tr>
 							<tr>
-							  <th scope="row" class="specalt" style="text-align: center"><img src="img/pin-blue.png" width="22" height="32"></img></th>
+							  <th scope="row" class="specalt" style="text-align: center"><img src="img/azul.png" width="22" height="32"></img></th>
 							  <td class="alt">Parte ou todo montante empenhado foi <b>liquidado</b>.</td>
 							</tr>
 							<caption>Legenda das cores dos marcadores utilizados</caption>
