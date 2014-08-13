@@ -22,6 +22,9 @@
 		<style type="text/css">
 			#map-wrapper {width:100%;height:500px;margin:0 auto;padding-top:0px;}
 			#map-wrapper img {max-width: none;}
+			#graficos-tabelas {display: none;}
+			#botao-graf-tab {margin-top: 50px;}
+			.leaflet-popup-content {font-size: 12pt;}
 		</style>
 		<!--END OF CSS Styles-->
 		
@@ -45,6 +48,7 @@
 		<!--Leaflet APIs-->
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 		<script src="http://jawj.github.io/OverlappingMarkerSpiderfier-Leaflet/bin/oms.min.js"></script>
+		<!--Mapquest APIs--><!--<script src="http://www.mapquestapi.com/sdk/leaflet/v1.0/mq-map.js?key=Fmjtd%7Cluur25ub25%2C8s%3Do5-9w7x50"></script>-->
 		<script src="js/build-map-visualization.js"></script>
 
 	</head>
@@ -145,6 +149,13 @@
 			  </div>
 			</section>
 
+				<div class="well" id="botao-graf-tab">
+<a onclick="carregarGrafTabs()">
+<h1>Clique aqui para carregar os gráficos e as tabelas</h1>
+</a>
+				</div>
+<div id="graficos-tabelas">
+
 			<section id="chart">
 			  <div class="page-header">
 			    <h2>Gráficos</h2>
@@ -173,6 +184,7 @@
 			  </div>
 			</section>
 		</div>
+</div>
 		<br>
 		<?php include("footer.inc.php"); ?>
 	</body>

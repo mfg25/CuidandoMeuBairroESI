@@ -1,5 +1,3 @@
-var abrirPopup;
-
 window.onload = function() {
 	
 	function getlocation(coordenadas) {
@@ -103,9 +101,15 @@ window.onload = function() {
 		}
 	}
 
+	// USANDO MAPQUEST
+	//var map = L.map('map-wrapper', {
+	//	layers: MQ.mapLayer(),
+	//	center: [ -23.58098, -46.61293 ],
+	//	zoom: 12
+	//});
 
+	// USANDO MAPBOX
 	var map = L.map('map-wrapper').setView([-23.58098, -46.61293], 11);
-
 	L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 		maxZoom: 18,
 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -117,24 +121,21 @@ window.onload = function() {
 	var oms = new OverlappingMarkerSpiderfier(map);
 
 	var popup = new L.Popup();
-	abrirPopup = function (marker) {
+	window.abrirPopup = function (marker) {
 		popup.setContent(marker.desc);
 		popup.setLatLng(marker.getLatLng());
 		map.openPopup(popup);
 	}
-	oms.addListener('click', abrirPopup);
-
+	oms.addListener('click', window.abrirPopup);
 
 	function drawMarkers(data) {
 		var mappedRowClass = '', notMappedRowClass = '';
 		$.each(data, function(index, entry) {
 			if(Object.keys(entry.coordenadas).length != 0) {
-				var description = getdescription(entry);
 				$.each(getlocation(entry.coordenadas), function(index, location) {
 
 					var marker = L.marker([location.localizacoes[0].lat, location.localizacoes[0].lng],{icon: getcolor(entry), title: entry.descricao});
-					marker.desc = description;
-					//.bindPopup(description).addTo(map);
+					marker.desc = getdescription(entry);
 					map.addLayer(marker);
 					oms.addMarker(marker);
 					markersArray.push(marker);
@@ -147,184 +148,140 @@ window.onload = function() {
 	}
 
 
-
-
-
 	function drawCharts(metadata) {
-		//var options_chart1 = {
-		//	title: 'Quantidade de cada tipo de despesa',
-		//	colors: ['#3FB1FC', '#C9C3C3'],
-		//	height: 400
-		//};
-		//
-		//var options_chart2 = {
-		//	title: 'Distribuição de recursos por tipo de despesa',
-		//	hAxis: {
-		//		title: 'Tipo',
-		//		viewWindowMode: 'pretty'
-		//	},
-		//	vAxis: {
-		//		viewWindowMode: 'pretty'
-//		//		logScale: true
-		//	},
-		//	colors: ['#C9C3C3', '#3FB1FC'],
-		//	isStacked: true,
-		//	height: 400
-		//};
-		
-		var data_chart1 = [
-			['Tipo', 'Quantidade']
-		];
-	
-		var data_chart2 = [
-			['Varíavel', 'Não Mapeado', 'Mapeado']
-		];
 		
 		var tipo1 = metadata.tipo_1;
 		var tipo2 = metadata.tipo_2;
 		var tipo3 = metadata.tipo_3;
 		var tipo4 = metadata.tipo_4;
 		
-		data_chart1.push(['Mapeado', tipo3.quantidade + tipo4.quantidade]);
-		data_chart1.push(['Não Mapeado', tipo1.quantidade + tipo2.quantidade]);
-		
-
-
-		 Highcharts.setOptions({
-			         lang: {
-					             thousandsSep: '.',
-					             decimalPoint: ','
-							             }
-				           });
+	 Highcharts.setOptions({
+				 lang: {
+							 thousandsSep: '.',
+							 decimalPoint: ','
+									 }
+					   });
 
 
 
-$(function () {
-    $('#chart-quantity-wrapper').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false
-        },
-        title: {
-            text: 'Quantidade de cada tipo de despesa'
-        },
-        tooltip: {
-            pointFormat: '<b>{point.y}</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-			distance: -70,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-		    style: {
-                        fontWeight: 'bold',
-                        color: 'white',
-                        textShadow: '0px 1px 2px black'
-                    }
-                }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Despesas',
-            data: [
-                ['Mapeado',   tipo3.quantidade + tipo4.quantidade],
-                ['Não Mapeado', tipo1.quantidade + tipo2.quantidade],
-            ]
-        }]
-    });
-});
+	$(function () {
+		$('#chart-quantity-wrapper').highcharts({
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false
+			},
+			title: {
+				text: 'Quantidade de cada tipo de despesa'
+			},
+			tooltip: {
+				pointFormat: '<b>{point.y}</b>'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: true,
+				distance: -70,
+						format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+				style: {
+							fontWeight: 'bold',
+							color: 'white',
+							textShadow: '0px 1px 2px black'
+						}
+					}
+				}
+			},
+			series: [{
+				type: 'pie',
+				name: 'Despesas',
+				data: [
+					['Mapeado',   tipo3.quantidade + tipo4.quantidade],
+					['Não Mapeado', tipo1.quantidade + tipo2.quantidade],
+				]
+			}]
+		});
+	});
 
 
 
-$(function () {
-        $('#chart-values-wrapper').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Distribuição de recursos por tipo de despesa'
-            },
-            xAxis: {
-                categories: ['Orçado', 'Atualizado', 'Empenhado', 'Liquidado']
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Despesas em bilhões de reais'
-                },
-		labels: {
-		    formatter: function () { return this.value/1000000000; }
-		},
-            },
-            legend: {
-                align: 'right',
-                x: -70,
-                verticalAlign: 'top',
-                y: 20,
-                floating: true,
-                backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: false
-            },
-            tooltip: {
-	        headerFormat: '{point.series.name}<br/>',
-		pointFormat: '<b>R${point.y:,.2f}</b>'
-                //formatter: function() {
-                //    return '<b>'+ this.x +'</b><br/>'+
-                //        this.series.name +': R$'+ this.y +'<br/>'+
-                //        'Total: R$'+ this.point.stackTotal;
-                //}
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: false,
-                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
-                        style: {
-                            textShadow: '0 0 3px black, 0 0 3px black'
-                        }
-                    }
-                }
-            },
-            series: [{
-                name: 'Mapeado',
-                data: [tipo3.orcado + tipo4.orcado, tipo3.atualizado + tipo4.atualizado, tipo3.empenhado + tipo4.empenhado, tipo3.liquidado + tipo4.liquidado]
-            }, {
-                name: 'Não Mapeado',
-                data: [tipo1.orcado + tipo2.orcado, tipo1.atualizado + tipo2.atualizado, tipo1.empenhado + tipo2.empenhado, tipo1.liquidado + tipo2.liquidado]
-            }]
-        });
-    });
+	$(function () {
+			$('#chart-values-wrapper').highcharts({
+				chart: {
+					type: 'column'
+				},
+				title: {
+					text: 'Distribuição de recursos por tipo de despesa'
+				},
+				xAxis: {
+					categories: ['Orçado', 'Atualizado', 'Empenhado', 'Liquidado']
+				},
+				yAxis: {
+					min: 0,
+					title: {
+						text: 'Despesas em bilhões de reais'
+					},
+			labels: {
+				formatter: function () { return this.value/1000000000; }
+			},
+				},
+				legend: {
+					align: 'right',
+					x: -70,
+					verticalAlign: 'top',
+					y: 20,
+					floating: true,
+					backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+					borderColor: '#CCC',
+					borderWidth: 1,
+					shadow: false
+				},
+				tooltip: {
+				headerFormat: '{point.series.name}<br/>',
+			pointFormat: '<b>R${point.y:,.2f}</b>'
+					//formatter: function() {
+					//    return '<b>'+ this.x +'</b><br/>'+
+					//        this.series.name +': R$'+ this.y +'<br/>'+
+					//        'Total: R$'+ this.point.stackTotal;
+					//}
+				},
+				plotOptions: {
+					column: {
+						stacking: 'normal',
+						dataLabels: {
+							enabled: false,
+							color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+							style: {
+								textShadow: '0 0 3px black, 0 0 3px black'
+							}
+						}
+					}
+				},
+				series: [{
+					name: 'Mapeado',
+					data: [tipo3.orcado + tipo4.orcado, tipo3.atualizado + tipo4.atualizado, tipo3.empenhado + tipo4.empenhado, tipo3.liquidado + tipo4.liquidado]
+				}, {
+					name: 'Não Mapeado',
+					data: [tipo1.orcado + tipo2.orcado, tipo1.atualizado + tipo2.atualizado, tipo1.empenhado + tipo2.empenhado, tipo1.liquidado + tipo2.liquidado]
+				}]
+			});
+		});
 
-
-		
-		//var data_chart1 = google.visualization.arrayToDataTable(data_chart1);
-		//var data_chart2 = google.visualization.arrayToDataTable(data_chart2);
-		//
-		//var formatter = new google.visualization.NumberFormat({prefix: 'R$'});
-		//formatter.format(data_chart2, 1);
-		//formatter.format(data_chart2, 2);
-		
-		//var chart1 = new google.visualization.PieChart(document.getElementById('chart-quantity-wrapper'));
-		//var chart2 = new google.visualization.ColumnChart(document.getElementById('chart-values-wrapper'));
-		//chart1.draw(data_chart1, options_chart1);
-		//chart2.draw(data_chart2, options_chart2);
 	}
 
 	// Code starts here
 	$.getJSON(path + 'geocoded.json', function(data) {
 		drawMarkers(data.data);
-		$('#mapped-list-wrapper').html(mapped_list_html + '</table>');
-		$('#notmapped-list-wrapper').html(notmapped_list_html + '</table>');
-		drawCharts(data.metadata);
 	});
+
+	window.prepararGrafTabs = function() {
+		$.getJSON(path + 'geocoded.json', function(data) {
+			$('#mapped-list-wrapper').html(mapped_list_html + '</table>');
+			$('#notmapped-list-wrapper').html(notmapped_list_html + '</table>');
+			drawCharts(data.metadata);
+		});
+	}
 	
 	window.markersArray = markersArray;
 	window.map = map;
@@ -332,10 +289,15 @@ $(function () {
 
 function gotoMarker(i) {
 	map.setView(markersArray[i]._latlng, 16);
-	$('html, body').animate({ scrollTop: $('#map-wrapper').offset().top }, 'slow' );
-	abrirPopup(markersArray[i]);
+	$('html, body').animate({ scrollTop: $('#map').offset().top }, 'slow' );
+	window.abrirPopup(markersArray[i]);
 }
 
+function carregarGrafTabs() {
+	window.prepararGrafTabs();
+	$("#graficos-tabelas").css("display", "block");
+	$("#botao-graf-tab").css("display", "none");
+}
 
 function codeAddress() {
   var address = document.getElementById('address').value;
