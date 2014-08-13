@@ -32,6 +32,15 @@
     
     <div class="container">
 			<div class="row">
+<p>Se quiser nos contatar, mande um e-mail para <b>cuidando</b>, seguido de <b>@gpopai.org</b>.</p>
+<p>Lamentamos muitíssimo, mas o formulárío de contato que estava nessa página não estava funcionando, mesmo ele dizendo que sim. Caso você o tenha usado e nós ainda não te respondemos, por favor reenvie sua mensagem para o e-mail acima.</p>
+			</div> <!--row-->
+    </div> <!--Container-->
+
+<?php
+/*
+    <div class="container">
+			<div class="row">
 		    <div class="span8 offset1">
 		      <form method="post" class="form-horizontal well" id="contact-form" action="sendmail.php">
 			      <?php
@@ -99,6 +108,8 @@
 				</div> <!--span7-->
 			</div> <!--row-->
     </div> <!--Container-->
+	*/
+?>
 
     <?php include("footer.inc.php"); ?>
   </body>
