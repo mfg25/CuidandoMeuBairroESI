@@ -38,25 +38,25 @@ sub main {
   getopts('fy:', \%arguments);
   usage() unless(defined $arguments{'y'});
 
-  # Verifica se forcar download esta ativado
-  if($arguments{'f'}) {
-    print "Forcing download ...\n";
-    $csvfilepath = download_csv($arguments{'y'});
-  }
+  ## Verifica se forcar download esta ativado
+  #if($arguments{'f'}) {
+  #  print "Forcing download ...\n";
+  #  $csvfilepath = download_csv($arguments{'y'});
+  #}
 
-  # Verifica se o arquivo ja foi baixado pelo modo force
-  unless(defined $csvfilepath) {
-    print "Checking if file was previously downloaded ...\n";
-    # Se o arquivo nao foi baixado pelo modo force, verifica se o arquivo ja foi baixado previamente
-    $csvfilepath = "../resources/data/raw/" . $arguments{'y'} . ".csv";
-    unless(-e $csvfilepath) {
-      print "File was not found. Downloading $arguments{'y'}.csv ...\n";
-      # Se o arquivo nao foi baixado previamente, baixe-o
-      $csvfilepath = download_csv($arguments{'y'});
-    } else {
-      print "File was found ...\n";
-    }
-  }
+  ## Verifica se o arquivo ja foi baixado pelo modo force
+  #unless(defined $csvfilepath) {
+  #  print "Checking if file was previously downloaded ...\n";
+  #  # Se o arquivo nao foi baixado pelo modo force, verifica se o arquivo ja foi baixado previamente
+  #  $csvfilepath = "../resources/data/raw/" . $arguments{'y'} . ".csv";
+  #  unless(-e $csvfilepath) {
+  #    print "File was not found. Downloading $arguments{'y'}.csv ...\n";
+  #    # Se o arquivo nao foi baixado previamente, baixe-o
+  #    $csvfilepath = download_csv($arguments{'y'});
+  #  } else {
+  #    print "File was found ...\n";
+  #  }
+  #}
   
   # Corrigir formato do arquivo
   #print "Fixing possible errors on raw CSV ...\n";
