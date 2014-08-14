@@ -80,7 +80,7 @@ sub main {
   #open FILE, '<', $path or die $!;
   #my @lista = <FILE>;
   #my $data = \@lista;
-  my $path = "../resources/data/json/$arguments{'y'}.json";
+  my $path = "jsons/$arguments{'y'}.json";
   open my $fh, '<', $path or die "error opening $path: $!";
   my $texto = do { local $/; <$fh> };
 
@@ -107,7 +107,7 @@ sub main {
 
   # Salvar arquivo JSON
   print "Saving file $arguments{'y'}-geocoded.json\n";
-  save_data("../resources/data/json/$arguments{'y'}-geocoded.json", JSON->new->allow_nonref->canonical->utf8->encode($data));
+  save_data("jsons/$arguments{'y'}-geocoded.json", JSON->new->allow_nonref->canonical->utf8->encode($data));
 }
 
 sub fix_csv {
