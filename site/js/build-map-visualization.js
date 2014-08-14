@@ -37,6 +37,9 @@ window.onload = function() {
 				'<br>Função: ' + entry.funcao +
 				'<br>Subfunção: ' + entry.subfuncao +
 				'<br>Programa: ' + entry.programa;
+			try {
+				description = description + '<br>Despesa: ' + entry.descricao_desp;
+			} catch (err) {}
 		return description;
 	}
 
@@ -128,6 +131,10 @@ window.onload = function() {
 	}
 	oms.addListener('click', window.abrirPopup);
 
+	var corrente = L.layerGroup();
+	var capital = L.layerGroup();
+	var naoident = L.layerGroup();
+
 	function drawMarkers(data) {
 		var mappedRowClass = '', notMappedRowClass = '';
 		$.each(data, function(index, entry) {
@@ -136,7 +143,18 @@ window.onload = function() {
 
 					var marker = L.marker([location.localizacoes[0].lat, location.localizacoes[0].lng],{icon: getcolor(entry), title: entry.descricao});
 					marker.desc = getdescription(entry);
-					map.addLayer(marker);
+			try {
+				var codigo = entry.descricao_desp[0];
+				if (codigo == "3") {
+					corrente.addLayer(marker);
+				}else if(codigo == "4") {
+					capital.addLayer(marker);
+				}else{
+					naoident.addLayer(marker);
+				}
+			} catch (err) {
+					naoident.addLayer(marker);
+			}
 					oms.addMarker(marker);
 					markersArray.push(marker);
 					appendTableEntry('mapped', entry, mappedRowClass);
@@ -146,6 +164,15 @@ window.onload = function() {
 			}
 		});
 	}
+
+	map.addLayer(corrente);
+	map.addLayer(capital);
+	map.addLayer(naoident);
+var controle = L.control.layers();
+controle.addOverlay(corrente, "Corrente");
+controle.addOverlay(capital, "Capital");
+controle.addOverlay(naoident, "Não identificado");
+controle.addTo(map);
 
 
 	function drawCharts(metadata) {

@@ -60,12 +60,10 @@ def exportar_json(lido, nome_arq):
         linha['programa'] = l["Ds_Programa"]
         linha['orgao'] = l["Ds_Orgao"]
         linha['descricao'] = l["Ds_Projeto_Atividade"]
+        linha['descricao_desp'] = l["Ds_Despesa"]
         linha['id'] = id
-        #linha['orcado'] =
         linha['unidade'] = l["Ds_Unidade"]
         linha['funcao'] = l["Ds_Funcao"]
-        #linha['entidades'] =
-        #linha['tipo'] =
         id += 1
         data.append(linha)
 
