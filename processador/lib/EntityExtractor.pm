@@ -24,7 +24,7 @@ use JSONLoader;
 sub new {
   my $class = shift;
   my $self = {
-    _listspath => shift || "../resources/algorithm/lists.json",
+    _listspath => shift || "../resources/lists.json",
   };
 
   my $jsonloader = JSONLoader->new;
