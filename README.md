@@ -1,5 +1,6 @@
 ### Cuidando do meu Bairro 
-cuidando.org.br
+
+http://cuidando.org.br
 
 #### Dependências
 
