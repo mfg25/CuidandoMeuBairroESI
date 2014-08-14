@@ -73,27 +73,27 @@ def exportar_json(lido, nome_arq):
     json.dump(data, arq)
 
 
+if __name__ == "__main__":
+    ano = sys.argv[1]
+    pasta_dados = "../../site/data/" + ano
+    nome_arq_xls = "xlss/%s.xls" % ano
+    nome_arq_json_nao_localizado = "jsons/%s.json" % ano
+    nome_arq_json_localizado = "jsons/%s-geocoded.json" % ano
 
-ano = sys.argv[1]
-pasta_dados = "../../site/data/" + ano
-nome_arq_xls = "xlss/%s.xls" % ano
-nome_arq_json_nao_localizado = "jsons/%s.json" % ano
-nome_arq_json_localizado = "jsons/%s-geocoded.json" % ano
+    print("ANO: %s" % ano)
 
-print("ANO: %s" % ano)
+    print("Baixando")
+    baixar_dados_da_prefeitura(nome_arq_xls)
 
-print("Baixando")
-baixar_dados_da_prefeitura(nome_arq_xls)
+    print("Pré-Processando")
+    dados = processar_xls(nome_arq_xls)
+    exportar_json(dados, nome_arq_json_nao_localizado)
 
-print("Pré-Processando")
-dados = processar_xls(nome_arq_xls)
-exportar_json(dados, nome_arq_json_nao_localizado)
+    print("Geolocalizando via PERL:")
+    os.system("perl main2.pl -y %s" % ano)
+    os.system("cp %s %s/geocoded.json" % (nome_arq_json_localizado, pasta_dados))
 
-print("Geolocalizando via PERL:")
-os.system("perl main2.pl -y %s" % ano)
-os.system("cp %s %s/geocoded.json" % (nome_arq_json_localizado, pasta_dados))
+    print("Gerando Arquivo com Orgãos")
+    os.system("perl json2csv.pl %s/geocoded.json > %s/orgaos.json" % ((pasta_dados,)*2))
 
-print("Gerando Arquivo com Orgãos")
-os.system("perl json2csv.pl %s/geocoded.json > %s/orgaos.json" % ((pasta_dados,)*2))
-
-print("Feito")
+    print("Feito")
