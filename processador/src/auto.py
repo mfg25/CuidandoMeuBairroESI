@@ -60,7 +60,7 @@ def exportar_json(lido, nome_arq):
         linha['programa'] = l["Ds_Programa"]
         linha['orgao'] = l["Ds_Orgao"]
         linha['descricao'] = l["Ds_Projeto_Atividade"]
-        linha['descricao_desp'] = l["Ds_Despesa"]
+        linha['descricao_desp'] = l["Cd_Despesa"]
         linha['id'] = id
         linha['unidade'] = l["Ds_Unidade"]
         linha['funcao'] = l["Ds_Funcao"]
