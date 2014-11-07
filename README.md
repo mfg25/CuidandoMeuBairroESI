@@ -1,19 +1,8 @@
-Cuidando do meu Bairro - www.gpopai.usp.br/cuidando
+## Cuidando do meu Bairro 
 
-===========
+http://cuidando.org.br
 
-Requisitos de dados para a replicação deste projeto:
-- Dados primários com nível de desagregação de projetos/atividades.
-- Descrição de projetos/atividades.
-  - Descrições com CEP são desejáveis para um resultado melhor.
-
-===========
-
-Gostaríamos de receber o seu feedback, sugestões e críticas a respeito do projeto "Cuidando do meu Bairro", seja a respeito do projeto em si, da visualização dos dados ou mesmo do código. Envie-nos um e-mail contando sua experiência para "cuidando@gpopai.org".
-
-Documentação em construção. Envie-nos um e-mail para obter a versão mais recente.
-
-===========
+#### Dependências
 
 Dependências de módulos Perl (instaláveis através do CPAN):
 - JSON
@@ -21,3 +10,23 @@ Dependências de módulos Perl (instaláveis através do CPAN):
 - WWW::Mechanize
 - DBI
 - DBD::SQLite
+
+Podem ser instaladas com:
+
+	# apt-get install libdbd-perl libdbd-sqlite3-perl libjson-perl libwww-mechanize-perl
+
+Dependências de módulos Python 3:
+- xlrd
+
+Podem ser instaladas com:
+
+	# easy_install xlrd
+
+#### Atualização dos Dados
+
+	cd processador/src
+	python auto.py <ANO>
+
+#### Contato
+
+Gostaríamos de receber o seu feedback, sugestões e críticas a respeito do projeto "Cuidando do meu Bairro", seja a respeito do projeto em si, da visualização dos dados ou mesmo do código. Envie-nos um e-mail contando sua experiência para "cuidando@gpopai.org".

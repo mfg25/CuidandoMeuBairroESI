@@ -1,5 +1,0 @@
-Por algum motivo os arquivos no "src" não estão funcionando.
-
-Para usar esses faça:
-python2 gam.py
-perl main2.pl -y 2013
