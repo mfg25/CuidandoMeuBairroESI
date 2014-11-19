@@ -11,7 +11,7 @@ import xlrd
 
 def baixar_dados_da_prefeitura(nome_arq):
     """Baixa os dados da prefeitura e salva em arquivo"""
-    link = "http://sempla.prefeitura.sp.gov.br/orcamento/orcamento_%s/basedadosexecucao%s.xls" % ((ano,)*2)
+    link = "http://sempla.prefeitura.sp.gov.br/orcamento/uploads/%s/basedadosexecucao%s.xls" % ((ano,)*2)
     with urllib.request.urlopen(link) as response, open(nome_arq, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
     
