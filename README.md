@@ -26,7 +26,3 @@ Podem ser instaladas com:
 
 	cd processador/src
 	python auto.py <ANO>
-
-#### Contato
-
-Gostaríamos de receber o seu feedback, sugestões e críticas a respeito do projeto "Cuidando do meu Bairro", seja a respeito do projeto em si, da visualização dos dados ou mesmo do código. Envie-nos um e-mail contando sua experiência para "cuidando@gpopai.org".
