@@ -105,21 +105,21 @@ window.onload = function() {
 	}
 
 	// USANDO MAPQUEST
-	//var map = L.map('map-wrapper', {
-	//	layers: MQ.mapLayer(),
-	//	center: [ -23.58098, -46.61293 ],
-	//	zoom: 12
-	//});
+	var map = L.map('map-wrapper', {
+		layers: MQ.mapLayer(),
+		center: [ -23.58098, -46.61293 ],
+		zoom: 12
+	});
 
 	// USANDO MAPBOX
-	var map = L.map('map-wrapper').setView([-23.58098, -46.61293], 11);
-	L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-		id: 'andresmrm.j7bc97nk'
-	}).addTo(map);
+	//var map = L.map('map-wrapper').setView([-23.58098, -46.61293], 11);
+	//L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+	//	maxZoom: 18,
+	//	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+	//		'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+	//		'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	//	id: 'andresmrm.j7bc97nk'
+	//}).addTo(map);
 
 	var oms = new OverlappingMarkerSpiderfier(map);
 
