@@ -1,17 +1,17 @@
 window.onload = function() {
-	
+
 	function getlocation(coordenadas) {
 		if("cep" in coordenadas) {
 			return coordenadas['cep'];
 		}
-		
+
 		var more_priority = [];
 		var less_priority = [];
 		var keys = Object.keys(coordenadas);
 		$.each(keys, function(index, key) {
 			var priorities = ["bairro", "cidade", "comunidade", "conjunto", "distrito", "favela", "jardim",
 												"loteamento", "morro", "recanto", "sitio", "subprefeitura", "vila"];
-												
+
 			if($.inArray(key, priorities) != -1) {
 			 	less_priority = less_priority.concat(coordenadas[key]);
 			 } else {
@@ -24,7 +24,7 @@ window.onload = function() {
 			return less_priority;
 		}
 	}
-	
+
 	function getdescription(entry) {
 		var description = 'ID: ' + entry.id +
 				'<br>' + entry.descricao +
@@ -43,7 +43,7 @@ window.onload = function() {
 		return description;
 	}
 
-	
+
 	//icones
 	var greenIcon = L.icon({
 		iconUrl: 'img/verde.png',
@@ -65,8 +65,9 @@ window.onload = function() {
 		iconSize: [25, 41],
 		popupAnchor: [0, -10],
 	});
-	
+
 	function getcolor(entry) {
+    a = entry
 		if(entry.atualizado == "0,00" && entry.empenhado == "0,00" && entry.liquidado == "0,00") {
 			return redIcon;
 		} else if(entry.empenhado == "0,00" && entry.liquidado == "0,00") {

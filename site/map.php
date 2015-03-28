@@ -49,7 +49,7 @@
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 		<script src="http://jawj.github.io/OverlappingMarkerSpiderfier-Leaflet/bin/oms.min.js"></script>
 		<!--Mapquest APIs-->
-		<script src="http://open.mapquestapi.com/sdk/leaflet/v1.0/mq-map.js?key=Fmjtd%7Cluur25ub25%2C8s%3Do5-9w7x50"></script>
+    <script src="http://open.mapquestapi.com/sdk/leaflet/v1.0/mq-map.js?key=Fmjtd%7Cluur25ub25%2C8s%3Do5-9w7x50"></script>
 		<script src="js/build-map-visualization.js"></script>
 
 	</head>

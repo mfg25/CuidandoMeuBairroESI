@@ -14,7 +14,7 @@ def baixar_dados_da_prefeitura(nome_arq):
     link = "http://sempla.prefeitura.sp.gov.br/orcamento/uploads/%s/basedadosexecucao%s.xls" % ((ano,)*2)
     with urllib.request.urlopen(link) as response, open(nome_arq, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
-    
+
 
 def processar_xls(nome_arq):
     """Lê um arquivo XLS montando uma lista de dicionários com o conteúdo"""
@@ -22,7 +22,7 @@ def processar_xls(nome_arq):
     sh = wb.sheets()[0]
     titulos = []
     for c in sh.row_values(0):
-        titulos.append(c.strip())
+        titulos.append(c.strip().lower())
     elementos = []
     for n in range(1,sh.nrows):
         l = sh.row_values(n)
@@ -48,22 +48,22 @@ def exportar_json(lido, nome_arq):
     for l in lido:
         linha = {}
 
-        linha['liquidado'] = formatar_num(l["Vl_Liquidado"])
-        linha['orcado'] = formatar_num(l["Sld_Orcado_Ano"])
-        linha['empenhado'] = formatar_num(l["Vl_Empenhado"])
-        linha['atualizado'] = formatar_num(l["Vl_Atualizado"])
+        linha['liquidado'] = formatar_num(l["vl_liquidado"])
+        linha['orcado'] = formatar_num(l["sld_orcado_ano"])
+        linha['empenhado'] = formatar_num(l["vl_empenhado"])
+        linha['atualizado'] = formatar_num(l["vl_atualizado"])
 
         if linha['atualizado'] == linha['orcado']:
             linha['atualizado'] = "0,00"
 
-        linha['subfuncao'] = l["Ds_SubFuncao"]
-        linha['programa'] = l["Ds_Programa"]
-        linha['orgao'] = l["Ds_Orgao"]
-        linha['descricao'] = l["Ds_Projeto_Atividade"]
-        linha['descricao_desp'] = l["Cd_Despesa"]
+        linha['subfuncao'] = l["ds_subfuncao"]
+        linha['programa'] = l["ds_programa"]
+        linha['orgao'] = l["ds_orgao"]
+        linha['descricao'] = l["ds_projeto_atividade"]
+        linha['descricao_desp'] = l["cd_despesa"]
         linha['id'] = id
-        linha['unidade'] = l["Ds_Unidade"]
-        linha['funcao'] = l["Ds_Funcao"]
+        linha['unidade'] = l["ds_unidade"]
+        linha['funcao'] = l["ds_funcao"]
         id += 1
         data.append(linha)
 
