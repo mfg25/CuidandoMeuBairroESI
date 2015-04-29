@@ -26,6 +26,8 @@
 				Colaboração:
 				<ul>
 					<li>Prof. Dr. Jorge A. S. Machado</li>
+					<li>Profa. Dra. Jutta Schmidt Machado</li>
+					<li><a target="_blank" href="http://colab.each.usp.br">Colaboratório de Desenvolvimento e Participação</a></li>
 					<li><a target="_blank" href="http://www.gpopai.usp.br">Grupo de Pesquisa em Políticas Públicas para o Acesso à Informação</a></li>
 				</ul>
 			</div>

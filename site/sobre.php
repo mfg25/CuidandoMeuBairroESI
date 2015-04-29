@@ -36,7 +36,7 @@
       			<h1>Sobre</h1>
 <ul>
 <li><a href="https://github.com/okfn-brasil/cuidando">Repositório do código deste aplicativo</a></li>
-<li><a href="http://sempla.prefeitura.sp.gov.br/orc_homenew.php">Fonte oficial de dados</a></li>
+<li><a href="http://sempla.prefeitura.sp.gov.br/orcamento/execucao.html">Fonte oficial de dados</a></li>
 <li><a href="data/">Dados geolocalizados</a></li>
 </ul>
       		</div>
