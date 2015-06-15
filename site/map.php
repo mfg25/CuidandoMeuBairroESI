@@ -17,7 +17,7 @@
 		<link href="css/table.css" rel="stylesheet">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 		<link href="css/docs.css" rel="stylesheet">
 		<style type="text/css">
 			#map-wrapper {width:100%;height:500px;margin:0 auto;padding-top:0px;}
