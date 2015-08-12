@@ -6,7 +6,7 @@ Mostly a wrapper for [pyjwt](https://github.com/jpadilla/pyjwt/) for use with as
 It was made for an ecosystem of microservices. One microservice produces the tokens, and the others read them to get the user name and stuff.
 
 One example of the token producer microservice would be [Viralata](https://gitlab.com/ok-br/viralata).
-And the one that only reads them, [Tagarela]](https://gitlab.com/ok-br/tagarela).
+And the one that only reads them, [Tagarela](https://gitlab.com/ok-br/tagarela).
 
 
 ## Installing
