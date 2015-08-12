@@ -8,12 +8,6 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from cryptography.hazmat.backends import default_backend
 # from cryptography.x509 import load_pem_x509_certificate
 
-# from itsdangerous import Signer
-# from itsdangerous import JSONWebSignatureSerializer
-# signer = JSONWebSignatureSerializer(DANGEROUS_SECRET_KEY)
-
-# a=jwt.encode({"username":u, 'exp': datetime.utcnow()}, D)
-
 # openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
 # cert_obj = load_pem_x509_certificate(cert_str, default_backend())
 # cert_obj.public_key()

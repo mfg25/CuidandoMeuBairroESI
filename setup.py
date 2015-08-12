@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name="viratoken",
-    version='0.1',
+    version='0.2',
     description='Small lib to encode/decode/sign/verify JWTs '
                 'using asymmetric cryptography.',
     author='Andrés M. R. Martano',
