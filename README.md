@@ -18,6 +18,7 @@ $ pip install viratoken
 ## Usage
 
 Having the private key you can encode and decode tokens:
+(the keys can be generated with `ssh-keygen -t rsa`)
 
 ```python
 from viratoken import SignerVerifier
