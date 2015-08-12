@@ -3,7 +3,7 @@
 Small lib to encode/decode/sign/verify JWTs using asymmetric cryptography.
 Mostly a wrapper for [pyjwt](https://github.com/jpadilla/pyjwt/) for use with asymmetric cryptography.
 
-It was made for an ecosystem of microservices. One microservice produces the tokens, and the others read them to get the username and stuff.
+It was made for an ecosystem of microservices. [One microservice produces the tokens](https://gitlab.com/ok-br/viralata), and [the others read them to get the username](https://gitlab.com/ok-br/tagarela) and stuff.
 
 
 ## Installing
