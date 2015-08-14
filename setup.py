@@ -18,7 +18,6 @@ setup(
     ],
     keywords=['cryptography', 'jwt'],
     classifiers=[
-        # "Development Status :: 3 - Alpha"
         "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
@@ -30,8 +29,5 @@ setup(
         "Topic :: Security :: Cryptography",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Environment :: Web Environment",
-        # "Topic :: Internet :: WWW/HTTP"
-        # "Topic :: Internet :: WWW/HTTP :: Session",
-        # "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: Message Boards",
     ]
 )
