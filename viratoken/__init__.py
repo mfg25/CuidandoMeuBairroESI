@@ -31,6 +31,7 @@ class SignerVerifier(object):
 
         # TODO: Is there a better way to expose exceptions?
         self.ExpiredSignatureError = jwt.ExpiredSignatureError
+        self.DecodeError = jwt.DecodeError
 
     def config(self, init_defaults=False, **kwargs):
         """Configures this class, loading defaults if asked, and then the passed
