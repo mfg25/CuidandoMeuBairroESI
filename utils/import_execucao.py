@@ -54,7 +54,7 @@ def generate_code(row):
     '''Returns a code for the row. Hopefully it is unique.'''
     # Supress 'cd_exercicio' if is equals to 'cd_anoexecucao'
     if int(row['cd_anoexecucao']) == int(row['cd_exercicio']):
-        return '.'.join([str(int(v)) for k, v in row.iterkv()
+        return '.'.join([str(int(v)) for k, v in row.iteritems()
                          if k != 'cd_exercicio'])
     else:
         return '.'.join([str(int(v)) for v in row])
@@ -85,7 +85,7 @@ def create_pks(table):
 
 
 def prepare_row(code, row):
-    data = dict(row.iterkv())
+    data = dict(row.iteritems())
     return {
         'code': code,
         'data': data,
