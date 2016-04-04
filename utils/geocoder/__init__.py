@@ -69,11 +69,12 @@ class Geocoder(object):
         self.terms_db = TermsDB(terms_folder)
 
         # Coords limits for geolocation
-        #         bot  left    top     right
-        self.limits = (-47, -24.05, -46.30, -23.35)
+        #                  bot left   top right
+        self.limits_str = "-47 -24.05 -46.30 -23.35"
+        self.limits_list = map(float, self.limits_str.split())
         self.regions = None
 
-        self.osm = geopy.Nominatim(view_box=self.limits)
+        self.osm = geopy.Nominatim(view_box=self.limits_str)
         self.gm = geopy.GoogleV3()
         self.server_options = {
             "osm": self.geocode_osm,
@@ -97,8 +98,8 @@ class Geocoder(object):
         if not self.regions:
             # Use rectangle check
             lat, lon = point.latitude, point.longitude
-            if (lon > self.limits[0] and lat > self.limits[1] and
-               lon < self.limits[2] and lat < self.limits[3]):
+            if (lon > self.limits_list[0] and lat > self.limits_list[1] and
+               lon < self.limits_list[2] and lat < self.limits_list[3]):
                 return True
             else:
                 return False
@@ -165,7 +166,8 @@ class Geocoder(object):
     def geocode_gm(self, s):
         # TODO: permitir configurar
         s += ", São Paulo, São Paulo"
-        r = self.gm.geocode(s, timeout=10, exactly_one=True)
+        r = self.gm.geocode(s, bounds=self.limits_list,
+                            timeout=10, exactly_one=True)
         # TODO: permitir configurar
         if not r or r.address == "São Paulo - State of São Paulo, Brazil":
             return []
