@@ -9,17 +9,17 @@ from flask.ext.cors import CORS
 
 from .config import DefaultConfig, INSTANCE_FOLDER_PATH
 from .extensions import db, api
-from .receita import receita
-from .contratos import contratos
+# from .receita import receita
+# from .contratos import contratos
 from .execucao import execucao
 
 # For import *
 __all__ = ['create_app']
 
 DEFAULT_BLUEPRINTS = (
-    receita,
-    contratos,
-    execucao
+    # receita,
+    # contratos,
+    execucao,
 )
 
 
