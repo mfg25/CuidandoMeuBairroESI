@@ -1,14 +1,19 @@
-#wget
-#unzip
-
 gcc
 python-dev
 g++
+postgresql-server-dev-9.4
+libpq-dev
+postgis
 
-pandas
-flask
+Instalar GEOS
 
 
+
+
+python setup.py install
+
+
+criar user gastosabertos no BD:
 
 ## Usando Postgres
 
@@ -16,24 +21,18 @@ Seguir:
 https://wiki.archlinux.org/index.php/PostgreSQL#Installing_PostgreSQL
 para instalar e configurar BD; criar usuário e database nova.
 
-    CREATE USER postgres_user WITH PASSWORD 'password';
-    CREATE DATABASE my_postgres_db OWNER postgres_user;
+    CREATE USER gastosabertos WITH PASSWORD 'password';
+    CREATE DATABASE gastosabertos OWNER gastosabertos;
 
 Adicione uma senha para o novo usuários:
 
 	ALTER USER gastosabertos with encrypted password '<senha>'
 
-
-postgresql-server-dev-9.4
-libpq-dev
-postgis
+Ative POSTGIS:
 
     psql -U postgres -d gastosabertos -c "CREATE EXTENSION postgis;"
 
 
-Nova dep
-
-    pip install psycopg2
 
 
 
@@ -45,4 +44,18 @@ Configurar parâmetros em `settings/local_settings.py`:
 Criar e iniciar BD:
 
     python manage.py initdb
-    python manage.py importdata
+    # python manage.py importdata
+    python manage.py importdata -r -d execucao
+
+
+Rodar cron de atualização
+
+
+
+# Instalar no OS
+
+rhc app create ga python-2.7
+rhc cartridge add postgresql-9.2 -a ga
+rhc ssh ga
+  psql
+    CREATE EXTENSION postgis;
