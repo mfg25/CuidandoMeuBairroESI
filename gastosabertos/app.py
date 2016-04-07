@@ -40,7 +40,7 @@ def create_app(config=None, app_name=None, instance_folder=None,
     # configure_hook(app)
     configure_blueprints(app, blueprints)
     configure_extensions(app)
-    configure_logging(app)
+    # configure_logging(app)
     configure_error_handlers(app)
 
     # Full CORS!
