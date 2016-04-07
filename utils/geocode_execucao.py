@@ -30,34 +30,38 @@ def get_geolocable_cells(row):
     return [i for i in row.data.values() if type(i) == TYPE_STR]
 
 
+def get_non_geocode(lines):
+    return (Execucao.query.filter(Execucao.searched == False)
+            .limit(lines).all())
+
+
 def geocode_all(db, data_folder="geocoder/data",
                 terms_folder="geocoder/terms",
                 lines_per_insert=1000):
-
     print("Loading table...")
-    # The query bellow seems not very efficient...
-    # Maybe change it as the link says.
-    # https://stackoverflow.com/questions/7389759/memory-efficient-built-in-sqlalchemy-iterator-generator
-    non_geocoded = Execucao.query.filter(Execucao.searched == False).all()
-    with Geocoder(data_folder, terms_folder) as geocoder:
-        counter = ProgressCounter(len(non_geocoded), print_abs=True)
-        to_be_inserted = 0
-        for row in non_geocoded:
-            cells = get_geolocable_cells(row)
-            geoent = geocoder.geocode_list(cells)
-            if geoent:
-                lat, lon, reg = geoent.best_coords()
-                if lat:
-                    row.point = "POINT(%s %s)" % (lon, lat)
-            row.searched = True
-            to_be_inserted += 1
-            if to_be_inserted == lines_per_insert:
-                db.session.commit()
+    non_geocoded = get_non_geocode(lines_per_insert)
+    if non_geocoded:
+        while non_geocoded:
+            with Geocoder(data_folder, terms_folder) as geocoder:
+                counter = ProgressCounter(len(non_geocoded), print_abs=True)
                 to_be_inserted = 0
-            counter.update()
-        if to_be_inserted:
-            db.session.commit()
-        counter.end()
+                for row in non_geocoded:
+                    cells = get_geolocable_cells(row)
+                    geoent = geocoder.geocode_list(cells)
+                    if geoent:
+                        lat, lon, reg = geoent.best_coords()
+                        if lat:
+                            row.point = "POINT(%s %s)" % (lon, lat)
+                    row.searched = True
+                    to_be_inserted += 1
+                    if to_be_inserted == lines_per_insert:
+                        db.session.commit()
+                        to_be_inserted = 0
+                    counter.update()
+                if to_be_inserted:
+                    db.session.commit()
+                counter.end()
+            non_geocoded = get_non_geocode(lines_per_insert)
 
 
 if __name__ == '__main__':
