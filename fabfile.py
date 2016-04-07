@@ -141,6 +141,7 @@ env.user, env.app, env.ns = open('os_user_and_app.conf',
                                  'r').read().strip().split()
 env.hosts = ['{app}-{ns}.rhcloud.com'.format(app=env.app, ns=env.ns)]
 
+local_old_data_folder = '../gastos_abertos_dados/Orcamento/execucao/'
 
 def _annotate_hosts_with_ssh_config_info():
     '''
@@ -198,9 +199,88 @@ def update_settings():
             put(os.path.join('settings', here), there)
 
     # put_settings('%s_settings.py' % env.host_type, 'local_settings.py')
-    put_settings('os_settings.py', 'production.cfg')
+    put_settings('custom_os_settings.py', 'production.cfg')
+    try:
+        put_settings('transfer.conf')
+    except:
+        pass
 
 
 def touch():
     with cd(env.folder):
         run('touch wsgi.py')
+
+
+def upload_old_data():
+    '''
+    The CSVs must already be processed localy.
+    '''
+    settings_folder = env.get_settings_folder()
+    old_data_folder = os.path.join(settings_folder, 'old_data')
+    run('mkdir ' + old_data_folder)
+
+    local_files = [x for x in os.listdir(local_old_data_folder)
+                   if x.endswith('.csv')]
+
+    with cd(old_data_folder):
+        for f in local_files:
+            put(os.path.join(local_old_data_folder, f), f)
+
+
+def upload_geo_cache():
+    settings_folder = env.get_settings_folder()
+    cache_folder = os.path.join(settings_folder, 'geo_cache')
+    try:
+        run('mkdir ' + cache_folder)
+    except:
+        pass
+    geo_data_folder = 'utils/geocoder/data/'
+    with cd(cache_folder):
+        f = 'cache.db'
+        put(os.path.join(geo_data_folder, f), f)
+        f = 'subprefeituras.geojson'
+        put(os.path.join(geo_data_folder, f), f)
+
+
+def upload_ga_dados_code():
+    '''
+    This code is used as requirement for the daily update script.
+    '''
+    settings_folder = env.get_settings_folder()
+    ga_dados_folder = os.path.join(settings_folder, 'ga_dados')
+    try:
+        run('mkdir ' + ga_dados_folder)
+    except:
+        pass
+    try:
+        run('mkdir ' + os.path.join(ga_dados_folder, 'store'))
+    except:
+        pass
+    try:
+        run('mkdir ' + os.path.join(ga_dados_folder, 'public'))
+    except:
+        pass
+    local_ga_dados_folder = '../gastos_abertos_dados/utils'
+    with cd(ga_dados_folder):
+        f = 'execucao_downloader.py'
+        put(os.path.join(local_ga_dados_folder, f), f)
+        f = 'requirements.txt'
+        put(os.path.join(local_ga_dados_folder, f), f)
+        run('pip install -r %s' % f)
+
+
+def initdb():
+    with cd(env.folder):
+        run("python manage.py -i %s initdb" % env.get_settings_folder())
+
+
+def importdata(reset=False):
+    c = 'python manage.py -i {inst} importdata -d execucao'
+    if reset:
+        c += ' -r'
+    c += ' -e {data} -g {cache}'
+    sf = env.get_settings_folder()
+    with cd(env.folder):
+        run(c.format(inst=sf,
+                     data=os.path.join(sf, 'old_data'),
+                     cache=os.path.join(sf, 'geo_cache')))
