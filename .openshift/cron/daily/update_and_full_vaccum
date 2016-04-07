@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Update with new data
+cd $OPENSHIFT_REPO_DIR/utils; python update_execucao.py -d $OPENSHIFT_DATA_DIR/ga_dados -p $OPENSHIFT_DATA_DIR/ga_dados/public -s $OPENSHIFT_DATA_DIR/ga_dados/store -i $OPENSHIFT_DATA_DIR
+# Transfer files to a new place
+cd $OPENSHIFT_REPO_DIR/utils; python transfer_files.py -p $OPENSHIFT_DATA_DIR/ga_dados/public -s $OPENSHIFT_DATA_DIR/ga_dados/store -i $OPENSHIFT_DATA_DIR
+
+# https://github.com/bilderbuchi/tiny_tiny_rss-openshift-quickstart/commit/4a8318be6df40cc48bfab62b2a198a20458ef4a5
+# Daily manual full-vacuum of the database to work around an Openshift bug
+# causing autovacuum not to work. 
+# See https://bugzilla.redhat.com/show_bug.cgi?id=849428 which is a duplicate
+# of the non-accessible https://bugzilla.redhat.com/show_bug.cgi?id=806016
+echo "Vacuuming database..."
+$OPENSHIFT_DATA_DIR/root/bin/vacuumdb -a -f
+returnvalue=$?
+echo "Vacuuming ended"
+
+exit $returnvalue
+
