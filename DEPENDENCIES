@@ -52,10 +52,65 @@ Rodar cron de atualização
 
 
 
-# Instalar no OS
+# Instalar no OpenShift
 
 rhc app create ga python-2.7
-rhc cartridge add postgresql-9.2 -a ga
-rhc ssh ga
-  psql
-    CREATE EXTENSION postgis;
+rhc cartridge add cron-1.4 -a ga
+
+Postgres precisa ser instalado na mão, pois os do OS são muito velhos...
+
+
+# Postgres
+cd $OPENSHIFT_DATA_DIR
+wget https://ftp.postgresql.org/pub/source/v9.4.7/postgresql-9.4.7.tar.gz
+tar xf postgresql-9.4.7.tar.gz
+mkdir $OPENSHIFT_DATA_DIR/root
+cd postgresql-9.4.7
+./configure --prefix=$OPENSHIFT_DATA_DIR/root
+make
+make install
+cd $OPENSHIFT_DATA_DIR
+mkdir db
+cd $OPENSHIFT_DATA_DIR/root/bin
+initdb --locale en_US.UTF-8 -D $OPENSHIFT_DATA_DIR/db/data
+echo "listen_addresses = ''" >> $OPENSHIFT_DATA_DIR/db/data/postgresql.conf
+cd $OPENSHIFT_DATA_DIR
+rm -rf postgresql-9.4.7*
+
+# Geos
+wget http://download.osgeo.org/geos/geos-3.5.0.tar.bz2
+tar xf geos-3.5.0.tar.bz2 
+cd geos-3.5.0
+./configure --prefix=$OPENSHIFT_DATA_DIR/root
+make
+make install
+cd $OPENSHIFT_DATA_DIR
+rm -rf geos-3.5.0*
+
+# Proj4
+wget https://github.com/OSGeo/proj.4/archive/4.9.2.tar.gz
+tar xf 4.9.2.tar.gz 
+cd proj.4-4.9.2/
+./configure --prefix=$OPENSHIFT_DATA_DIR/root
+make
+make install
+cd $OPENSHIFT_DATA_DIR
+rm 4.9.2.tar.gz 
+rm -rf proj.4-4.9.2
+
+# Postgis
+wget http://download.osgeo.org/postgis/source/postgis-2.2.2.tar.gz
+tar xf postgis-2.2.2.tar.gz
+cd postgis-2.2.2
+./configure --with-pgconfig=$OPENSHIFT_DATA_DIR/root/bin/pg_config --with-geosconfig=$OPENSHIFT_DATA_DIR/root/bin/geos-config --with-projdir=$OPENSHIFT_DATA_DIR/root/ --prefix=$OPENSHIFT_DATA_DIR/root
+make
+make install
+cp extensions/postgis/postgis.control ../root/share/postgresql/extension/
+cp extensions/postgis/sql_bits/postgis.sql ../root/share/postgresql/extension/postgis--2.2.2.sql
+cd $OPENSHIFT_DATA_DIR
+rm -rf postgis-2.2.2*
+
+# Run
+$OPENSHIFT_DATA_DIR/root/bin/postgres -D $OPENSHIFT_DATA_DIR/db/data
+
+$OPENSHIFT_DATA_DIR/root/bin/psql -d gastosabertos -c "CREATE EXTENSION postgis;"
