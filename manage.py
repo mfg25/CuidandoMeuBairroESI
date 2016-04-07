@@ -55,15 +55,16 @@ def _importcontratos():
     import_contrato_urls.insert_all(db, csv_file='data/urls.csv')
 
 
-def _importexecucao():
+def _importexecucao(folder=None, data_folder=None):
     """Import execucao data to the database"""
     from utils import (import_execucao, geocode_execucao,
                        update_execucao_year_info)
 
-    # Execucao
-    folder = '../gastos_abertos_dados/Orcamento/execucao/'
+    if not folder:
+        folder = '../gastos_abertos_dados/Orcamento/execucao/'
+    if not data_folder:
+        data_folder = 'utils/geocoder/data'
     import_execucao.insert_all(db, path=folder)
-    data_folder = 'utils/geocoder/data'
     terms_folder = 'utils/geocoder/terms'
     geocode_execucao.geocode_all(db, data_folder, terms_folder)
     update_execucao_year_info.update_all_years_info(db)
@@ -71,8 +72,10 @@ def _importexecucao():
 
 @manager.command
 @manager.option('-d', '--data', help='Data type to be imported')
+@manager.option('-e', '--execucao', help='Folder with execucao data')
+@manager.option('-g', '--geo', help='Folder with geocoder cache')
 @manager.option('-r', '--reset', help='Remove previous data from database before importing')
-def importdata(data='all', reset=False):
+def importdata(data='all', reset=False, geo=None, execucao=None):
     """Import the data to the database"""
     data = data.lower()
 
@@ -84,7 +87,7 @@ def importdata(data='all', reset=False):
     if data in ('all', 'contratos'):
         _importcontratos()
     if data in ('all', 'execucao'):
-        _importexecucao()
+        _importexecucao(execucao, geo)
 
 
 @manager.command
