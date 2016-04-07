@@ -7,9 +7,9 @@ import sys
 from gastosabertos import create_app
 
 
-def get_db():
+def get_db(instance=None):
     from gastosabertos.extensions import db
-    app = create_app()
+    app = create_app(instance_folder=instance)
     db.app = app
     return db
 
