@@ -76,7 +76,7 @@ if __name__ == '__main__':
         update_from_csv(db, newfilepath)
         if arguments['--remove']:
             os.remove(newfilepath)
-            remove_older_history(timedelta(weeks=4))
+            remove_older_history(db, timedelta(weeks=4))
 
         print('Geocoding...')
         geocode_all(db)

@@ -27,7 +27,7 @@ from utils import ProgressCounter, get_db
 from update_execucao_year_info import update_all_years_info
 
 
-def remove_older_history(delta):
+def remove_older_history(db, delta):
     '''Remove history entries older than 'delta' time.
     '''
     current_time = datetime.datetime.utcnow()
