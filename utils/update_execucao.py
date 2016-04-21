@@ -9,7 +9,7 @@ Usage:
 
 Options:
     -h --help                                 Show this message.
-    -r --remove                               Remove CSV after import.
+    -r --remove                               Remove CSV and older history after import.
     -i --instance <instance_folder_path>      Instance folder path.
     -d --ga-dados <ga_dados_path>             Folder with GA dados files.
                                               [default: ../../gastos_abertos_dados/utils]
@@ -24,18 +24,21 @@ import os
 import sys
 import shutil
 import filecmp
-from datetime import date
+from datetime import date, timedelta
 
 from docopt import docopt
 from utils import get_db
 from import_execucao import update_from_csv
-from update_execucao_year_info import update_all_years_info
+from update_execucao_year_info import (update_all_years_info,
+                                       remove_older_history)
 from geocode_execucao import geocode_all
 from generate_execucao_csv import generate_year
 # from import_execucao import insert_csv
 # ga_dados_path = os.path.join(*['/'] +
 #                              os.getcwd().split('/')[1:-2] +
 #                              ['gastos_abertos_dados'])
+
+
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
@@ -74,6 +77,7 @@ if __name__ == '__main__':
         update_from_csv(db, newfilepath)
         if arguments['--remove']:
             os.remove(newfilepath)
+            remove_older_history(timedelta(weeks=4))
 
         print('Geocoding...')
         geocode_all(db)

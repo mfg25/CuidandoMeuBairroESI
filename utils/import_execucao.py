@@ -27,6 +27,17 @@ from utils import ProgressCounter, get_db
 from update_execucao_year_info import update_all_years_info
 
 
+def remove_older_history(delta):
+    '''Remove history entries older than 'delta' time.
+    '''
+    current_time = datetime.datetime.utcnow()
+    old_date = current_time - delta
+    db.session.query(History).filter(History.date < old_date).delete()
+    db.session.commit()
+    # To remove based on number of stored rows:
+    # db.session.query(History).order_by(desc(History.date)).offset(1000).delete()
+
+
 def identify_state(data):
     if data['vl_liquidado']:
         return 'liquidado'
