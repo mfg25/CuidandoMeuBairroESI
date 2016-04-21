@@ -28,9 +28,8 @@ from datetime import date, timedelta
 
 from docopt import docopt
 from utils import get_db
-from import_execucao import update_from_csv
-from update_execucao_year_info import (update_all_years_info,
-                                       remove_older_history)
+from import_execucao import update_from_csv, remove_older_history
+from update_execucao_year_info import update_all_years_info
 from geocode_execucao import geocode_all
 from generate_execucao_csv import generate_year
 # from import_execucao import insert_csv
