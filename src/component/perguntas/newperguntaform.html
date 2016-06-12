@@ -44,7 +44,7 @@
 
     </div>
 
-    <script type="es6">
+    <script>
     this.mixin('base')
     this.maxPedidoLength = 5000
 
@@ -73,7 +73,7 @@
         }
     }
 
-    this.watch('orgaos', () => {
+    this.watches('orgaos', () => {
         this.bestFitOrgao()
     })
 

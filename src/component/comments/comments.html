@@ -27,11 +27,11 @@
     </div>
 
 
-    <script type="es6">
+    <script>
     import {checkIsLogged} from '../../store/auth'
     this.checkIsLogged = checkIsLogged
     this.mixin('base')
-    this.watch('username')
+    this.watches('username')
     this.watchDepends('comments', 'code', () => this.update())
 
     // Clear text-area

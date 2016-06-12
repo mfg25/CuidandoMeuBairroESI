@@ -70,11 +70,11 @@
     </modal>
 
 
-    <script type="es6">
+    <script>
     import translator from '../utils/translator'
     import router from '../store/router'
     this.mixin('base')
-    this.watch('username')
+    this.watches('username')
     this.langs = translator.getLangs().map((x) => {
         return {key: x.code, value: x.name}
      })

@@ -147,9 +147,9 @@
     </div>
 
 
-    <script type="es6">
+    <script>
     this.mixin('base')
-    this.watch('userError')
+    this.watches('userError')
 
     // Set an error message and the incorrect fields
     this.setError = (msg, fields) => {
@@ -176,7 +176,7 @@
         this['user-edit-new-password'].value = ''
     }
 
-    this.watch('username', () => {
+    this.watches('username', () => {
         this.clearError()
         this.clearFields()
         if (this.username == this.user) {
@@ -188,7 +188,7 @@
     this.isEditting = {}
 
     // reset userinfo so loading spinner appears
-    this.watch('user', () => {
+    this.watches('user', () => {
         this.userinfo = null
         // Hack: without the line below this.user gets updated by this watch
         // before watchDepends is run, and so watchDepends does nothing thinking

@@ -15,9 +15,9 @@
         </li>
     </ul>
 
-    <script type="es6">
+    <script>
     this.mixin('base')
-    this.watch('msgList', null, () => this.update())
+    this.watches('msgList', null, () => this.update())
 
     this.removeMsg = (ev) => {
         ev.ignoreEvent = true

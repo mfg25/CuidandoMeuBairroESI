@@ -5,11 +5,11 @@
                    onchange={ selectedYear }/>
 
 
-    <script type="es6">
+    <script>
     this.mixin('base')
 
     this.year = opts.year
-    this.watch('years year')
+    this.watches('years year')
 
     this.selectedYear = (year) => {
         this.triggerChange('year', year)

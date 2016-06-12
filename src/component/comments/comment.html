@@ -187,13 +187,13 @@
     </div>
 
 
-    <script type="es6">
+    <script>
     import {checkIsLogged} from '../../store/auth'
     import auth from '../../store/auth'
     import {formatDate} from '../../utils/helpers'
     this.formatDate = formatDate
     this.mixin('base')
-    this.watch('username')
+    this.watches('username')
 
     // RiotJS makes tags inherit parent. This tag uses recursion, so "this"
     // variables were inheriting from parent giving a BIG mess. To avoid this

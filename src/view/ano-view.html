@@ -21,11 +21,11 @@
     </div>
 
 
-    <script type="es6">
+    <script>
     this.mixin('base')
      /*     this.year = opts.year */
     this.year = this.router.getParam('year')
-    this.watch('year')
+    this.watches('year')
 
     /* this.openExternal = () => */
     /* window.open("http://site.gastosabertos.org/static-downloads/execucao/") */

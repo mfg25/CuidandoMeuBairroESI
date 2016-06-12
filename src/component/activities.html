@@ -55,7 +55,7 @@
     </ul>
 
 
-    <script type="es6">
+    <script>
     import {formatDate} from '../utils/helpers'
     this.formatDate = formatDate
     this.mixin('base')
@@ -74,11 +74,11 @@
                               .sort(this.dateCompare)
     }
 
-    this.watch('multiPontinfo', () => {
+    this.watches('multiPontinfo', () => {
         this.update()
     })
 
-    this.watch('moneyUpdates', () => {
+    this.watches('moneyUpdates', () => {
         this.moneys = []
         for (let row of this.moneyUpdates.value) {
             this.moneys.push(row)
@@ -86,7 +86,7 @@
         this.updateActivities()
     })
 
-    this.watch('pedidosUpdates', () => {
+    this.watches('pedidosUpdates', () => {
         if (this.pedidosUpdates && this.pedidosUpdates.value) {
             this.pedidos = []
             for (let pedido of this.pedidosUpdates.value) {
@@ -104,7 +104,7 @@
         }
     })
 
-    this.watch('commentsUpdates', () => {
+    this.watches('commentsUpdates', () => {
         this.threads = []
         // Group comments by thread
         if (this.commentsUpdates.value) {

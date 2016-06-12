@@ -37,6 +37,7 @@ var BaseMixin = {
         return (event) => {
 				    if(event.keyCode == 13){
 						    func()
+                return false
 				    } else {
                 // If is not Enter, run default
                 return true
@@ -44,7 +45,7 @@ var BaseMixin = {
         }
     },
 
-    watch: function(names, func, always) {
+    watches: function(names, func, always) {
         names = names.split(' ')
         for (let name of names) {
             let watcher = (val) => {

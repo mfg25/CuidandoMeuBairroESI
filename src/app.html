@@ -19,12 +19,9 @@
     <!-- </div> -->
 
 
-    <script type="es6">
-    // import router from './store/router'
+    <script>
     this.mixin('base')
-    this.watch('_root')
-    // this._root = router.getParam('_root')
-    // this.bigmap = this._root == 'despesa' ? false : true
+    this.watches('_root')
 
     // Views that should display the map
     this.showMapIn = ['home', 'ano', 'despesa']

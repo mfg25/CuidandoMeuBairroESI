@@ -84,7 +84,7 @@
     <perg-com-tabs/>
 
 
-    <script type="es6">
+    <script>
     import {formatCur} from '../utils/helpers'
     import map from '../component/map/map.js'
     this.formatCur = formatCur
@@ -115,7 +115,7 @@
     }
 
     // reset pointinfo so loading spinner appears
-    this.watch('code', () => this.pointinfo = null)
+    this.watches('code', () => this.pointinfo = null)
 
     this.watchDepends('pointinfo', 'code', () => {
         if (this.pointinfo) {

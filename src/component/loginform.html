@@ -148,10 +148,10 @@
     </div>
 
 
-    <script type="es6">
+    <script>
     import {capitalize} from '../utils/helpers'
     this.mixin('base')
-    this.watch('authError')
+    this.watches('authError')
 
     this.exp_reset_code = 0
 
@@ -214,7 +214,7 @@
     }
 
     // Tries to login user with current fields data
-    sendLogin = () => {
+    this.sendLogin = () => {
         if(this.checkNotEmpty('username password')) {
             this.clearError()
             this.safeTriggerChange('login', {
@@ -225,7 +225,7 @@
     }
 
     // Tries to register user with current fields data
-    sendRegister = () => {
+    this.sendRegister = () => {
         if(this.checkNotEmpty('username password') &&
            this.checkPasswordsSame()) {
             this.clearError()
@@ -238,7 +238,7 @@
     }
 
     // Request a reset code
-    sendForgot1 = () => {
+    this.sendForgot1 = () => {
         if(this.checkNotEmpty('username email')) {
             this.clearError()
             this.safeTriggerChange('forgotPassword', {
@@ -249,7 +249,7 @@
     }
 
     // Tries to reset password and login
-    sendForgot2 = () => {
+    this.sendForgot2 = () => {
         if(this.checkNotEmpty('username password code') &&
            this.checkPasswordsSame()) {
             this.clearError()
@@ -263,7 +263,7 @@
     }
 
     // Facebook login
-    startFacebookLogin = () => this.triggerChange('loginFacebook')
+    this.startFacebookLogin = () => this.triggerChange('loginFacebook')
 
     // Closes modal when user changes (should mean a successfully login...)
     this.onControl(riot.SEC('username'), data => {
