@@ -45,6 +45,7 @@ export default class MapStore {
 
         }
         this.triggerChanged(key)
+        return null
     }
 
     triggerChanged(key) {
