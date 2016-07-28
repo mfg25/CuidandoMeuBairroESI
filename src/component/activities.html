@@ -108,7 +108,7 @@
         this.threads = []
         // Group comments by thread
         if (this.commentsUpdates.value) {
-            threadsMap = this.commentsUpdates.value.reduce((threads, curr) => {
+            var threadsMap = this.commentsUpdates.value.reduce((threads, curr) => {
                 if (threads[curr.thread_name]) {
                     threads[curr.thread_name].push(curr)
                 } else {
