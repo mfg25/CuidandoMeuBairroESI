@@ -108,7 +108,9 @@
     })
 
     // Load both vars
-    riot.control.trigger(this.dependSignal)
+    // The line below seems to request the data without year and page values set
+    // giving an API error. Commenting:
+    // riot.control.trigger(this.dependSignal)
     riot.control.trigger(riot.VEL('tabledata'), this.currKey())
 
     this.calcPlanejado = (orcado, atualizado) => {
