@@ -17,7 +17,7 @@
             </tr>
             <tr each={ tabledata }
                 class="clickable"
-                onclick="{ fRoute('despesa', {code:code}) }">
+                onclick="{ fRoute('despesa', objCode(code)) }">
                 <td class="main-cell">{ ds_projeto_atividade }</td>
                 <td class="text-right">
                     { formatCur(calcPlanejado(sld_orcado_ano, vl_atualizado)) }
@@ -71,8 +71,9 @@
         return this.dependVars.map((x) => this[x]).join('-')
     }
 
-    // Helper to route to a page. Riot is not liking '{}' inside onclick...
+    // Helper to route to a page/code. Riot is not liking '{}' inside onclick...
     this.objPage = (num) => {return {page:num}}
+    this.objCode = (code) => {return {code}}
 
     this.updateTable = data => {
         if ((data.key == this.currKey()) &&
