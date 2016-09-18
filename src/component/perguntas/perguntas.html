@@ -19,7 +19,13 @@
 
     <ul class="list-bare">
         <li class="top-bar"
-            each="{ pedidos }">
+            each="{ pedidos.prepedidos }">
+            <p><b>Pergunta sendo enviada:</b> {text}</p>
+        </li>
+    </ul>
+    <ul class="list-bare">
+        <li class="top-bar"
+            each="{ pedidos.pedidos }">
             <div class="row">
                 <div class="col-xs-1">
                     <img class="icon block-center" src="{ assets.aPer }">

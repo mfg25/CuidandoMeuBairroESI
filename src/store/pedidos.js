@@ -43,7 +43,10 @@ class Pedidos extends MapStore {
                 message.date = new Date(message.date)
             }
         }
-        return json.pedidos.sort(pedidosCompare)
+        return {
+            pedidos: json.pedidos.sort(pedidosCompare),
+            prepedidos: json.prepedidos
+        }
     }
 
     // updatePedido(json) {
