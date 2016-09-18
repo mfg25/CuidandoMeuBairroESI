@@ -9,7 +9,17 @@ var api = config.apiurl_esic
 
 
 function pedidosCompare(a, b) {
-    return a.history[0].date < b.history[0].date ? 1 : -1
+    let a_date = 0,
+        b_date = 0
+    if (a.history.length)
+        a_date = a.history[0].date
+    else
+        a_date = a.request_date
+    if (b.history.length)
+        b_date = b.history[0].date
+    else
+        b_date = b.request_date
+    return a_date < b_date ? 1 : -1
 }
 
 
