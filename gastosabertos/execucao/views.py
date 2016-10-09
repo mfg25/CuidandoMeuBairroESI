@@ -180,7 +180,6 @@ class ExecucaoAPI(Resource):
         '''Return information about a given list of codes.'''
         args = general_parser.parse_args()
         codes = args['codes']
-        print('UHU', codes)
         if codes:
             execucao_data = (query_execucao()
                              .filter(Execucao.code.in_(codes))
