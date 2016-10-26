@@ -155,7 +155,7 @@ class Orgaos extends MapStore {
         return {url, method}
     }
     processResponse(json) {
-        return json.orgaos.map((x) => {return {key: x, value: x}})
+        return json.orgaos.sort().map((x) => {return {key: x, value: x}})
     }
 }
 let orgaos = new Orgaos('orgaos')
