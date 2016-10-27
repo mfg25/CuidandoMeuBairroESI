@@ -13,6 +13,8 @@
                        outclicklimit="{ parent.root }"/>
         -->
 
+        <p if="{ !orgao }"><b>Ops... Parece que não conseguimos achar, na lista do Esic, o órgão responsável por essa despesa. Por favor, escolha um na lista abaixo.</b></p>
+
         <styled-select class="separated-caret text-left"
                        options="{ orgaos.value }"
                        current="{ orgao }"
@@ -69,7 +71,7 @@
                 }
             }
             // If orgao not found, set to first
-            if (!this.orgao) this.orgao = this.orgaos.value[0].key
+            // if (!this.orgao) this.orgao = this.orgaos.value[0].key
         }
     }
 
@@ -98,18 +100,20 @@
     //]
     //this.secondDest = 'prefeitura'
     this.secondDestSelected = (option) => {
-        console.log(option)
         this.orgao = option
         this.update()
     }
 
     this.sendPedido = () => {
         if (this['new-pergunta-textarea'].value) {
-            this.safeTriggerChange('sendPedido', {
-                text: this.startPedido() + ' ' + this['new-pergunta-textarea'].value,
-                orgao: this.tags['styled-select'].getCurrent(),
-                keywords: [this.parent.parent.code]
-            })
+            var selectedOrgao = this.tags['styled-select'].getCurrent()
+            if (selectedOrgao && selectedOrgao != '...') {
+                this.safeTriggerChange('sendPedido', {
+                    text: this.startPedido() + ' ' + this['new-pergunta-textarea'].value,
+                    orgao: selectedOrgao,
+                    keywords: [this.parent.parent.code]
+                })
+            }
         }
     }
 
