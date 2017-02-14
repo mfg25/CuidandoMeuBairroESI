@@ -243,7 +243,6 @@ class Router {
     // {id2=id2}
     processRouteParams(param1, params2) {
         let roots = null,
-            root = null,
             params = {}
 
         // If the param1 is a string of route parts separed with ' '

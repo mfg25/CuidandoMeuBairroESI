@@ -38,7 +38,7 @@ class Points extends MapStore {
         return {url, method}
     }
 }
-let points = new Points('points')
+new Points('points')
 
 
 // Store for general data about an year
@@ -52,7 +52,7 @@ class YearInfo extends MapStore {
         return json.data
     }
 }
-let yearinfo = new YearInfo('yearinfo')
+new YearInfo('yearinfo')
 
 
 // Store for dynamic table
