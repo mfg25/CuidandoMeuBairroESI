@@ -8,7 +8,8 @@ const config = {
     // apiurl_auth: _domain + 5002,
     apiurl_comments: 'https://tagarela-cuidando.rhcloud.com',
     // apiurl_comments: _domain + 5003,
-    apiurl_esic: 'https://cuidando.vc/esiclivre',
+    // apiurl_esic: 'https://cuidando.vc/esiclivre',
+    apiurl_esic: 'https://esiclivre-cuidando.rhcloud.com',
     // apiurl_esic: _domain + 5004,
 }
 
