@@ -1,4 +1,5 @@
 import ajax from '../utils/ajax.js'
+import {sleep} from '../utils/helpers.js'
 import msgs from './msgs'
 
 export default class MapStore {
@@ -31,18 +32,26 @@ export default class MapStore {
         if (current === undefined || force) {
             this._map[key] = 'loading'
 
-            try {
-                let json = await ajax(await this.ajaxParams(key))
-                if (json) {
-                    this._map[key] = await this.processResponse(json)
-                } else {
-                    return null
+            let keep_trying = 5
+            while (keep_trying) {
+                try {
+                    let json = await ajax(await this.ajaxParams(key))
+                    if (json) {
+                        this._map[key] = await this.processResponse(json)
+                        keep_trying = 0
+                    } else {
+                        return null
+                    }
+                } catch(err) {
+                    keep_trying--
+                    if (!keep_trying) {
+                        msgs.addError('error_mapstore_ajax')
+                        return null
+                    }
+                    // sleeps 500, 1000, 2000 and 4000 ms
+                    await sleep(8000/Math.pow(2, keep_trying))
                 }
-            } catch(err) {
-                msgs.addError('error_mapstore_ajax')
-                return null
             }
-
         }
         this.triggerChanged(key)
         return null

@@ -73,3 +73,9 @@ export function strFormat(str, params) {
     }
     return str
 }
+
+
+// Sleep for `ms` miliseconds (call using `await sleep(x)`)
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
