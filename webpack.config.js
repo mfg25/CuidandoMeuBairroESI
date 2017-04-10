@@ -66,7 +66,7 @@ module.exports = {
             // { test: /\.js$|\.html$/, exclude: /\.es5\.js$/, include: [ /configs/, /src/ ], loader: 'babel', query: { presets: 'es2015-riot' } },
 
             // ,{ test: /\.(png|otf|svg)$/, include: /assets/, loader: "url-loader?limit=100000" }
-            ,{ test: /cluster\.svg$/, include: /assets/, loader: "url-loader?limit=100000" }
+            ,{ test: /cluster\.svg$/, include: /assets/, loader: "url?limit=100000" }
         ]
     },
     plugins: [
