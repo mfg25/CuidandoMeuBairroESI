@@ -27,7 +27,6 @@ import random
 import time
 import pickle
 from multiprocessing import Process, Manager
-# from datetime import datetime
 
 import arrow
 from selenium import webdriver
@@ -112,10 +111,7 @@ class ESicLivre(object):
         tipos = ','.join(['text/csv', 'audio/wav', 'audio/x-wav',
                           'image/jpeg', 'application/octet-stream'])
         fp.set_preference("browser.helperApps.neverAsk.saveToDisk", tipos)
-        # fp.set_preference("plugin.disable_full_page_plugin_for_types",
-        #                   "image/jpeg")
         fp.set_preference("general.useragent.override", self.user_agent)
-        # fp.set_preference('permissions.default.image', 1)
         # O binário do navegador deve estar na pasta firefox
         binary = FirefoxBinary(self.firefox)
         self.navegador = webdriver.Firefox(
@@ -168,24 +164,11 @@ class ESicLivre(object):
         except (OSError, IOError):
             pass
         link = self.base_url + "/Account/pgImagem.ashx"
-        # self.navegador.get(link)
-        # time.sleep(3)
-        # while self.nome_audio_captcha + ".part" in os.listdir(self.pasta):
-        #     time.sleep(1)
 
         nome = 'ASP.NET_SessionId'
         cookie = self.navegador.get_cookie(nome)
-        # cookie.pop('httpOnly')
-        # cookie.pop('secure')
-        # cookie.pop('expiry')
         headers = {
             'User-Agent': self.user_agent,
-            # 'Host': 'esic.prefeitura.sp.gov.br',
-            # Accept-Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
-            # Accept-Encoding: gzip, deflate
-            # 'Referer': self.base_url + '/Account/Login.aspx',
-            # 'Connection': keep-alive
-            # 'Cookie': 'ASP.NET_SessionId=dgsonyd4zczcipg2vs3xgn0l'
         }
         if cookie and cookie.get('value', False):
             headers.update({'Cookie': '{0}={1}'.format(nome, cookie['value'])})
@@ -193,12 +176,8 @@ class ESicLivre(object):
         r = requests.get(link, stream=True, headers=headers)
         r.raw.decode_content = True
         import tempfile
-        # with open(os.path.join('static', 'captcha.jpg'), 'wb') as out_file:
         with tempfile.NamedTemporaryFile() as out_file:
             shutil.copyfileobj(r.raw, out_file)
-        # return requests.get(link, stream=True, headers=headers)
-        # return requests.get(link, stream=True, headers=headers,
-        # cookies=cookie)
 
     def gerar_novo_captcha(self):
         self.navegador.find_element_by_id(
@@ -287,11 +266,6 @@ class ESicLivre(object):
         deadline = self.navegador.find_element_by_id(
             "ctl00_MainContent_lbl_prazo_atendimento_confirmar"
         ).text
-        # ctl00_MainContent_lbl_data_solicitacao_confirmar
-        # ctl00_MainContent_lbl_descricao_pedido_confirmar
-        # ctl00_MainContent_lbl_orgao_confirmar
-        # ctl00_MainContent_lbl_solicitante_confirmar
-        # return int(protocolo), datetime.strptime(deadline, "%d/%m/%Y")
         return int(protocolo), arrow.get(deadline, ['DD/MM/YYYY'])
 
     def lista_de_orgaos(self):
@@ -349,7 +323,6 @@ class ESicLivre(object):
                     # Main loop
                     while self.safe_dict['running']:
                         self.main_loop()
-                        # time.sleep(5)
                 except:
                     raise
                 finally:
@@ -359,15 +332,6 @@ class ESicLivre(object):
         self.safe_dict['running'] = False
 
     def verificar_lista_orgaos(self):
-        # # Loads orgaos list if empty (or with only test data)
-        # orgaos = db.session.query(Orgao.name).all()
-        # if len(orgaos) < 5:
-        #     #     if (not self._last_update_of_orgao_list or
-        #     #        self._last_update_of_orgao_list.date() !=
-        #     #        arrow.utcnow().date()):
-        #     self.logger.info('Atualizando lista de orgaos...')
-        #     self.update_orgaos_list()
-
         last_update = db.session.query(OrgaosUpdate).order_by(
             OrgaosUpdate.date.desc()).first()
 
@@ -424,21 +388,7 @@ class ESicLivre(object):
 
                 # pedidos_preproc.update_pedidos_list(self)
 
-                # counter = 0
                 while self.safe_dict['running']:
-                    # Keep alive; for how long? ...
-                    # if counter == 120:
-
-                    #     if (not self._last_update_of_orgao_list or
-                    #        self._last_update_of_orgao_list.date() !=
-                    #        arrow.utcnow().date()):
-                    #         self.logger.info('Calling update_orgaos_list...')
-                    #         self.update_orgaos_list()
-
-                    #     self.ir_para_registrar_pedido()
-                    #     self.ir_para_consultar_pedido()
-                    #     counter = 0
-
                     # Main function
                     self.active_loop()
 
@@ -446,7 +396,6 @@ class ESicLivre(object):
                         self.safe_dict['running'] = False
                         return True
 
-                    # counter += 1
                     time.sleep(5)
 
             except LoginNeeded:
@@ -479,7 +428,6 @@ class ESicLivre(object):
             PedidosUpdate.date.desc()).first()  # noqa
 
         if last_update and last_update.date.date() == arrow.now().date():
-            # self.logger.info("%s: Já houve atualização hoje!" % arrow.now())
             return None
         else:
             pedidos_preproc.update_pedidos_list(self)
