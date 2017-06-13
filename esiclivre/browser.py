@@ -69,8 +69,8 @@ class ESicLivre(object):
         self.recognizer = sr.Recognizer(str('pt-BR'))
 
         self.user_agent = (
-            "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:28.0)"
-            " Gecko/20100101  Firefox/28.0"
+            'Mozilla/5.0 (X11; Linux x86_64; rv:28.0)'
+            ' Gecko/20150101  Firefox/45.0'
         )
         self.base_url = 'http://esic.prefeitura.sp.gov.br'
         self.login_url = self.base_url + '/Account/Login.aspx'
