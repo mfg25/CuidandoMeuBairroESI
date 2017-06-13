@@ -71,7 +71,7 @@ class ESicLivre(object):
             'Mozilla/5.0 (X11; Linux x86_64; rv:28.0)'
             ' Gecko/20150101  Firefox/45.0'
         )
-        self.base_url = 'http://esic.prefeitura.sp.gov.br'
+        self.base_url = 'esic.prefeitura.sp.gov.br'
         self.login_url = self.base_url + '/Account/Login.aspx'
 
         self.logado = False
@@ -126,7 +126,7 @@ class ESicLivre(object):
         self.navegador.get(self.base_url + "/consultar_pedido_v2.aspx")
 
     def ir_para_login(self):
-        self.navegador.get(self.base_url + "/Account/Login.aspx")
+        self.navegador.get(self.login_url)
 
     def transcribe_audio_captcha(self):
         self.logger.info("Transcribing audio captcha...")
@@ -184,8 +184,7 @@ class ESicLivre(object):
             "ctl00_MainContent_btnAtualiza").click()
 
     def clicar_login_entrar(self):
-        self.navegador.find_element_by_id(
-            "ctl00_MainContent_btnEnviar").click()
+        self.navegador.find_element_by_id('ctl00_MainContent_btnEnviar').click()
 
     def clicar_recorrer(self):
         self.navegador.find_element_by_id(
@@ -267,6 +266,27 @@ class ESicLivre(object):
             "ctl00_MainContent_lbl_prazo_atendimento_confirmar"
         ).text
         return int(protocolo), arrow.get(deadline, ['DD/MM/YYYY'])
+
+    def postar_recurso(self, protocolo, texto):
+        self.logger.info('> estou indo para a página "Consultar Pedidos"')
+        self.ir_para_consultar_pedido()
+        self.check_login_needed()
+
+        self.logger.info('> estou indo para a pagina do pedido')
+        linha_do_pedido =  self.navegador.find_element_by_xpath(
+            '//table/tr[td=' + protocolo + ']'
+        )
+        linha_do_pedido.find_elements_by_tag_name('a').click()
+
+        self.logger.info('> estou indo para a pagina do para abrir recurso')
+        self.navegador.find_element_by_id(
+            'ctl00_MainContent_btnSolicitarEsclarecimento'
+        ).click()
+
+        self.navegador.find_element_by_id(
+            'ctl00_MainContent_txt_descricao_solicitacao'
+        ).send_keys(texto)
+
 
     def lista_de_orgaos(self):
         self.ir_para_registrar_pedido()
@@ -386,10 +406,7 @@ class ESicLivre(object):
             try:
                 self.verificar_lista_orgaos()
 
-                # pedidos_preproc.update_pedidos_list(self)
-
                 while self.safe_dict['running']:
-                    # Main function
                     self.active_loop()
 
                     if self.rodar_apenas_uma_vez:
@@ -412,20 +429,19 @@ class ESicLivre(object):
 
         for pre_pedido in pending_pre_pedidos:
 
-            protocolo, deadline = self.postar_pedido(
-                pre_pedido.orgao_name, pre_pedido.text
-            )
-            pre_pedido.create_pedido(protocolo, deadline)
-            db.session.commit()
-            self.logger.info('Sent!')
-        # TODO: ver se quem quer recorrer
-        # TODO: ver precisa olhar respostas aos pedidos
+            if pre_pedido.tipo == 0:
+                protocolo, deadline = self.postar_pedido(
+                    pre_pedido.orgao_name, pre_pedido.text
+                )
+                pre_pedido.create_pedido(protocolo, deadline)
+                db.session.commit()
+                self.logger.info('Pedido sent!')
 
-        # Inicialmente, a atualização dos pedidos é feita uma vez ao dia
-        # TODO: Abrir uma issue para discutir melhor o processo de atualização
-        # de pedidos
-        last_update = db.session.query(PedidosUpdate).order_by(
-            PedidosUpdate.date.desc()).first()  # noqa
+            if pre_pedido.tipo == 1:
+                self.postar_recurso(pre_pedido.keywords, pre_pedido.text)
+                self.logger.info('Recurso sent!')
+
+        last_update = db.session.query(PedidosUpdate).order_by(PedidosUpdate.date.desc()).first()
 
         if last_update and last_update.date.date() == arrow.now().date():
             return None
