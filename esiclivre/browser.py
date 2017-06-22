@@ -71,7 +71,7 @@ class ESicLivre(object):
             'Mozilla/5.0 (X11; Linux x86_64; rv:28.0)'
             ' Gecko/20150101  Firefox/45.0'
         )
-        self.base_url = 'esic.prefeitura.sp.gov.br'
+        self.base_url = 'http://esic.prefeitura.sp.gov.br'
         self.login_url = self.base_url + '/Account/Login.aspx'
 
         self.logado = False
@@ -273,10 +273,9 @@ class ESicLivre(object):
         self.check_login_needed()
 
         self.logger.info('> estou indo para a pagina do pedido')
-        linha_do_pedido =  self.navegador.find_element_by_xpath(
-            '//table/tr[td=' + protocolo + ']'
-        )
-        linha_do_pedido.find_elements_by_tag_name('a').click()
+        linha_do_pedido = self.navegador.find_element_by_xpath(
+            "//table//tr[td[text()='" + protocolo + "']]//a"
+        ).click()
 
         self.logger.info('> estou indo para a pagina do para abrir recurso')
         self.navegador.find_element_by_id(
@@ -287,6 +286,7 @@ class ESicLivre(object):
             'ctl00_MainContent_txt_descricao_solicitacao'
         ).send_keys(texto)
 
+        self.navegador.find_element_by_id("ctl00_MainContent_btnEnviar").click()
 
     def lista_de_orgaos(self):
         self.ir_para_registrar_pedido()
