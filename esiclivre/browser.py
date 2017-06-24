@@ -268,7 +268,7 @@ class ESicLivre(object):
         return int(protocolo), arrow.get(deadline, ['DD/MM/YYYY'])
 
     def postar_recurso(self, protocolo, texto):
-        self.logger.info('> estou indo para a página "Consultar Pedidos"')
+        self.logger.info('> estou indo para a página para consultar pedidos')
         self.ir_para_consultar_pedido()
         self.check_login_needed()
 
@@ -277,16 +277,37 @@ class ESicLivre(object):
             "//table//tr[td[text()='" + protocolo + "']]//a"
         ).click()
 
-        self.logger.info('> estou indo para a pagina do para abrir recurso')
-        self.navegador.find_element_by_id(
-            'ctl00_MainContent_btnSolicitarEsclarecimento'
-        ).click()
+        try:
+            self.logger.info("> estou tentando ir para pagina de recurso de segunda instancia")
+            self.navegador.find_element_by_id(
+                "ctl00_MainContent_btnAbrirRecurso"
+            ).click()
+        except Exception as e:
+            self.logger.info(e)
+        else:
+            self.logger.info("> estou indo para a pagina do para abrir recurso")
+            self.navegador.find_element_by_id(
+                "ctl00_MainContent_btnSolicitarEsclarecimento"
+            ).click()
+        finally:
+            deadline = self.navegador.find_element_by_xpath(
+                "//tr[td/b/text()='Prazo de resposta:']//input"
+            ).get_attribute("value")
 
-        self.navegador.find_element_by_id(
-            'ctl00_MainContent_txt_descricao_solicitacao'
-        ).send_keys(texto)
+            self.navegador.find_elements_by_tag_name("textarea").send_keys(texto)
 
-        self.navegador.find_element_by_id("ctl00_MainContent_btnEnviar").click()
+        try:
+            self.navegador.find_element_by_id(
+                "ctl00_MainContent_btnEnviar"
+            ).click()
+        except Exception as e:
+            self.logger.info(e)
+        else:
+            self.navegador.find_element_by_id(
+                "ctl00_MainContent_btnAbrirRecurso"
+            ).click()
+        finally:
+            return arrow.get(deadline, ['DD/MM/YYYY']
 
     def lista_de_orgaos(self):
         self.ir_para_registrar_pedido()
@@ -422,7 +443,7 @@ class ESicLivre(object):
             self.preparar_receber_captcha()
 
     def active_loop(self):
-        """Does routine stuff inside eSIC, like posting pedidos."""
+        """Does routine stuff inside eSIC, like posting pedidos and recursos."""
 
         pending_pre_pedidos = db.session.query(
             PrePedido).filter_by(state='WAITING').all()
@@ -435,11 +456,15 @@ class ESicLivre(object):
                 )
                 pre_pedido.create_pedido(protocolo, deadline)
                 db.session.commit()
-                self.logger.info('Pedido sent!')
+                self.logger.info("Pedido sent!")
 
             if pre_pedido.tipo == 1:
-                self.postar_recurso(pre_pedido.keywords, pre_pedido.text)
-                self.logger.info('Recurso sent!')
+                deadline = self.postar_recurso(
+                    pre_pedido.keywords, pre_pedido.text
+                )
+                pre_pedido.create_recurso(deadline)
+                db.session.commit()
+                self.logger.info("Recurso sent!")
 
         last_update = db.session.query(PedidosUpdate).order_by(PedidosUpdate.date.desc()).first()
 

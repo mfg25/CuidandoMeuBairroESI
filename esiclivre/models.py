@@ -349,6 +349,7 @@ class Attachment(db.Model):
             'ia_url': self.ia_url
         }
 
+
 class Attachment_Recurso(db.Model):
 
     __tablename__ = 'attachment_recurso'
