@@ -268,11 +268,11 @@ class ESicLivre(object):
         return int(protocolo), arrow.get(deadline, ['DD/MM/YYYY'])
 
     def postar_recurso(self, protocolo, texto):
-        self.logger.info('> estou indo para a página para consultar pedidos')
+        self.logger.info("> estou indo para a página para consultar pedidos")
         self.ir_para_consultar_pedido()
         self.check_login_needed()
 
-        self.logger.info('> estou indo para a pagina do pedido')
+        self.logger.info("> estou indo para a pagina do pedido")
         linha_do_pedido = self.navegador.find_element_by_xpath(
             "//table//tr[td[text()='" + protocolo + "']]//a"
         ).click()
@@ -282,6 +282,11 @@ class ESicLivre(object):
             self.navegador.find_element_by_id(
                 "ctl00_MainContent_btnAbrirRecurso"
             ).click()
+
+            self.logger.info("> estou tentando ir para pagina de recurso de segunda instancia")
+            self.navegador.find_element_by_id(
+                "ctl00_MainContent_ddl_tipo_recurso"
+            ).select_by_value("Outros")
         except Exception as e:
             self.logger.info(e)
         else:
@@ -293,8 +298,7 @@ class ESicLivre(object):
             deadline = self.navegador.find_element_by_xpath(
                 "//tr[td/b/text()='Prazo de resposta:']//input"
             ).get_attribute("value")
-
-            self.navegador.find_elements_by_tag_name("textarea").send_keys(texto)
+            self.navegador.find_element_by_tag_name("textarea").send_keys(texto)
 
         try:
             self.navegador.find_element_by_id(
@@ -306,8 +310,8 @@ class ESicLivre(object):
             self.navegador.find_element_by_id(
                 "ctl00_MainContent_btnAbrirRecurso"
             ).click()
-        finally:
-            return arrow.get(deadline, ['DD/MM/YYYY']
+
+        return arrow.get(deadline, ['DD/MM/YYYY'])
 
     def lista_de_orgaos(self):
         self.ir_para_registrar_pedido()
