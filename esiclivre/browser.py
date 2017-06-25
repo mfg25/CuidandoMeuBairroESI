@@ -30,6 +30,7 @@ from multiprocessing import Process, Manager
 
 import arrow
 from selenium import webdriver
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import speech_recognition as sr
 
@@ -283,22 +284,20 @@ class ESicLivre(object):
                 "ctl00_MainContent_btnAbrirRecurso"
             ).click()
 
-            self.logger.info("> estou tentando ir para pagina de recurso de segunda instancia")
-            self.navegador.find_element_by_id(
-                "ctl00_MainContent_ddl_tipo_recurso"
-            ).select_by_value("Outros")
+            select = Select(self.navegador.find_element_by_tag_name("select"))
+            select.select_by_value("13")
         except Exception as e:
             self.logger.info(e)
-        else:
             self.logger.info("> estou indo para a pagina do para abrir recurso")
             self.navegador.find_element_by_id(
                 "ctl00_MainContent_btnSolicitarEsclarecimento"
             ).click()
-        finally:
-            deadline = self.navegador.find_element_by_xpath(
-                "//tr[td/b/text()='Prazo de resposta:']//input"
-            ).get_attribute("value")
-            self.navegador.find_element_by_tag_name("textarea").send_keys(texto)
+
+        deadline = self.navegador.find_element_by_xpath(
+            "//tr[td/b/text()='Prazo de resposta:']//input"
+        ).get_attribute("value")
+
+        self.navegador.find_element_by_tag_name("textarea").send_keys(texto)
 
         try:
             self.navegador.find_element_by_id(
@@ -306,9 +305,8 @@ class ESicLivre(object):
             ).click()
         except Exception as e:
             self.logger.info(e)
-        else:
             self.navegador.find_element_by_id(
-                "ctl00_MainContent_btnAbrirRecurso"
+                "ctl00_MainContent_btnEnviarRecurso"
             ).click()
 
         return arrow.get(deadline, ['DD/MM/YYYY'])
