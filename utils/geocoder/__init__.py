@@ -70,8 +70,8 @@ class Geocoder(object):
 
         # Coords limits for geolocation
         #                  bot left   top right
-        self.limits_str = "-47 -24.05 -46.30 -23.35"
-        self.limits_list = map(float, self.limits_str.split())
+        self.limits_str = ("-47", "-24.05", "-46.30", "-23.35")
+        self.limits_list = map(float, self.limits_str)
         self.regions = None
 
         self.osm = geopy.Nominatim(view_box=self.limits_str)
