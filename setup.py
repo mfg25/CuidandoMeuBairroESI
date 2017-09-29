@@ -9,7 +9,7 @@ setup(
     description='Microservice for comments.',
     author='Andrés M. R. Martano',
     author_email='andres@inventati.org',
-    url='https://gitlab.com/ok-br/tagarela',
+    url='https://gitlab.com/cuidandodomeubairro/tagarela',
     packages=["tagarela"],
     install_requires=[
         # Main deps:
