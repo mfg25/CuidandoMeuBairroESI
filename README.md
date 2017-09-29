@@ -90,7 +90,7 @@ Place both files in `~/app-root/data/`, inside the OpenShift gear.
 And, from inside the gear, using SSH, init the DB:
 
     . $OPENSHIFT_PYTHON_DIR/virtenv/bin/activate
-    ~/app-root/repo
+    cd ~/app-root/repo
     python manage.py -s $OPENSHIFT_DATA_DIR initdb
 
 ## API

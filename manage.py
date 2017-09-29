@@ -32,5 +32,6 @@ def initdb():
     db.create_all()
     social_models.PSABase.metadata.create_all(db.engine)
 
+
 if __name__ == '__main__':
     manager.run()
