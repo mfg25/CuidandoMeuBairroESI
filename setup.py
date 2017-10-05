@@ -16,7 +16,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'Flask>=0.10.1',
-        'Flask-SQLAlchemy',
+        'Flask-SQLAlchemy==2.1',
         # 'Flask-WTF',
         'Flask-Script',
         'Flask-Babel',
@@ -33,6 +33,13 @@ setup(
         'shapely',
         'psycopg2',
         'xlrd',
+
+        'pyexcel',
+        'pyexcel-xls',
+        'pyexcel-ods3',
+        'lxml',
+        'ezodf',
+
         # 'elasticsearch>=1.0.0,<2.0.0',
         # 'elasticsearch-dsl',
         'futures',

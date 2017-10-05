@@ -38,7 +38,6 @@ from generate_execucao_csv import generate_year
 #                              ['gastos_abertos_dados'])
 
 
-
 if __name__ == '__main__':
     arguments = docopt(__doc__)
 

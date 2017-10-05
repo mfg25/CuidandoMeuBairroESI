@@ -27,6 +27,10 @@ Clone this project repository and the data repository:
 Enter the project folder:
 
     cd gastos_abertos
+    
+Run this SQL:
+
+    psql mydatabasename -c "CREATE EXTENSION postgis";
 
 Install python's dependencies:
 

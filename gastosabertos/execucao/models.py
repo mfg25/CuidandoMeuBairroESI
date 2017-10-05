@@ -29,7 +29,7 @@ class Execucao(db.Model):
 
     @classmethod
     def get_year(cls):
-        return cls.data['cd_anoexecucao'].cast(db.Integer)
+        return cls.data['cd_anoexecucao']
 
     @classmethod
     def point_found(cls):

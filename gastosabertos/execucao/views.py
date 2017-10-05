@@ -74,7 +74,7 @@ class ExecucaoInfoApi(Resource):
     def get(self):
         '''Information about all the database (currently only years).'''
         dbyears = db.session.query(Execucao.get_year()).distinct().all()
-        years = sorted([str(i[0]) for i in dbyears])
+        years = sorted([i[0] for i in dbyears])
 
         return {
             'data': {
@@ -118,7 +118,7 @@ class ExecucaoMinListApi(Resource):
 
         items = (
             db.session.query(*fields)
-            .filter(Execucao.get_year() == year)
+            .filter(Execucao.get_year() == str(year))
             .filter(Execucao.point_found())
             .all())
 
@@ -165,7 +165,8 @@ class ExecucaoAPI(Resource):
             execucao_data = execucao_data.filter(Execucao.code == code)
         # Get all rows of 'year'
         elif year:
-            execucao_data = execucao_data.filter(Execucao.get_year() == year)
+            execucao_data = execucao_data.filter(
+                Execucao.get_year() == str(year))
 
         total = execucao_data.count()
 
