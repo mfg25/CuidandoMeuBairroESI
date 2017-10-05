@@ -10,7 +10,7 @@ setup(
                 'using asymmetric cryptography.',
     author='Andrés M. R. Martano',
     author_email='andres@inventati.org',
-    url='https://gitlab.com/ok-br/viratoken',
+    url='https://gitlab.com/cuidandodomeubairro/viratoken',
     packages=["viratoken"],
     install_requires=[
         'cryptography',
