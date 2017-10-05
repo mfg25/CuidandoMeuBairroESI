@@ -27,7 +27,11 @@ def create_app(settings_folder):
     db.init_app(app)
 
     # Signer/Verifier
-    sv.config(pub_key_path=os.path.join(settings_folder, 'keypub'))
+    if app.config.get('PUBLIC_KEY_PATH'):
+        pub_key_path = app.config['PUBLIC_KEY_PATH']
+    else:
+        pub_key_path = os.path.join(settings_folder, 'keypub')
+    sv.config(pub_key_path=pub_key_path)
 
     # API
     api.init_app(app)
