@@ -24,6 +24,7 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-sm-12">
+                                <h2>{ t('Program') }: { this.pointinfo.ds_programa }</h2>
                                 <h2>{ t('Expense') }: { this.pointinfo.ds_projeto_atividade }</h2>
                                 <spinner class="dark-spinner" if="{ !this.pointinfo }" scale="0.25"/>
                             </div>
@@ -57,11 +58,16 @@
                         <span class="key">{el[0]}:</span>
                         <span>{el[1]}</span>
                     </li>
+                    <li><a href="http://e-negocioscidadesp.prefeitura.sp.gov.br/BuscaLicitacao.aspx" target="_blank">Licitações - Pesquise aqui</a></li>
+                    <li><a href="http://transparencia.prefeitura.sp.gov.br/contas/Paginas/Contratos-v2.aspx" target="_blank">Contratos - Pesquise aqui</a></li>
+                    <li><a href="https://www.instantstreetview.com/@{ this.pointinfo.geometry.coordinates[1] },{ this.pointinfo.geometry.coordinates[0] },0h,0p,1z" target="_blank">Visão da rua</a></li>
+
                     <a if="{ !showAllInfo }"
                        class="small-font"
                         onclick="{ doShowAll }">
                         mais
                     </a>
+
                 </ul>
 
                 <ul if="{ showAllInfo && this.pointinfo }"

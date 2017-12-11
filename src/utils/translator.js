@@ -51,6 +51,7 @@ class Translator {
             'address_not_found': 'Endereço não encontrado...',
             'comments': 'comentários',
             'Expense': 'Despesa',
+            'Program': 'Programa',
             'Wrong email.': 'E-mail errado.',
             'Invalid code': 'Código inválido',
             'Explore the data': 'Explore os dados agora',
