@@ -1,10 +1,8 @@
 const config = {
-    apiurl_money: 'https://ga-muitosdados.rhcloud.com/api/v1/',
-    // apiurl_money: 'https://site-cuidando.rhcloud.com/dados/api/v1/',
-    apiurl_auth: 'https://viralata-cuidando.rhcloud.com',
-    apiurl_comments: 'https://tagarela-cuidando.rhcloud.com',
-    apiurl_esic: 'https://esiclivre-cuidando.rhcloud.com',
-    // apiurl_esic: 'https://cuidando.vc/esiclivre',
+  apiurl_money: 'https://devcolab.each.usp.br/gastos_abertos/api/v1/',
+  apiurl_auth: 'https://devcolab.each.usp.br/viralata',
+  apiurl_comments: 'https://devcolab.each.usp.br/tagarela',
+  apiurl_esic: 'https://devcolab.each.usp.br/esiclivre',
 }
 
 export default config
