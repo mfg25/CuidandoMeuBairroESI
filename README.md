@@ -11,6 +11,8 @@ Porém, esse processo não é perfeito, e muitas despesas não são mapeadas, ou
 
 Nessa segunda versão do Cuidando, pretendemos melhorar aquilo que o ele já fazia e adicionar novas funcionalidades.
 
+Mais informações também nessa [wiki](https://pt.wikiversity.org/wiki/Projeto_Cuidando_do_Meu_Bairro).
+
 
 ## Arquitetura
 
