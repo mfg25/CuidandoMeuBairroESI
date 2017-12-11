@@ -25,6 +25,8 @@ async function ajax(params) {
         }
     }
 
+    if (params.headers) fParams.headers = params.headers
+
     try {
         var response = await fetch(params.url, fParams)
     } catch(err) {

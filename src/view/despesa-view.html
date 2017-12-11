@@ -58,9 +58,17 @@
                         <span class="key">{el[0]}:</span>
                         <span>{el[1]}</span>
                     </li>
+
+
+                    <li each={empenho in empenhos}>
+                      <a href="{ 'http://sfemp.prefeitura.sp.gov.br/extrato_empenho.aspx?Empenho=' + empenho.codEmpenho + '&Ano=' + empenho.anoEmpenho }" target="_blank">Nota de empenho</a>
+                    </li>
+
+
                     <li><a href="http://e-negocioscidadesp.prefeitura.sp.gov.br/BuscaLicitacao.aspx" target="_blank">Licitações - Pesquise aqui</a></li>
                     <li><a href="http://transparencia.prefeitura.sp.gov.br/contas/Paginas/Contratos-v2.aspx" target="_blank">Contratos - Pesquise aqui</a></li>
                     <li><a href="https://www.instantstreetview.com/@{ this.pointinfo.geometry.coordinates[1] },{ this.pointinfo.geometry.coordinates[0] },0h,0p,1z" target="_blank">Visão da rua</a></li>
+
 
                     <a if="{ !showAllInfo }"
                        class="small-font"
@@ -89,15 +97,16 @@
 
     <perg-com-tabs/>
 
-
     <script>
     import {formatCur} from '../utils/helpers'
+    import ajax from '../utils/ajax'
     import map from '../component/map/map.js'
     this.formatCur = formatCur
     this.mixin('base')
     // this.code = opts.code
     this.code = this.router.getParam('code')
     this.showAllInfo = false
+    this.empenhos = []
     this.doShowAll = () => this.showAllInfo = true
     this.donotShowAll = () => this.showAllInfo = false
 
@@ -145,6 +154,33 @@
                 map.setCenter([lat, lng])
             }
             this.update()
+
+            // Empenhos link
+            var self = this
+            var filters = {
+                anoEmpenho: 'cd_exercicio',
+                codOrgao: 'cd_orgao',
+                codModalidade: 'cd_modalidade',
+                codFuncao: 'cd_funcao',
+                codSubFuncao: 'cd_subfuncao',
+                codProjetoAtividade: 'projetoatividade',
+                codPrograma: 'cd_programa',
+                codElemento: 'cd_elemento',
+                codFonteRecurso: 'cd_fonte',
+                codCategoria: 'categoria_despesa',
+                codGrupo: 'grupo_despesa',
+            }
+            var strFilters = '&mesEmpenho=12&' + Object.keys(filters).map(k => k + '=' + this.pointinfo[filters[k]]).join('&')
+              console.log(this.pointinfo, strFilters)
+            ajax({
+                url: 'https://gatewayapi.prodam.sp.gov.br:443/financas/orcamento/sof/v2.1.0/consultaEmpenhos?' + strFilters,
+                headers: {
+                    Authorization: 'Bearer 198f959a5f39a1c441c7c863423264'
+                }
+            }).then(function (response) {
+                self.empenhos = response.lstEmpenhos
+                self.update()
+            })
         }
     })
 
