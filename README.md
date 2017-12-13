@@ -42,8 +42,8 @@ Essa arquitetura de [micro serviços](https://en.wikipedia.org/wiki/Microservice
 
 Ao longo do tempo alguns elementos mudaram enfraquecendo alguns dos motivos de adoção dessa arquitetura:
 
-1. O projeto Gastos Abertos mudou de rumo, obrigando a plataforma Cuidando a arcar com a internalização do sistema de dados de execução orçamentária.
-2. A plataforma Openshift passou a cobrar por todos as máquinas não "dormentes".
+1. O projeto Gastos Abertos mudou de rumo, obrigando a plataforma Cuidando a arcar com a internalização, desenvolvimento e manutenção do sistema de dados de execução orçamentária.
+2. A plataforma Openshift passou a cobrar por todas as máquinas não "dormentes".
 
 
 ## Instalando
