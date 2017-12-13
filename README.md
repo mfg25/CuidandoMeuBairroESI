@@ -29,6 +29,22 @@ Linkando para os respectivos repositórios:
 - [Tagarela](https://github.com/okfn-brasil/tagarela): Comentários. ([endpoint](http://cuidando.org.br:5002))
 - [EsicLivre](https://github.com/okfn-brasil/esiclivre): Interface com eSIC para a realização de pedidos de informação. ([endpoint](http://cuidando.org.br:5004) - ainda não online)
 
+### Motivação
+
+Essa arquitetura de [micro serviços](https://en.wikipedia.org/wiki/Microservices) foi escolhida ao invés da mais convencional "monolítica" por um série de razões:
+
+1. Necessidade de consumir dados de outros sistemas: originalmente a plataforma Cuidando do Meu Bairro consumiria dados de execução orçamentária do projeto Gastos Abertos (OKBR).
+2. Restrições de hospedagem: tendo em vista o baixo orçamento do projeto, ele foi hospedado por um tempo na plataforma Openshift, que fornecia máquinas fracas, mas gratuítas, ambiente propício para micro serviços.
+3. Possível menor barreira de entrada para novxs desenvolvedorxs: como os micro serviços são minimamente independentes, um(a) novx desenvolvedor(a) possivelmente só precisaria aprender sobre um dos micro serviços, e não sobre a plataforma inteira.
+4. Permitir o consumo dos dados por outras plataformas: cada micro serviço pode ser reutilizado por outros sites, aplicativos e plataformas, permitindo a criação de um ecossistema de compartilhamento dos dados e serviços.
+
+### Reveses
+
+Ao longo do tempo alguns elementos mudaram enfraquecendo alguns dos motivos de adoção dessa arquitetura:
+
+1. O projeto Gastos Abertos mudou de rumo, obrigando a plataforma Cuidando a arcar com a internalização do sistema de dados de execução orçamentária.
+2. A plataforma Openshift passou a cobrar por todos as máquinas não "dormentes".
+
 
 ## Instalando
 
