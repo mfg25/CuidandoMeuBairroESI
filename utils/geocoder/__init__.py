@@ -48,7 +48,7 @@ class GeoEntity(object):
             geo = term.get("geo")
             if geo:
                 osm = geo['osm']
-                gm = geo['gm']
+                gm = geo.get('gm')
                 geo_data = None
                 if osm:
                     geo_data = osm
@@ -78,7 +78,7 @@ class Geocoder(object):
         self.gm = geopy.GoogleV3()
         self.server_options = {
             "osm": self.geocode_osm,
-            "gm": self.geocode_gm,
+            #"gm": self.geocode_gm,
         }
         self.shapefy_regions(os.path.join(data_folder,
                                           "subprefeituras.geojson"))
