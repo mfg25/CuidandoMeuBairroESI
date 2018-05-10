@@ -11,6 +11,7 @@ Options:
     -h --help   Show this message.
 '''
 from sqlalchemy import func
+from sqlalchemy.dialects import postgresql
 from docopt import docopt
 
 from gastosabertos.execucao.models import Execucao, ExecucaoYearInfo
@@ -19,6 +20,7 @@ from utils import get_db
 
 def create_year_info_json(db, year):
     '''Creates a json with information about an year.'''
+    year = str(year)
     q_total = db.session.query(Execucao).filter(
         Execucao.get_year() == year)
     num_total = q_total.count()
@@ -41,7 +43,7 @@ def create_year_info_json(db, year):
     ]
     for name, db_field in fields:
         q = (db.session.query(
-            func.sum(Execucao.data[db_field].cast(db.Float)))
+            func.sum(Execucao.data[db_field].astext.cast(postgresql.DOUBLE_PRECISION)))
             .filter(Execucao.get_year() == year))
 
         total = q.scalar()
@@ -57,7 +59,7 @@ def create_year_info_json(db, year):
         })
 
     last_update = (db.session.query(Execucao.data['datafinal'])
-                   .filter(Execucao.get_year()==year)
+                   .filter(Execucao.get_year() == year)
                    .distinct().all()[-1][0])
 
     return {
