@@ -10,12 +10,12 @@ import bleach
 from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
-from flask.ext.restplus import Resource
+from flask_restplus import Resource
 
 from viralata.utils import decode_token
 from cutils import paginate, ExtraApi
 
-from models import Orgao, Author, PrePedido, Pedido, Recurso, Message, Keyword
+from models import Orgao, Author, PrePedido, Pedido, Message, Keyword
 from extensions import db, sv
 
 
@@ -28,6 +28,10 @@ api.update_parser_arguments({
     'text': {
         'location': 'json',
         'help': 'The text for the pedido.',
+    },
+    'protocolo': {
+        'location': 'json',
+        'help': 'The protocolo of the pedido.',
     },
     'orgao': {
         'location': 'json',
@@ -120,7 +124,7 @@ class PedidoApi(Resource):
             db.session.commit()
             author_id = author.id
 
-        pre_pedido = PrePedido(author_id=author_id, orgao_name=args['orgao'], tipo=0)
+        pre_pedido = PrePedido(author_id=author_id, orgao_name=args['orgao'])
 
         # Set keywords
         for keyword_name in args['keywords']:
@@ -144,27 +148,20 @@ class PedidoApi(Resource):
 @api.route('/recursos')
 class RecursoApi(Resource):
 
-    @api.doc(parser=api.create_parser('token', 'text', 'orgao', 'keywords'))
+    @api.doc(parser=api.create_parser('token', 'text', 'protocolo'))
     def post(self):
         '''Adds a new recurso to be submited to eSIC.'''
         args = api.general_parse()
-        decoded = decode_token(args['token'], sv, api)
-        author_name = decoded['username']
+        # decoded = decode_token(args['token'], sv, api)
+        # author_name = decoded['username']
+        # TODO: TIRARRRRRRRRRRR!
+        author_name = 'abacate'
 
         text = bleach.clean(args['text'], strip=True)
 
         # Size limit enforced by eSIC
         if len(text) > 6000:
             api.abort_with_msg(400, 'Text size limit exceeded.', ['text'])
-
-        # Validate 'orgao'
-        if args['orgao']:
-            orgao_exists = db.session.query(Orgao).filter_by(
-                name=args['orgao']).count() == 1
-            if not orgao_exists:
-                api.abort_with_msg(400, 'Orgao not found.', ['orgao'])
-        else:
-            api.abort_with_msg(400, 'No Orgao specified.', ['orgao'])
 
         # Get author (add if needed)
         try:
@@ -176,18 +173,19 @@ class RecursoApi(Resource):
             db.session.commit()
             author_id = author.id
 
-        pre_pedido = PrePedido(author_id=author_id, orgao_name=args['orgao'], tipo=1)
+        pre_pedido = PrePedido()
 
         # Set protocolo
-        for keywords_name in args['keywords']:
-            try:
-                keywords = (db.session.query(Keyword)
-                           .filter_by(name=keywords_name).one())
-            except NoResultFound:
-                keywords = Keyword(name=keywords_name)
-                db.session.add(keywords)
-                db.session.commit()
-        pre_pedido.keywords = ','.join(k for k in args['keywords'])
+        # for keywords_name in args['keywords']:
+        #     try:
+        #         keywords = (db.session.query(Keyword).filter_by(name=keywords_name).one())
+        #     except NoResultFound:
+        #         keywords = Keyword(name=keywords_name)
+        #         db.session.add(keywords)
+        #         db.session.commit()
+        # pre_pedido.keywords = ','.join(k for k in args['keywords'])
+
+        # TODO: falta ter o protocolo?
         pre_pedido.text = text
         pre_pedido.state = 'WAITING'
         pre_pedido.created_at = arrow.now()
@@ -195,6 +193,7 @@ class RecursoApi(Resource):
         db.session.add(pre_pedido)
         db.session.commit()
         return {'status': 'ok'}
+
 
 @api.route('/pedidos/protocolo/<int:protocolo>')
 class GetPedidoProtocolo(Resource):
@@ -210,17 +209,19 @@ class GetPedidoProtocolo(Resource):
             api.abort(404)
         return pedido.as_dict
 
-@api.route('/recursos/protocolo/<int:protocolo>')
-class GetRecursoProtocolo(Resource):
 
-    def get(self, protocolo):
-        '''Returns a recurso by its pedido protocolo.'''
-        try:
-            recurso = (db.session.query(Recurso)
-                      .filter_by(protocol=protocolo).one())
-        except NoResultFound:
-            api.abort(404)
-        return recurso.as_dict
+# @api.route('/recursos/protocolo/<int:protocolo>')
+# class GetRecursoProtocolo(Resource):
+
+#     def get(self, protocolo):
+#         '''Returns a recurso by its pedido protocolo.'''
+#         try:
+#             recurso = (db.session.query(Recurso)
+#                       .filter_by(protocol=protocolo).one())
+#         except NoResultFound:
+#             api.abort(404)
+#         return recurso.as_dict
+
 
 @api.route('/pedidos/id/<int:id_number>')
 class GetPedidoId(Resource):
@@ -233,16 +234,18 @@ class GetPedidoId(Resource):
             api.abort(404)
         return pedido.as_dict
 
-@api.route('/recursos/id/<int:id_number>')
-class GetRecursoId(Resource):
 
-    def get(self, id_number):
-        '''Returns a Recurso by its pedido id.'''
-        try:
-            recurso = db.session.query(Recurso).filter_by(pedido_id=id_number).one()
-        except NoResultFound:
-            api.abort(404)
-        return recurso.as_dict
+# @api.route('/recursos/id/<int:id_number>')
+# class GetRecursoId(Resource):
+
+#     def get(self, id_number):
+#         '''Returns a Recurso by its pedido id.'''
+#         try:
+#             recurso = db.session.query(Recurso).filter_by(pedido_id=id_number).one()
+#         except NoResultFound:
+#             api.abort(404)
+#         return recurso.as_dict
+
 
 @api.route('/keywords/<string:keyword_name>')
 class GetPedidoKeyword(Resource):
@@ -341,13 +344,13 @@ def list_all_prepedidos():
     q = q.filter(PrePedido.author_id == Author.id)
 
     return [{
-            'text': p.text,
-            'orgao': p.orgao_name,
-            'created': p.created_at.isoformat(),
-            'keywords': p.keywords,
-            'tipo': p.tipo,
-            'author': a.name,
-} for p, a in q.all()]
+        'text': p.text,
+        'orgao': p.orgao_name,
+        'created': p.created_at.isoformat(),
+        'keywords': p.keywords,
+        'tipo': p.tipo,
+        'author': a.name,
+    } for p, a in q.all()]
 
 
 def set_captcha_func(value):

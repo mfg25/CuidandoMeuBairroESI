@@ -66,7 +66,7 @@ class ESicLivre(object):
 
         self.try_break_audio_captcha = True
         self.nome_audio_captcha = "somCaptcha.wav"
-        self.recognizer = sr.Recognizer(str('pt-BR'))
+        self.recognizer = sr.Recognizer()
 
         self.user_agent = (
             'Mozilla/5.0 (X11; Linux x86_64; rv:28.0)'
@@ -135,7 +135,7 @@ class ESicLivre(object):
         with sr.WavFile(str(audio_path)) as source:
             audio = self.recognizer.record(source)
         try:
-            return self.recognizer.recognize(audio)
+            return self.recognizer.recognize_google(audio, language='pt-BR')
         except LookupError:
             return None
 
@@ -274,7 +274,7 @@ class ESicLivre(object):
         self.check_login_needed()
 
         self.logger.info("> estou indo para a pagina do pedido")
-        linha_do_pedido = self.navegador.find_element_by_xpath(
+        self.navegador.find_element_by_xpath(
             "//table//tr[td[text()='" + protocolo + "']]//a"
         ).click()
 
@@ -452,23 +452,25 @@ class ESicLivre(object):
 
         for pre_pedido in pending_pre_pedidos:
 
-            if pre_pedido.tipo == 0:
+            # Is a new Pedido
+            if not pre_pedido.pedido:
                 protocolo, deadline = self.postar_pedido(
                     pre_pedido.orgao_name, pre_pedido.text
                 )
                 pre_pedido.create_pedido(protocolo, deadline)
                 db.session.commit()
                 self.logger.info("Pedido sent!")
-
-            if pre_pedido.tipo == 1:
+            # Is a Recurso to a current Pedido
+            elif pre_pedido.pedido:
                 deadline = self.postar_recurso(
-                    pre_pedido.keywords, pre_pedido.text
+                    pre_pedido.protocolo, pre_pedido.text
                 )
-                pre_pedido.create_recurso(deadline)
+                # TODO: falta colocar o deadline no Pedido
                 db.session.commit()
                 self.logger.info("Recurso sent!")
 
-        last_update = db.session.query(PedidosUpdate).order_by(PedidosUpdate.date.desc()).first()
+        last_update = db.session.query(PedidosUpdate).order_by(
+            PedidosUpdate.date.desc()).first()
 
         if last_update and last_update.date.date() == arrow.now().date():
             return None

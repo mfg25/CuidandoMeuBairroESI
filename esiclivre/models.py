@@ -16,11 +16,11 @@ pedido_attachments = sa.Table(
     db.Column('attachment_id', db.Integer, db.ForeignKey('attachment.id'))
 )
 
-recurso_attachments = sa.Table(
-    'recurso_attachments', db.metadata,
-    db.Column('recurso_id', db.Integer, db.ForeignKey('recurso.id')),
-    db.Column('attachment_recurso_id', db.Integer, db.ForeignKey('attachment_recurso.id'))
-)
+# recurso_attachments = sa.Table(
+#     'recurso_attachments', db.metadata,
+#     db.Column('recurso_id', db.Integer, db.ForeignKey('recurso.id')),
+#     db.Column('attachment_recurso_id', db.Integer, db.ForeignKey('attachment_recurso.id'))
+# )
 
 pedido_keyword = sa.Table(
     'pedido_keyword', db.metadata,
@@ -43,13 +43,14 @@ class PedidosUpdate(db.Model):
 
     date = db.Column(sa_utils.ArrowType, index=True)
 
-class RecursosUpdate(db.Model):
 
-    __tablename__ = 'recursos_update'
+# class RecursosUpdate(db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
+#     __tablename__ = 'recursos_update'
 
-    date = db.Column(sa_utils.ArrowType, index=True)
+#     id = db.Column(db.Integer, primary_key=True)
+
+#     date = db.Column(sa_utils.ArrowType, index=True)
 
 
 class PrePedido(db.Model):
@@ -72,7 +73,14 @@ class PrePedido(db.Model):
 
     updated_at = db.Column(sa_utils.ArrowType)
 
-    tipo = db.Column(db.Integer)
+    # Used only if this PrePedido is a Recurso
+    pedido = db.relationship('Pedido')
+
+    def __init__(self, **kw):
+        protocolo = kw.get('protocolo')
+        if protocolo:
+            pedido = db.session.query(Pedido).filter_by(protocol=protocolo).one()
+            self.pedido = pedido
 
     @property
     def as_dict(self):
@@ -124,24 +132,24 @@ class PrePedido(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def create_recurso(self, deadline):
+    # def create_recurso(self, deadline):
 
-        recurso = Recurso()
+    #     recurso = Recurso()
 
-        recurso.deadline = deadline
+    #     recurso.deadline = deadline
 
-        recurso.orgao = self.orgao
-        pedido.justification = self.text
-        pedido.request_date = arrow.utcnow()
+    #     recurso.orgao = self.orgao
+    #     pedido.justification = self.text
+    #     pedido.request_date = arrow.utcnow()
 
-        db.session.add(pedido)
-        db.session.commit()
+    #     db.session.add(pedido)
+    #     db.session.commit()
 
-        self.updated_at = arrow.utcnow()
-        self.state = 'PROCESSED'
+    #     self.updated_at = arrow.utcnow()
+    #     self.state = 'PROCESSED'
 
-        db.session.add(self)
-        db.session.commit()
+    #     db.session.add(self)
+    #     db.session.commit()
 
 
 class Pedido(db.Model):
@@ -209,45 +217,45 @@ class Pedido(db.Model):
         self.keywords.append(keyword)
 
 
-class Recurso(db.Model):
+# class Recurso(db.Model):
 
-    __tablename__ = 'recurso'
+#     __tablename__ = 'recurso'
 
-    id = db.Column(db.Integer, primary_key=True, unique=True)
+#     id = db.Column(db.Integer, primary_key=True, unique=True)
 
-    pedido_id = db.Column('pedido_id', db.Integer, db.ForeignKey('pedido.id'), primary_key=True)
+#     pedido_id = db.Column('pedido_id', db.Integer, db.ForeignKey('pedido.id'), primary_key=True)
 
-    protocol = db.Column(db.Integer, index=True, unique=True)
+#     protocol = db.Column(db.Integer, index=True, unique=True)
 
-    situation = db.Column(db.String(255), index=True)
+#     situation = db.Column(db.String(255), index=True)
 
-    request_date = db.Column(sa_utils.ArrowType, index=True)
+#     request_date = db.Column(sa_utils.ArrowType, index=True)
 
-    description = db.Column(sa.UnicodeText())
+#     description = db.Column(sa.UnicodeText())
 
-    deadline = db.Column(sa_utils.ArrowType, index=True)
+#     deadline = db.Column(sa_utils.ArrowType, index=True)
 
-    history = db.relationship("Message", backref="recurso")
+#     history = db.relationship("Message", backref="recurso")
 
-    orgao_name = db.Column(db.String(255))
+#     orgao_name = db.Column(db.String(255))
 
-    attachments = db.relationship(
-        'Attachment_Recurso', secondary=recurso_attachments, backref='recurso'
-    )
+#     attachments = db.relationship(
+#         'Attachment_Recurso', secondary=recurso_attachments, backref='recurso'
+#     )
 
-    @property
-    def as_dict(self):
-        return {
-            'id': self.id,
-	    	'pedido_id': self.pedido_id,
-            'situation': self.situation,
-            'request_date': self.request_date.isoformat(),
-            'justification': self.description,
-            'deadline': self.deadline.isoformat() if self.deadline else '',
-            'orgao_name': self.orgao_name,
-            'history': [m.as_dict for m in self.history],
-            'attachments': [att.as_dict for att in self.attachments]
-        }
+#     @property
+#     def as_dict(self):
+#         return {
+#             'id': self.id,
+# 	    	'pedido_id': self.pedido_id,
+#             'situation': self.situation,
+#             'request_date': self.request_date.isoformat(),
+#             'justification': self.description,
+#             'deadline': self.deadline.isoformat() if self.deadline else '',
+#             'orgao_name': self.orgao_name,
+#             'history': [m.as_dict for m in self.history],
+#             'attachments': [att.as_dict for att in self.attachments]
+#         }
 
 
 class OrgaosUpdate(db.Model):
@@ -288,7 +296,7 @@ class Message(db.Model):
 
     pedido_id = db.Column('pedido_id', db.Integer, db.ForeignKey('pedido.id'))
 
-    recurso_id = db.Column('recurso_id', db.Integer, db.ForeignKey('recurso.id'))
+    # recurso_id = db.Column('recurso_id', db.Integer, db.ForeignKey('recurso.id'))
 
     @property
     def as_dict(self):
@@ -350,22 +358,22 @@ class Attachment(db.Model):
         }
 
 
-class Attachment_Recurso(db.Model):
+# class Attachment_Recurso(db.Model):
 
-    __tablename__ = 'attachment_recurso'
+#     __tablename__ = 'attachment_recurso'
 
-    id = db.Column(db.Integer, primary_key=True)
+#     id = db.Column(db.Integer, primary_key=True)
 
-    name = db.Column(db.String(255), nullable=False)
+#     name = db.Column(db.String(255), nullable=False)
 
-    created_at = db.Column(sa_utils.ArrowType)
+#     created_at = db.Column(sa_utils.ArrowType)
 
-    ia_url = db.Column(sa_utils.URLType)
+#     ia_url = db.Column(sa_utils.URLType)
 
-    @property
-    def as_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'ia_url': self.ia_url
-        }
+#     @property
+#     def as_dict(self):
+#         return {
+#             'id': self.id,
+#             'name': self.name,
+#             'ia_url': self.ia_url
+#         }
