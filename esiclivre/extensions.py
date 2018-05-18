@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals  # unicode by default
 
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 from viratoken import SignerVerifier
 # from browser import ESicLivre

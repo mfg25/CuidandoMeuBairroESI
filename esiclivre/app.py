@@ -5,8 +5,8 @@ from __future__ import unicode_literals  # unicode by default
 import os
 
 from flask import Flask, send_file, send_from_directory
-from flask.ext.cors import CORS
-from flask.ext.restplus import apidoc
+from flask_cors import CORS
+from flask_restplus import apidoc
 
 from extensions import db, sv
 from views import api

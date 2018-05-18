@@ -4,7 +4,7 @@
 from __future__ import unicode_literals  # unicode by default
 import json
 
-from flask.ext.restplus import Api
+from flask_restplus import Api
 
 
 def paginate(query, page, per_page_num):
