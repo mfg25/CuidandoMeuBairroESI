@@ -10,7 +10,7 @@ import bleach
 from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
-from flask.ext.restplus import Resource
+from flask_restplus import Resource
 
 from viralata.utils import decode_token
 from cutils import paginate, ExtraApi
@@ -28,6 +28,10 @@ api.update_parser_arguments({
     'text': {
         'location': 'json',
         'help': 'The text for the pedido.',
+    },
+    'protocolo': {
+        'location': 'json',
+        'help': 'The protocolo of the pedido.',
     },
     'orgao': {
         'location': 'json',
@@ -135,7 +139,57 @@ class PedidoApi(Resource):
         pre_pedido.text = text
         pre_pedido.state = 'WAITING'
         pre_pedido.created_at = arrow.now()
+        pre_pedido.tipo = 0
+        db.session.add(pre_pedido)
+        db.session.commit()
+        return {'status': 'ok'}
 
+
+@api.route('/recursos')
+class RecursoApi(Resource):
+
+    @api.doc(parser=api.create_parser('token', 'text', 'protocolo'))
+    def post(self):
+        '''Adds a new recurso to be submited to eSIC.'''
+        args = api.general_parse()
+        # decoded = decode_token(args['token'], sv, api)
+        # author_name = decoded['username']
+        # TODO: TIRARRRRRRRRRRR!
+        author_name = 'abacate'
+
+        text = bleach.clean(args['text'], strip=True)
+
+        # Size limit enforced by eSIC
+        if len(text) > 6000:
+            api.abort_with_msg(400, 'Text size limit exceeded.', ['text'])
+
+        # Get author (add if needed)
+        try:
+            author_id = db.session.query(
+                Author.id).filter_by(name=author_name).one()
+        except NoResultFound:
+            author = Author(name=author_name)
+            db.session.add(author)
+            db.session.commit()
+            author_id = author.id
+
+        pre_pedido = PrePedido()
+
+        # Set protocolo
+        # for keywords_name in args['keywords']:
+        #     try:
+        #         keywords = (db.session.query(Keyword).filter_by(name=keywords_name).one())
+        #     except NoResultFound:
+        #         keywords = Keyword(name=keywords_name)
+        #         db.session.add(keywords)
+        #         db.session.commit()
+        # pre_pedido.keywords = ','.join(k for k in args['keywords'])
+
+        # TODO: falta ter o protocolo?
+        pre_pedido.text = text
+        pre_pedido.state = 'WAITING'
+        pre_pedido.created_at = arrow.now()
+        pre_pedido.tipo = 1
         db.session.add(pre_pedido)
         db.session.commit()
         return {'status': 'ok'}
@@ -156,6 +210,19 @@ class GetPedidoProtocolo(Resource):
         return pedido.as_dict
 
 
+# @api.route('/recursos/protocolo/<int:protocolo>')
+# class GetRecursoProtocolo(Resource):
+
+#     def get(self, protocolo):
+#         '''Returns a recurso by its pedido protocolo.'''
+#         try:
+#             recurso = (db.session.query(Recurso)
+#                       .filter_by(protocol=protocolo).one())
+#         except NoResultFound:
+#             api.abort(404)
+#         return recurso.as_dict
+
+
 @api.route('/pedidos/id/<int:id_number>')
 class GetPedidoId(Resource):
 
@@ -166,6 +233,18 @@ class GetPedidoId(Resource):
         except NoResultFound:
             api.abort(404)
         return pedido.as_dict
+
+
+# @api.route('/recursos/id/<int:id_number>')
+# class GetRecursoId(Resource):
+
+#     def get(self, id_number):
+#         '''Returns a Recurso by its pedido id.'''
+#         try:
+#             recurso = db.session.query(Recurso).filter_by(pedido_id=id_number).one()
+#         except NoResultFound:
+#             api.abort(404)
+#         return recurso.as_dict
 
 
 @api.route('/keywords/<string:keyword_name>')
@@ -187,8 +266,6 @@ class GetPedidoKeyword(Resource):
                     pedidos, key=lambda p: p.request_date, reverse=True
                 )
             ],
-            'prepedidos': [p for p in list_all_prepedidos()
-                           if keyword_name in p['keywords']],
         }
 
 
@@ -220,7 +297,6 @@ class GetAuthor(Resource):
 
     def get(self, name):
         '''Returns pedidos marked with a specific keyword.'''
-        # TODO: endpoint dando erro
         try:
             author = (db.session.query(Author)
                       .options(joinedload('pedidos'))
@@ -268,12 +344,13 @@ def list_all_prepedidos():
     q = q.filter(PrePedido.author_id == Author.id)
 
     return [{
-            'text': p.text,
-            'orgao': p.orgao_name,
-            'created': p.created_at.isoformat(),
-            'keywords': p.keywords,
-            'author': a.name,
-            } for p, a in q.all()]
+        'text': p.text,
+        'orgao': p.orgao_name,
+        'created': p.created_at.isoformat(),
+        'keywords': p.keywords,
+        'tipo': p.tipo,
+        'author': a.name,
+    } for p, a in q.all()]
 
 
 def set_captcha_func(value):

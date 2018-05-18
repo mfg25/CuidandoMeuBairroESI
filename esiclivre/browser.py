@@ -27,10 +27,10 @@ import random
 import time
 import pickle
 from multiprocessing import Process, Manager
-# from datetime import datetime
 
 import arrow
 from selenium import webdriver
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import speech_recognition as sr
 
@@ -66,7 +66,7 @@ class ESicLivre(object):
 
         self.try_break_audio_captcha = True
         self.nome_audio_captcha = "somCaptcha.wav"
-        self.recognizer = sr.Recognizer(str('pt-BR'))
+        self.recognizer = sr.Recognizer()
 
         self.user_agent = (
             'Mozilla/5.0 (X11; Linux x86_64; rv:28.0)'
@@ -112,10 +112,7 @@ class ESicLivre(object):
         tipos = ','.join(['text/csv', 'audio/wav', 'audio/x-wav',
                           'image/jpeg', 'application/octet-stream'])
         fp.set_preference("browser.helperApps.neverAsk.saveToDisk", tipos)
-        # fp.set_preference("plugin.disable_full_page_plugin_for_types",
-        #                   "image/jpeg")
         fp.set_preference("general.useragent.override", self.user_agent)
-        # fp.set_preference('permissions.default.image', 1)
         # O binário do navegador deve estar na pasta firefox
         binary = FirefoxBinary(self.firefox)
         self.navegador = webdriver.Firefox(
@@ -130,7 +127,7 @@ class ESicLivre(object):
         self.navegador.get(self.base_url + "/consultar_pedido_v2.aspx")
 
     def ir_para_login(self):
-        self.navegador.get(self.base_url + "/Account/Login.aspx")
+        self.navegador.get(self.login_url)
 
     def transcribe_audio_captcha(self):
         self.logger.info("Transcribing audio captcha...")
@@ -138,7 +135,7 @@ class ESicLivre(object):
         with sr.WavFile(str(audio_path)) as source:
             audio = self.recognizer.record(source)
         try:
-            return self.recognizer.recognize(audio)
+            return self.recognizer.recognize_google(audio, language='pt-BR')
         except LookupError:
             return None
 
@@ -168,24 +165,11 @@ class ESicLivre(object):
         except (OSError, IOError):
             pass
         link = self.base_url + "/Account/pgImagem.ashx"
-        # self.navegador.get(link)
-        # time.sleep(3)
-        # while self.nome_audio_captcha + ".part" in os.listdir(self.pasta):
-        #     time.sleep(1)
 
         nome = 'ASP.NET_SessionId'
         cookie = self.navegador.get_cookie(nome)
-        # cookie.pop('httpOnly')
-        # cookie.pop('secure')
-        # cookie.pop('expiry')
         headers = {
             'User-Agent': self.user_agent,
-            # 'Host': 'esic.prefeitura.sp.gov.br',
-            # Accept-Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
-            # Accept-Encoding: gzip, deflate
-            # 'Referer': self.base_url + '/Account/Login.aspx',
-            # 'Connection': keep-alive
-            # 'Cookie': 'ASP.NET_SessionId=dgsonyd4zczcipg2vs3xgn0l'
         }
         if cookie and cookie.get('value', False):
             headers.update({'Cookie': '{0}={1}'.format(nome, cookie['value'])})
@@ -193,20 +177,15 @@ class ESicLivre(object):
         r = requests.get(link, stream=True, headers=headers)
         r.raw.decode_content = True
         import tempfile
-        # with open(os.path.join('static', 'captcha.jpg'), 'wb') as out_file:
         with tempfile.NamedTemporaryFile() as out_file:
             shutil.copyfileobj(r.raw, out_file)
-        # return requests.get(link, stream=True, headers=headers)
-        # return requests.get(link, stream=True, headers=headers,
-        # cookies=cookie)
 
     def gerar_novo_captcha(self):
         self.navegador.find_element_by_id(
             "ctl00_MainContent_btnAtualiza").click()
 
     def clicar_login_entrar(self):
-        self.navegador.find_element_by_id(
-            "ctl00_MainContent_btnEnviar").click()
+        self.navegador.find_element_by_id('ctl00_MainContent_btnEnviar').click()
 
     def clicar_recorrer(self):
         self.navegador.find_element_by_id(
@@ -287,12 +266,50 @@ class ESicLivre(object):
         deadline = self.navegador.find_element_by_id(
             "ctl00_MainContent_lbl_prazo_atendimento_confirmar"
         ).text
-        # ctl00_MainContent_lbl_data_solicitacao_confirmar
-        # ctl00_MainContent_lbl_descricao_pedido_confirmar
-        # ctl00_MainContent_lbl_orgao_confirmar
-        # ctl00_MainContent_lbl_solicitante_confirmar
-        # return int(protocolo), datetime.strptime(deadline, "%d/%m/%Y")
         return int(protocolo), arrow.get(deadline, ['DD/MM/YYYY'])
+
+    def postar_recurso(self, protocolo, texto):
+        self.logger.info("> estou indo para a página para consultar pedidos")
+        self.ir_para_consultar_pedido()
+        self.check_login_needed()
+
+        self.logger.info("> estou indo para a pagina do pedido")
+        self.navegador.find_element_by_xpath(
+            "//table//tr[td[text()='" + protocolo + "']]//a"
+        ).click()
+
+        try:
+            self.logger.info("> estou tentando ir para pagina de recurso de segunda instancia")
+            self.navegador.find_element_by_id(
+                "ctl00_MainContent_btnAbrirRecurso"
+            ).click()
+
+            select = Select(self.navegador.find_element_by_tag_name("select"))
+            select.select_by_value("13")
+        except Exception as e:
+            self.logger.info(e)
+            self.logger.info("> estou indo para a pagina do para abrir recurso")
+            self.navegador.find_element_by_id(
+                "ctl00_MainContent_btnSolicitarEsclarecimento"
+            ).click()
+
+        deadline = self.navegador.find_element_by_xpath(
+            "//tr[td/b/text()='Prazo de resposta:']//input"
+        ).get_attribute("value")
+
+        self.navegador.find_element_by_tag_name("textarea").send_keys(texto)
+
+        try:
+            self.navegador.find_element_by_id(
+                "ctl00_MainContent_btnEnviar"
+            ).click()
+        except Exception as e:
+            self.logger.info(e)
+            self.navegador.find_element_by_id(
+                "ctl00_MainContent_btnEnviarRecurso"
+            ).click()
+
+        return arrow.get(deadline, ['DD/MM/YYYY'])
 
     def lista_de_orgaos(self):
         self.ir_para_registrar_pedido()
@@ -349,7 +366,6 @@ class ESicLivre(object):
                     # Main loop
                     while self.safe_dict['running']:
                         self.main_loop()
-                        # time.sleep(5)
                 except:
                     raise
                 finally:
@@ -359,15 +375,6 @@ class ESicLivre(object):
         self.safe_dict['running'] = False
 
     def verificar_lista_orgaos(self):
-        # # Loads orgaos list if empty (or with only test data)
-        # orgaos = db.session.query(Orgao.name).all()
-        # if len(orgaos) < 5:
-        #     #     if (not self._last_update_of_orgao_list or
-        #     #        self._last_update_of_orgao_list.date() !=
-        #     #        arrow.utcnow().date()):
-        #     self.logger.info('Atualizando lista de orgaos...')
-        #     self.update_orgaos_list()
-
         last_update = db.session.query(OrgaosUpdate).order_by(
             OrgaosUpdate.date.desc()).first()
 
@@ -422,31 +429,13 @@ class ESicLivre(object):
             try:
                 self.verificar_lista_orgaos()
 
-                # pedidos_preproc.update_pedidos_list(self)
-
-                # counter = 0
                 while self.safe_dict['running']:
-                    # Keep alive; for how long? ...
-                    # if counter == 120:
-
-                    #     if (not self._last_update_of_orgao_list or
-                    #        self._last_update_of_orgao_list.date() !=
-                    #        arrow.utcnow().date()):
-                    #         self.logger.info('Calling update_orgaos_list...')
-                    #         self.update_orgaos_list()
-
-                    #     self.ir_para_registrar_pedido()
-                    #     self.ir_para_consultar_pedido()
-                    #     counter = 0
-
-                    # Main function
                     self.active_loop()
 
                     if self.rodar_apenas_uma_vez:
                         self.safe_dict['running'] = False
                         return True
 
-                    # counter += 1
                     time.sleep(5)
 
             except LoginNeeded:
@@ -456,30 +445,34 @@ class ESicLivre(object):
             self.preparar_receber_captcha()
 
     def active_loop(self):
-        """Does routine stuff inside eSIC, like posting pedidos."""
+        """Does routine stuff inside eSIC, like posting pedidos and recursos."""
 
         pending_pre_pedidos = db.session.query(
             PrePedido).filter_by(state='WAITING').all()
 
         for pre_pedido in pending_pre_pedidos:
 
-            protocolo, deadline = self.postar_pedido(
-                pre_pedido.orgao_name, pre_pedido.text
-            )
-            pre_pedido.create_pedido(protocolo, deadline)
-            db.session.commit()
-            self.logger.info('Sent!')
-        # TODO: ver se quem quer recorrer
-        # TODO: ver precisa olhar respostas aos pedidos
+            # Is a new Pedido
+            if not pre_pedido.pedido:
+                protocolo, deadline = self.postar_pedido(
+                    pre_pedido.orgao_name, pre_pedido.text
+                )
+                pre_pedido.create_pedido(protocolo, deadline)
+                db.session.commit()
+                self.logger.info("Pedido sent!")
+            # Is a Recurso to a current Pedido
+            elif pre_pedido.pedido:
+                deadline = self.postar_recurso(
+                    pre_pedido.protocolo, pre_pedido.text
+                )
+                # TODO: falta colocar o deadline no Pedido
+                db.session.commit()
+                self.logger.info("Recurso sent!")
 
-        # Inicialmente, a atualização dos pedidos é feita uma vez ao dia
-        # TODO: Abrir uma issue para discutir melhor o processo de atualização
-        # de pedidos
         last_update = db.session.query(PedidosUpdate).order_by(
-            PedidosUpdate.date.desc()).first()  # noqa
+            PedidosUpdate.date.desc()).first()
 
         if last_update and last_update.date.date() == arrow.now().date():
-            # self.logger.info("%s: Já houve atualização hoje!" % arrow.now())
             return None
         else:
             pedidos_preproc.update_pedidos_list(self)
