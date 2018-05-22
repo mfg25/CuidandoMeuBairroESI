@@ -7,7 +7,7 @@ from passlib.apps import custom_app_context as pwd_context
 # from sqlalchemy import Column, String, Integer, Boolean
 # from sqlalchemy.ext.declarative import declarative_base
 
-from extensions import db
+from cuidando_utils import db
 
 
 # Base = declarative_base()

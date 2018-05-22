@@ -16,7 +16,7 @@ from social.utils import build_absolute_uri
 # from social.apps.flask_app.routes import social_auth
 # from social.apps.flask_app.template_filters import backends
 
-from extensions import db
+from cuidando_utils import db
 
 
 def init_social_models(app):

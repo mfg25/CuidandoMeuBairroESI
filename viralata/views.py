@@ -8,19 +8,34 @@ import passlib
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import NoResultFound
 # from flask import redirect, url_for, make_response
-from flask.ext.restplus import Resource
-from flask.ext.mail import Message
+from flask_restplus import Resource
+from flask_mail import Message
+from flask import current_app
 
-from auths import get_auth_url, get_username
-from models import User
-from extensions import db, sv
-from utils import decode_validate_token
-from cutils import ExtraApi
+from cuidando_utils import db, sv, ExtraApi
+
+# from viralata.auths import get_auth_url, get_username
+from viralata.models import User
 
 
 api = ExtraApi(version='1.0',
                title='Vira-lata',
                description='An authentication microservice.')
+
+
+# Replace API method
+def decode_token(self, token):
+    decoded = self.decode_validate_token(token)
+
+    # Verify if main token is not invalid
+    if decoded['type'] == 'main':
+        user = get_user(decoded['username'])
+        if decoded['exp'] != user.last_token_exp:
+            self.abort_with_msg(400, 'Invalid main token!', ['token'])
+
+    return decoded
+api.decode_token = decode_token # noqa
+
 
 api.update_parser_arguments({
     'username': {
@@ -50,22 +65,22 @@ api.update_parser_arguments({
 })
 
 
-@api.route('/login/external/manual/<string:backend>')
-class LoginExtManAPI(Resource):
+# @api.route('/login/external/manual/<string:backend>')
+# class LoginExtManAPI(Resource):
 
-    def get(self, backend):
-        '''Asks the URL that should be used to login with a specific backend
-        (like Facebook).'''
-        return {'redirect': get_auth_url(backend, 'loginextmanapi')}
+#     def get(self, backend):
+#         '''Asks the URL that should be used to login with a specific backend
+#         (like Facebook).'''
+#         return {'redirect': get_auth_url(backend, 'loginextmanapi')}
 
 
-@api.route('/complete/manual/<string:backend>')
-class CompleteLoginExtManAPI(Resource):
+# @api.route('/complete/manual/<string:backend>')
+# class CompleteLoginExtManAPI(Resource):
 
-    def post(self, backend):
-        '''Completes the login with a specific backend.'''
-        username = get_username(backend, redirect_uri='/')
-        return create_tokens(username)
+#     def post(self, backend):
+#         '''Completes the login with a specific backend.'''
+#         username = get_username(backend, redirect_uri='/')
+#         return create_tokens(username)
 
 
 # @api.route('/login/external/automatic/<string:backend>')
@@ -98,12 +113,9 @@ class CompleteLoginExtManAPI(Resource):
 @api.route('/login/local')
 class LoginLocalAPI(Resource):
 
-    @api.doc(parser=api.create_parser('username', 'password'))
-    def post(self):
+    @api.parsed_args('username', 'password')
+    def post(self, username, password):
         '''Login using local DB, not a third-party service.'''
-        args = api.general_parse()
-        username = args['username']
-        password = args['password']
         try:
             if User.verify_user_password(username, password):
                 return create_tokens(username)
@@ -118,11 +130,11 @@ class LoginLocalAPI(Resource):
 @api.route('/renew_micro_token')
 class RenewMicroToken(Resource):
 
-    @api.doc(parser=api.create_parser('token'))
-    def post(self):
+    # TODO: oq fazer nesse caso?
+    @api.parsed_args('token', parse_token=False)
+    def post(self, token):
         '''Get a new micro token to be used with the other microservices.'''
-        args = api.general_parse()
-        decoded = decode_token(args['token'])
+        decoded = decode_token(token)
         if decoded['type'] != 'main':
             # This seems not to be a main token. It must be main for security
             # reasons, for only main ones can be invalidated at logout.
@@ -141,13 +153,12 @@ class RenewMicroToken(Resource):
 @api.route('/reset_password')
 class ResetPassword(Resource):
 
-    @api.doc(parser=api.create_parser('username', 'email'))
-    def post(self):
+    @api.parsed_args('username', 'email')
+    def post(self, username, email):
         '''Sends an email to the user with a code to reset password.'''
-        args = api.general_parse()
-        user = get_user(args['username'])
+        user = get_user(username)
 
-        check_user_email(user, args['email'])
+        check_user_email(user, email)
 
         msg = Message(
             api.app.config['MAIL_SUBJECT'],
@@ -166,16 +177,13 @@ class ResetPassword(Resource):
             'exp': exp,
         }
 
-    @api.doc(parser=api.create_parser('username', 'email', 'code', 'password'))
-    def put(self):
+    @api.parsed_args('username', 'email', 'code', 'password')
+    def put(self, username, email, code, password):
         '''Change the password of a user using a temporary code.'''
-        args = api.general_parse()
-        password = args['password']
         validate_password(password)
-        username = args['username']
         user = get_user(username)
-        check_user_email(user, args['email'])
-        if not user.check_temp_password(args['code']):
+        check_user_email(user, email)
+        if not user.check_temp_password(code):
             api.abort_with_msg(400, 'Invalid code', ['code'])
         user.hash_password(password)
         # Commit is done by create_tokens
@@ -185,8 +193,8 @@ class ResetPassword(Resource):
 @api.route('/logout')
 class Logout(Resource):
 
-    @api.doc(parser=api.create_parser('token'))
-    def post(self):
+    @api.parsed_args('token')
+    def post(self, username):
         '''Invalidates the main token.'''
         args = api.general_parse()
         decoded = decode_token(args['token'])
@@ -199,10 +207,9 @@ class Logout(Resource):
 @api.route('/users/<string:username>')
 class UserAPI(Resource):
 
-    @api.doc(parser=api.create_parser('token'))
-    def get(self, username):
+    @api.parsed_args('token')
+    def get(self, token_username, username):
         '''Get information about an user.'''
-        args = api.general_parse()
         try:
             user = User.get_user(username)
         except NoResultFound:
@@ -214,27 +221,20 @@ class UserAPI(Resource):
         }
 
         # Add email if this is the owner of the account
-        token = args['token']
-        if token:
-            decoded = decode_token(token)
-            if decoded['username'] == username:
-                resp['email'] = user.email
+        if token_username == username:
+            resp['email'] = user.email
         return resp
 
-    @api.doc(parser=api.create_parser('token', 'description',
-                                      'email', 'password', 'new_password'))
-    def put(self, username):
+    @api.parsed_args('token', 'description', 'email', 'password', 'new_password')
+    def put(self, token_username, username, description=None, email=None,
+            password=None, new_password=None):
         '''Edit information about an user.'''
-        args = api.general_parse()
-        decoded = decode_token(args['token'])
-        if username == decoded['username']:
-            user = get_user(decoded['username'])
+        if username == token_username:
+            user = get_user(token_username)
             changed = False
 
-            password = args.get('password')
             # If is changing password
             if password:
-                new_password = args['new_password']
                 if user.verify_password(password):
                     validate_password(new_password, 'new_password')
                     user.hash_password(new_password)
@@ -243,12 +243,10 @@ class UserAPI(Resource):
                     api.abort_with_msg(400, 'Wrong password...', ['password'])
 
             # If is changing description
-            if args['description']:
-                user.description = bleach.clean(args['description'],
-                                                strip=True)
+            if description:
+                user.description = bleach.clean(description, strip=True)
                 changed = True
 
-            email = args.get('email')
             # If is changing email
             if email:
                 validate_email(email)
@@ -271,22 +269,28 @@ class UserAPI(Resource):
 
 
 @api.route('/users')
-class ListUsers(Resource):
+class UsersAPI(Resource):
 
-    def get(self):
-        '''List registered users.'''
-        users = db.session.query(User.username).all()
+    @api.parsed_args('optional_token')
+    def get(self, username=None):
+        '''List registered users.
+        Also returns e-mails if token from special user is passed.'''
+        users = db.session.query(User).all()
+        if username and username in current_app.config['SPECIAL_USERS']:
+            return {
+                'users': [{
+                    'username': u.username,
+                    'email': u.email,
+                } for u in users]
+            }
+        else:
+            return {
+                'users': [u.username for u in users]
+            }
 
-        return {
-            'users': [u[0] for u in users]
-        }
-
-    @api.doc(parser=api.create_parser('username', 'password', 'email'))
-    def post(self):
+    @api.parsed_args('username', 'password', 'email')
+    def post(self, username, password, email):
         '''Register a new user.'''
-        args = api.general_parse()
-        username = args['username']
-
         # TODO: case insensitive? ver isso na hora de login tb
         # username = username.lower()
         if len(username) < 5 or len(username) > 20:
@@ -298,10 +302,7 @@ class ListUsers(Resource):
             api.abort_with_msg(400, 'Invalid characters in username...',
                                ['username'])
 
-        password = args['password']
         validate_password(password)
-
-        email = args.get('email')
         validate_email(email)
 
         user = User(username=username, email=email)
@@ -356,18 +357,6 @@ def create_token(username, main=False):
         'username': username,
         'type': token_type,
     }, exp_minutes)
-
-
-def decode_token(token):
-    decoded = decode_validate_token(token, sv, api)
-
-    # Verify if main token is not invalid
-    if decoded['type'] == 'main':
-        user = get_user(decoded['username'])
-        if decoded['exp'] != user.last_token_exp:
-            api.abort_with_msg(400, 'Invalid main token!', ['token'])
-
-    return decoded
 
 
 def get_user(username):
