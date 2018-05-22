@@ -14,7 +14,7 @@ from __future__ import unicode_literals  # unicode by default
 
 from docopt import docopt
 
-from gastosabertos.execucao.models import Execucao
+from gastosabertos.models import Execucao
 from utils import ProgressCounter, get_db
 from geocoder import Geocoder
 from update_execucao_year_info import update_all_years_info

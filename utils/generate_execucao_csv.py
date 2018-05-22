@@ -19,7 +19,7 @@ import csv
 
 from docopt import docopt
 
-from gastosabertos.execucao.models import Execucao
+from gastosabertos.models import Execucao
 from utils import get_db
 
 # For Python 2...
@@ -60,7 +60,7 @@ def generate_year(db, year, outfolder):
         rows.append(data)
 
     # Sort by code
-    rows.sort(lambda x, y: x['codigo'] < y['codigo'])
+    rows.sort(key=lambda x: x['codigo'])
 
     filepath = os.path.join(outfolder, year + '.csv')
     with open(filepath, 'w') as outfile:

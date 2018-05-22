@@ -14,7 +14,7 @@ from sqlalchemy import func
 from sqlalchemy.dialects import postgresql
 from docopt import docopt
 
-from gastosabertos.execucao.models import Execucao, ExecucaoYearInfo
+from gastosabertos.models import Execucao, ExecucaoYearInfo
 from utils import get_db
 
 

@@ -4,4 +4,4 @@ import os
 from gastosabertos.app import create_app
 
 settings_folder = os.path.join(os.getcwd(), 'settings')
-application = create_app(instance_folder=settings_folder)
+application = create_app(settings_folder)

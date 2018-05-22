@@ -2,55 +2,44 @@
 
 from setuptools import setup
 
-project = "gastosabertos"
-
 setup(
-    name=project,
-    version='0.0.1',
-    url='https://github.com/okfn-brasil/gastos_abertos',
-    description='Visualization of public spending in Sao Paulo city for Gastos Abertos project',
-    author='Edgar Zanella Alvarenga',
-    author_email='e@vaz.io',
-    packages=["gastosabertos"],
-    include_package_data=True,
-    zip_safe=False,
+    name='gastosabertos',
+    version='0.2',
+    url='https://gitlab.com/cuidandodomeubairro/gastos-abertos',
+    description='Sao Paulo city public spending data.',
+    author='Andrés M. R. Martano',
+    author_email='andres@inventati.org',
+    packages=['gastosabertos'],
+    # include_package_data=True,
+    # zip_safe=False,
     install_requires=[
-        'Flask>=0.10.1',
-        'Flask-SQLAlchemy==2.1',
-        # 'Flask-WTF',
-        'Flask-Script',
-        'Flask-Babel',
-        # 'Flask-Testing',
-        'Flask-Restful',
-        # 'Flask-Paginate',
-        'Flask-CORS>=2.0.1',
+        'Flask',
+        'Flask-SQLAlchemy',
         'Flask-Restplus',
+        'Flask-CORS',
         'geoalchemy2',
         'fabric',
         'docopt',
         'pandas',
         'geopy',
         'shapely',
-        'psycopg2',
+        'psycopg2-binary',
         'xlrd',
-
         'pyexcel',
         'pyexcel-xls',
         'pyexcel-ods3',
         'lxml',
         'ezodf',
-
-        # 'elasticsearch>=1.0.0,<2.0.0',
-        # 'elasticsearch-dsl',
-        'futures',
+        # 'futures',
     ],
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries'
+        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
     ]
 )

@@ -28,17 +28,14 @@ import datetime
 # Python 2 and 3...
 try:
     from urllib import urlretrieve
-except:
+except ImportError:
     from urllib.request import urlretrieve
 
 from docopt import docopt
 import pandas as pd
 import pyexcel
-from pyexcel.ext import ods3, xls
 # To allow ODS and XLS need these libs imported:
-ods3 and xls
-# (yes, I know, the above line seems useless, but it avoids 'imported but
-# unused' warnings in my Python linter [*genious*] =P )
+# from pyexcel.ext import ods3, xls # noqa
 
 
 def convert_codes_to_int(table):

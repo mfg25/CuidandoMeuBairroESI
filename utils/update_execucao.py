@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-''' Downloads the execucao data for the current year, checks if the file
+'''Downloads the execucao data for the current year, checks if the file
 changed and updates the DB if so.
 
 Usage:

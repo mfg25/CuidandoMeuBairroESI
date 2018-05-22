@@ -22,7 +22,7 @@ import pandas as pd
 from docopt import docopt
 from sqlalchemy.sql.expression import insert
 
-from gastosabertos.execucao.models import Execucao, History
+from gastosabertos.models import Execucao, History
 from utils import ProgressCounter, get_db
 from update_execucao_year_info import update_all_years_info
 
@@ -164,7 +164,7 @@ def update_from_csv(db, csv):
             modified = {}
 
             # Check if state was modified
-            if row_model.state != new_row['state'].decode('utf8'):
+            if row_model.state != new_row['state']:
                 modified['state'] = (row_model.state, new_row['state'])
                 row_model.state = new_row['state']
 
@@ -174,7 +174,7 @@ def update_from_csv(db, csv):
 
                 # Avoids confusion caused by new_value not been unicode
                 if type(new_value) is str:
-                    new_value = new_value.decode('utf8')
+                    new_value = new_value
                     new_row['data'][key] = new_value
 
                 # Avoids data that changed from 0 to None
