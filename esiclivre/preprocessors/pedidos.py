@@ -17,12 +17,14 @@ import internetarchive
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
 
-from esiclivre import models, extensions
+from cuidando_utils import db
+
+from esiclivre import models
 
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-VALID_ATTACHMENTS_NAME_CHARS = string.lowercase + string.digits + '.-_'
+VALID_ATTACHMENTS_NAME_CHARS = string.ascii_lowercase + string.digits + '.-_'
 
 
 def parse_date(text):
@@ -166,7 +168,7 @@ class ParsedPedido(object):
             return None
 
         # Get the current pedido and its attachments from the DB
-        db_pedido = extensions.db.session.query(models.Pedido).filter_by(
+        db_pedido = db.session.query(models.Pedido).filter_by(
             protocol=self.protocol).options(joinedload('attachments')).first()
         db_attachments = db_pedido.attachments if db_pedido else []
 
@@ -329,10 +331,10 @@ def update_pedido_messages(scrapped_pedido, pedido):
             message.responsible = item.responsible
             message.situation = item.situation
             message.pedido_id = pedido.id
-            extensions.db.session.add(message)
+            db.session.add(message)
             new_insetion = True
 
-    extensions.db.session.commit() if new_insetion else None
+    db.session.commit() if new_insetion else None
 
 
 def create_pedido_attachments(scrapped_pedido):
@@ -353,9 +355,9 @@ def create_pedido_attachments(scrapped_pedido):
             )
         )
 
-        extensions.db.session.add(attachment)
+        db.session.add(attachment)
         attachments.append(attachment)
-    extensions.db.session.commit() if attachments else None
+    db.session.commit() if attachments else None
 
     return attachments
 
@@ -369,17 +371,17 @@ def save_pedido_into_db(scrapped_pedido):
         # if not, create one
         default_author = flask.current_app.config['DEFAULT_AUTHOR']
         try:
-            author = extensions.db.session.query(models.Author).filter(
+            author = db.session.query(models.Author).filter(
                 models.Author.name == default_author
             ).one()
         except NoResultFound:
             author = models.Author(name=default_author)
-            extensions.db.session.add(author)
-            extensions.db.session.commit()
+            db.session.add(author)
+            db.session.commit()
 
         pedido = models.Pedido(protocol=scrapped_pedido.protocol, author=author)
         pedido.add_keyword('recuperado')
-        extensions.db.session.add(pedido)
+        db.session.add(pedido)
 
     # TODO: O que fazer se o orgão não existir no DB?
     if not scrapped_pedido.orgao:
@@ -390,8 +392,8 @@ def save_pedido_into_db(scrapped_pedido):
     orgao = models.Orgao.query.filter_by(name=orgao_name).first()
     if not orgao:
         orgao = models.Orgao(name=orgao_name)
-        extensions.db.session.add(orgao)
-        extensions.db.session.commit()
+        db.session.add(orgao)
+        db.session.commit()
     pedido.orgao_name = orgao.name
 
     pedido.interessado = scrapped_pedido.interessado
@@ -403,7 +405,7 @@ def save_pedido_into_db(scrapped_pedido):
     # pedido.deadline = scrapped_pedido.deadline
     # TODO: salvar no pedido alguma informação sobre se pode fazer recurso ou não
 
-    extensions.db.session.commit()
+    db.session.commit()
 
     update_pedido_messages(scrapped_pedido, pedido)
 
@@ -465,9 +467,9 @@ def update_pedidos_list(browser):
         save_pedido_into_db(pedido)
 
     # registrar atualização do dia
-    extensions.db.session.add(
+    db.session.add(
         models.PedidosUpdate(date=arrow.now())
     )
-    extensions.db.session.commit()
+    db.session.commit()
 
     logger.info("Pedidos atualizados. Atualização registrada.")

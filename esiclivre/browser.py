@@ -35,9 +35,9 @@ from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.common.exceptions import TimeoutException
 import speech_recognition as sr
 
-from extensions import db
-from models import Orgao, PrePedido, PedidosUpdate, OrgaosUpdate
-from preprocessors import pedidos as pedidos_preproc
+from cuidando_utils import db
+from esiclivre.models import Orgao, PrePedido, PedidosUpdate, OrgaosUpdate
+from esiclivre.preprocessors import pedidos as pedidos_preproc
 
 
 class LoginNeeded(Exception):

@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals  # unicode by default
 
-from multiprocessing import Process
+# from multiprocessing import Process
 
 import arrow
 import bleach
@@ -12,11 +12,8 @@ from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
 from flask_restplus import Resource
 
-from viralata.utils import decode_token
-from cutils import paginate, ExtraApi
-
-from models import Orgao, Author, PrePedido, Pedido, Message, Keyword
-from extensions import db, sv
+from esiclivre.models import Orgao, Author, PrePedido, Pedido, Message, Keyword
+from cuidando_utils import db, paginate, ExtraApi
 
 
 api = ExtraApi(version='1.0',
@@ -55,25 +52,22 @@ class ListOrgaos(Resource):
         }
 
 
-@api.route('/captcha/<string:value>')
-class SetCaptcha(Resource):
+# @api.route('/captcha/<string:value>')
+# class SetCaptcha(Resource):
 
-    def get(self, value):
-        '''Sets a captcha to be tried by the browser.'''
-        process = Process(target=set_captcha_func, args=(value,))
-        process.start()
-        return {}
+#     def get(self, value):
+#         '''Sets a captcha to be tried by the browser.'''
+#         process = Process(target=set_captcha_func, args=(value,))
+#         process.start()
+#         return {}
 
 
 @api.route('/messages')
 class MessageApi(Resource):
 
-    @api.doc(parser=api.create_parser('page', 'per_page_num'))
-    def get(self):
+    @api.parsed_args('page', 'per_page_num')
+    def get(self, page, per_page_num):
         '''List messages by decrescent time.'''
-        args = api.general_parse()
-        page = args['page']
-        per_page_num = args['per_page_num']
         messages = (db.session.query(Pedido, Message)
                     .options(joinedload('keywords'))
                     .filter(Message.pedido_id == Pedido.id)
@@ -92,23 +86,19 @@ class MessageApi(Resource):
 @api.route('/pedidos')
 class PedidoApi(Resource):
 
-    @api.doc(parser=api.create_parser('token', 'text', 'orgao', 'keywords'))
-    def post(self):
+    @api.parsed_args('token', 'text', 'orgao', 'keywords')
+    def post(self, author_name, text, orgao, keywords):
         '''Adds a new pedido to be submited to eSIC.'''
-        args = api.general_parse()
-        decoded = decode_token(args['token'], sv, api)
-        author_name = decoded['username']
 
-        text = bleach.clean(args['text'], strip=True)
+        text = bleach.clean(text, strip=True)
 
         # Size limit enforced by eSIC
         if len(text) > 6000:
             api.abort_with_msg(400, 'Text size limit exceeded.', ['text'])
 
         # Validate 'orgao'
-        if args['orgao']:
-            orgao_exists = db.session.query(Orgao).filter_by(
-                name=args['orgao']).count() == 1
+        if orgao:
+            orgao_exists = db.session.query(Orgao).filter_by(name=orgao).count() == 1
             if not orgao_exists:
                 api.abort_with_msg(400, 'Orgao not found.', ['orgao'])
         else:
@@ -125,7 +115,7 @@ class PedidoApi(Resource):
             author_id = author.id
 
         # get keywords
-        for keyword_name in args['keywords']:
+        for keyword_name in keywords:
             try:
                 keyword = (db.session.query(Keyword)
                            .filter_by(name=keyword_name).one())
@@ -135,8 +125,8 @@ class PedidoApi(Resource):
                 db.session.commit()
 
         pre_pedido = PrePedido(
-            author_id=author_id, orgao_name=args['orgao'],
-            keywords=','.join(k for k in args['keywords']),
+            author_id=author_id, orgao_name=orgao,
+            keywords=','.join(k for k in keywords),
             text=text, state='WAITING', created_at=arrow.now())
 
         db.session.add(pre_pedido)
@@ -147,16 +137,13 @@ class PedidoApi(Resource):
 @api.route('/recurso/<int:protocolo>')
 class RecursoApi(Resource):
 
-    @api.doc(parser=api.create_parser('token', 'text'))
-    def post(self, protocolo):
+    @api.parsed_args('token', 'text')
+    def post(self, author_name, protocolo, text):
         '''Adds a new recurso to be submited to eSIC.'''
-        args = api.general_parse()
-        # decoded = decode_token(args['token'], sv, api)
-        # author_name = decoded['username']
         # TODO: TIRARRRRRRRRRRR!
-        author_name = 'abacate'
+        # author_name = 'abacate'
 
-        text = bleach.clean(args['text'], strip=True)
+        text = bleach.clean(text, strip=True)
 
         # Size limit enforced by eSIC
         if len(text) > 6000:
@@ -341,11 +328,10 @@ def list_all_prepedidos():
         'orgao': p.orgao_name,
         'created': p.created_at.isoformat(),
         'keywords': p.keywords,
-        # 'tipo': p.tipo,
         'author': a.name,
     } for p, a in q.all()]
 
 
-def set_captcha_func(value):
-    '''Sets a captcha to be tried by the browser.'''
-    api.browser.set_captcha(value)
+# def set_captcha_func(value):
+#     '''Sets a captcha to be tried by the browser.'''
+#     api.browser.set_captcha(value)

@@ -7,7 +7,7 @@ import sqlalchemy as sa
 import sqlalchemy_utils as sa_utils
 from sqlalchemy.orm.exc import NoResultFound
 
-from extensions import db
+from cuidando_utils import db
 
 
 pedido_attachments = sa.Table(

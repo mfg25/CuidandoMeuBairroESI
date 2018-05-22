@@ -4,35 +4,13 @@
 from __future__ import unicode_literals  # unicode by default
 import os
 
-from flask import Flask, send_file, send_from_directory
-from flask_cors import CORS
-from flask_restplus import apidoc
-from flask_migrate import Migrate
-
-from extensions import db, sv
-from views import api
-from browser import ESicLivre
+import cuidando_utils
+from esiclivre.views import api
+from esiclivre.browser import ESicLivre
 
 
 def create_app(settings_folder):
-    # App
-    app = Flask(__name__)
-    Migrate(app, db)
-    app.config.from_pyfile('../settings/common.py', silent=False)
-    app.config.from_pyfile(
-        os.path.join(settings_folder, 'local_settings.py'), silent=False)
-    configure_logging(app)
-    CORS(app, resources={r"*": {"origins": "*"}})
-
-    # DB
-    db.init_app(app)
-
-    # Signer/Verifier
-    if app.config.get('PUBLIC_KEY_PATH'):
-        pub_key_path = app.config['PUBLIC_KEY_PATH']
-    else:
-        pub_key_path = os.path.join(settings_folder, 'keypub')
-    sv.config(pub_key_path=pub_key_path)
+    app = cuidando_utils.create_app(settings_folder, api, init_sv='public')
 
     # Browser
     browser = ESicLivre()
@@ -46,19 +24,14 @@ def create_app(settings_folder):
         )
     app.browser = browser
 
-    # API
-    api.init_app(app)
-    app.register_blueprint(apidoc.apidoc)
-    api.browser = browser
-
     # TODO: colocar isso em um lugar descente...
-    @app.route('/static/<path:path>')
-    def send_templates(path):
-        return send_from_directory('static/', path)
+    # @app.route('/static/<path:path>')
+    # def send_templates(path):
+    #     return send_from_directory('static/', path)
 
-    @app.route('/captcha')
-    def send_captcha():
-        return send_file('static/captcha.jpg')
+    # @app.route('/captcha')
+    # def send_captcha():
+    #     return send_file('static/captcha.jpg')
 
     @app.cli.command()
     def browser_once():
