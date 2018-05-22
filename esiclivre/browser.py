@@ -32,6 +32,7 @@ import arrow
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+from selenium.common.exceptions import TimeoutException
 import speech_recognition as sr
 
 from extensions import db
@@ -91,7 +92,7 @@ class ESicLivre(object):
         '''Carrega os cookies do navegador salvos anteriormente.'''
         try:
             cookies = pickle.load(open("cookies.pkl", "rb"))
-        except:
+        except IOError:
             return False
         for cookie in cookies:
             self.navegador.add_cookie(cookie)
@@ -135,7 +136,7 @@ class ESicLivre(object):
         with sr.WavFile(str(audio_path)) as source:
             audio = self.recognizer.record(source)
         try:
-            return self.recognizer.recognize_google(audio, language='pt-BR')
+            return self.recognizer.recognize_google(audio, language=str('pt-BR'))
         except LookupError:
             return None
 
@@ -151,10 +152,19 @@ class ESicLivre(object):
         # Esse número deve ser usado para evitar problemas com a cache
         n = random.randint(1, 400)
         link = self.base_url + "/Account/pgAudio.ashx?%s" % n
-        self.navegador.get(link)
+
+        self.navegador.set_page_load_timeout(1)
+        try:
+            self.navegador.get(link)
+        except TimeoutException:
+            pass
+        self.navegador.set_page_load_timeout(10)
+
         time.sleep(3)
         while str(self.nome_audio_captcha + ".part") in os.listdir(self.pasta):
+            self.logger.info("Waiting download finish...")
             time.sleep(1)
+        self.logger.info("Downloaded.")
 
     def baixar_imagem_captcha(self):
         # Removes the last downloaded audio file, avoiding adding (1) to
@@ -447,35 +457,38 @@ class ESicLivre(object):
     def active_loop(self):
         """Does routine stuff inside eSIC, like posting pedidos and recursos."""
 
-        pending_pre_pedidos = db.session.query(
-            PrePedido).filter_by(state='WAITING').all()
+        # pending_pre_pedidos = db.session.query(
+        #     PrePedido).filter_by(state='WAITING').all()
 
-        for pre_pedido in pending_pre_pedidos:
+        # for pre_pedido in pending_pre_pedidos:
 
-            # Is a new Pedido
-            if not pre_pedido.pedido:
-                protocolo, deadline = self.postar_pedido(
-                    pre_pedido.orgao_name, pre_pedido.text
-                )
-                pre_pedido.create_pedido(protocolo, deadline)
-                db.session.commit()
-                self.logger.info("Pedido sent!")
-            # Is a Recurso to a current Pedido
-            elif pre_pedido.pedido:
-                deadline = self.postar_recurso(
-                    pre_pedido.protocolo, pre_pedido.text
-                )
-                # TODO: falta colocar o deadline no Pedido
-                db.session.commit()
-                self.logger.info("Recurso sent!")
+        #     # Is a new Pedido
+        #     if not pre_pedido.pedido_id:
+        #         protocolo, deadline = self.postar_pedido(
+        #             pre_pedido.orgao_name, pre_pedido.text
+        #         )
+        #         pre_pedido.create_pedido(protocolo, deadline)
+        #         db.session.commit()
+        #         self.logger.info("Pedido sent!")
+        #     # Is a Recurso to a current Pedido
+        #     elif pre_pedido.pedido_id:
+        #         pedido = pre_pedido.pedido
+        #         protocolo = pedido.protocolo
+        #         deadline = self.postar_recurso(
+        #             protocolo, pre_pedido.text
+        #         )
+        #         # TODO: falta colocar o deadline no Pedido
+        #         pedido.deadline = deadline
+        #         db.session.commit()
+        #         self.logger.info("Recurso sent!")
 
-        last_update = db.session.query(PedidosUpdate).order_by(
-            PedidosUpdate.date.desc()).first()
+        # last_update = db.session.query(PedidosUpdate).order_by(
+        #     PedidosUpdate.date.desc()).first()
 
-        if last_update and last_update.date.date() == arrow.now().date():
-            return None
-        else:
-            pedidos_preproc.update_pedidos_list(self)
+        # if last_update and last_update.date.date() == arrow.now().date():
+        #     return None
+        # else:
+        #     pedidos_preproc.update_pedidos_list(self)
 
         self.logger.info("Nothing more to do...")
 

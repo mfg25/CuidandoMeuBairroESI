@@ -59,28 +59,30 @@ class PrePedido(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    author_id = db.Column(db.Integer)
+    author_id = db.Column(db.Integer, nullable=False)
 
-    orgao_name = db.Column(db.String(255))
+    orgao_name = db.Column(db.String(255), nullable=False, default='')
 
-    text = db.Column(sa.UnicodeText())
+    text = db.Column(sa.UnicodeText(), nullable=False)
 
-    keywords = db.Column(db.String(255))  # separated by commas
+    # separated by commas
+    keywords = db.Column(db.String(255), nullable=False, default='')
 
-    state = db.Column(db.String(255))  # WAITING or PROCESSED
+    state = db.Column(db.String(255), nullable=False)  # WAITING or PROCESSED
 
-    created_at = db.Column(sa_utils.ArrowType)
+    created_at = db.Column(sa_utils.ArrowType, nullable=False)
 
     updated_at = db.Column(sa_utils.ArrowType)
 
     # Used only if this PrePedido is a Recurso
-    pedido = db.relationship('Pedido')
+    # pedido = db.relationship('pedido')
+    pedido_id = db.Column(db.Integer, db.ForeignKey('pedido.id'), nullable=True)
 
-    def __init__(self, **kw):
-        protocolo = kw.get('protocolo')
-        if protocolo:
-            pedido = db.session.query(Pedido).filter_by(protocol=protocolo).one()
-            self.pedido = pedido
+    # def __init__(self, **kw):
+    #     protocolo = kw.get('protocolo')
+    #     if protocolo:
+    #         pedido = db.session.query(Pedido).filter_by(protocol=protocolo).one()
+    #         self.pedido = pedido
 
     @property
     def as_dict(self):
@@ -180,13 +182,13 @@ class Pedido(db.Model):
         'Author', secondary=pedido_author, backref='pedidos', uselist=False
     )
 
-    keywords = db.relationship(
-        'Keyword', secondary=pedido_keyword, backref='pedidos'
-    )
+    keywords = db.relationship('Keyword', secondary=pedido_keyword, backref='pedidos')
 
     attachments = db.relationship(
         'Attachment', secondary=pedido_attachments, backref='pedido'
     )
+
+    recursos = db.relationship("PrePedido", backref="pedido")
 
     @property
     def as_dict(self):
@@ -307,7 +309,7 @@ class Message(db.Model):
             'responsible': self.responsible,
             'date': self.date.isoformat(),
             'pedido_id': self.pedido_id,
-            'recurso_id': self.recurso_id
+            # 'recurso_id': self.recurso_id
         }
 
 

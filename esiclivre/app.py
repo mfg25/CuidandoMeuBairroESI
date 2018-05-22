@@ -7,6 +7,7 @@ import os
 from flask import Flask, send_file, send_from_directory
 from flask_cors import CORS
 from flask_restplus import apidoc
+from flask_migrate import Migrate
 
 from extensions import db, sv
 from views import api
@@ -16,6 +17,7 @@ from browser import ESicLivre
 def create_app(settings_folder):
     # App
     app = Flask(__name__)
+    Migrate(app, db)
     app.config.from_pyfile('../settings/common.py', silent=False)
     app.config.from_pyfile(
         os.path.join(settings_folder, 'local_settings.py'), silent=False)
@@ -57,6 +59,11 @@ def create_app(settings_folder):
     @app.route('/captcha')
     def send_captcha():
         return send_file('static/captcha.jpg')
+
+    @app.cli.command()
+    def browser_once():
+        '''Run browser once.'''
+        app.browser.rodar_uma_vez()
 
     return app
 

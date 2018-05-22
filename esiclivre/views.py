@@ -124,9 +124,7 @@ class PedidoApi(Resource):
             db.session.commit()
             author_id = author.id
 
-        pre_pedido = PrePedido(author_id=author_id, orgao_name=args['orgao'])
-
-        # Set keywords
+        # get keywords
         for keyword_name in args['keywords']:
             try:
                 keyword = (db.session.query(Keyword)
@@ -135,21 +133,22 @@ class PedidoApi(Resource):
                 keyword = Keyword(name=keyword_name)
                 db.session.add(keyword)
                 db.session.commit()
-        pre_pedido.keywords = ','.join(k for k in args['keywords'])
-        pre_pedido.text = text
-        pre_pedido.state = 'WAITING'
-        pre_pedido.created_at = arrow.now()
-        pre_pedido.tipo = 0
+
+        pre_pedido = PrePedido(
+            author_id=author_id, orgao_name=args['orgao'],
+            keywords=','.join(k for k in args['keywords']),
+            text=text, state='WAITING', created_at=arrow.now())
+
         db.session.add(pre_pedido)
         db.session.commit()
         return {'status': 'ok'}
 
 
-@api.route('/recursos')
+@api.route('/recurso/<int:protocolo>')
 class RecursoApi(Resource):
 
-    @api.doc(parser=api.create_parser('token', 'text', 'protocolo'))
-    def post(self):
+    @api.doc(parser=api.create_parser('token', 'text'))
+    def post(self, protocolo):
         '''Adds a new recurso to be submited to eSIC.'''
         args = api.general_parse()
         # decoded = decode_token(args['token'], sv, api)
@@ -173,23 +172,17 @@ class RecursoApi(Resource):
             db.session.commit()
             author_id = author.id
 
-        pre_pedido = PrePedido()
+        try:
+            pedido = db.session.query(Pedido).filter_by(protocol=protocolo).one()
+        except NoResultFound:
+            api.abort(404, 'Pedido not found')
 
-        # Set protocolo
-        # for keywords_name in args['keywords']:
-        #     try:
-        #         keywords = (db.session.query(Keyword).filter_by(name=keywords_name).one())
-        #     except NoResultFound:
-        #         keywords = Keyword(name=keywords_name)
-        #         db.session.add(keywords)
-        #         db.session.commit()
-        # pre_pedido.keywords = ','.join(k for k in args['keywords'])
+        if pedido.author.id != author_id:
+            api.abort(403, 'Only the author of pedido can add recurso')
 
-        # TODO: falta ter o protocolo?
-        pre_pedido.text = text
-        pre_pedido.state = 'WAITING'
-        pre_pedido.created_at = arrow.now()
-        pre_pedido.tipo = 1
+        pre_pedido = PrePedido(
+            pedido_id=pedido.id, state='WAITING', text=text, author_id=author_id,
+            created_at=arrow.now())
         db.session.add(pre_pedido)
         db.session.commit()
         return {'status': 'ok'}
@@ -296,7 +289,7 @@ class ListKeywords(Resource):
 class GetAuthor(Resource):
 
     def get(self, name):
-        '''Returns pedidos marked with a specific keyword.'''
+        '''Returns pedidos made by an author.'''
         try:
             author = (db.session.query(Author)
                       .options(joinedload('pedidos'))
@@ -309,8 +302,8 @@ class GetAuthor(Resource):
                 {
                     'id': p.id,
                     'protocolo': p.protocol,
-                    'orgao': p.orgao,
-                    'situacao': p.situation(),
+                    'orgao': p.orgao_name,
+                    'situacao': p.situation,
                     'deadline': p.deadline.isoformat() if p.deadline else '',
                     'keywords': [kw.name for kw in p.keywords],
                 }
@@ -348,7 +341,7 @@ def list_all_prepedidos():
         'orgao': p.orgao_name,
         'created': p.created_at.isoformat(),
         'keywords': p.keywords,
-        'tipo': p.tipo,
+        # 'tipo': p.tipo,
         'author': a.name,
     } for p, a in q.all()]
 

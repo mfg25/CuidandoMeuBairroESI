@@ -43,6 +43,8 @@ class ParsedPedido(object):
             self.situation = self._get_situation()
             self.request_date = self._get_request_date()
             self.history = self._get_history()
+            # TODO: criar a função que pega o deadline, ver em browser.py como fazer já que lá isso está implementado. Parece usar 2 jeitos diferentes.
+            # self.deadline = self._get_deadline()
 
     def _get_main_data(self):
         return self._raw_data.form
@@ -305,10 +307,10 @@ def fix_attachment_name_and_extension():
             )
 
 
-def update_pedido_messages(pre_pedido, pedido):
+def update_pedido_messages(scrapped_pedido, pedido):
     '''Update messages for a pedido.'''
     new_insetion = False
-    for item in pre_pedido.history:
+    for item in scrapped_pedido.history:
         # Check if is a new msg
         already_inserted = False
         for itemDB in pedido.history:
@@ -333,10 +335,10 @@ def update_pedido_messages(pre_pedido, pedido):
     extensions.db.session.commit() if new_insetion else None
 
 
-def create_pedido_attachments(pre_pedido):
+def create_pedido_attachments(scrapped_pedido):
 
     attachments = []
-    for item in pre_pedido.attachments:
+    for item in scrapped_pedido.attachments:
 
         attachment = models.Attachment()
         attachment.created_at = item.created_at
@@ -346,7 +348,7 @@ def create_pedido_attachments(pre_pedido):
             u'{base}/{prefix}_pedido_{protocol}/{filename}'.format(
                 base=base_url,
                 prefix=flask.current_app.config['ATTACHMENT_URL_PREFIX'],
-                protocol=pre_pedido.protocol,
+                protocol=scrapped_pedido.protocol,
                 filename=item.filename
             )
         )
@@ -358,10 +360,10 @@ def create_pedido_attachments(pre_pedido):
     return attachments
 
 
-def save_pedido_into_db(pre_pedido):
+def save_pedido_into_db(scrapped_pedido):
     # check if there is a object with the same protocol
     pedido = models.Pedido.query.filter(
-        models.Pedido.protocol == pre_pedido.protocol)
+        models.Pedido.protocol == scrapped_pedido.protocol)
     pedido = pedido.options(joinedload('history')).first()
     if not pedido:
         # if not, create one
@@ -375,15 +377,15 @@ def save_pedido_into_db(pre_pedido):
             extensions.db.session.add(author)
             extensions.db.session.commit()
 
-        pedido = models.Pedido(protocol=pre_pedido.protocol, author=author)
+        pedido = models.Pedido(protocol=scrapped_pedido.protocol, author=author)
         pedido.add_keyword('recuperado')
         extensions.db.session.add(pedido)
 
     # TODO: O que fazer se o orgão não existir no DB?
-    if not pre_pedido.orgao:
+    if not scrapped_pedido.orgao:
         orgao_name = 'desconhecido'
     else:
-        orgao_name = pre_pedido.orgao
+        orgao_name = scrapped_pedido.orgao
 
     orgao = models.Orgao.query.filter_by(name=orgao_name).first()
     if not orgao:
@@ -392,18 +394,21 @@ def save_pedido_into_db(pre_pedido):
         extensions.db.session.commit()
     pedido.orgao_name = orgao.name
 
-    pedido.interessado = pre_pedido.interessado
-    pedido.situation = pre_pedido.situation
-    pedido.request_date = pre_pedido.request_date
-    pedido.contact_option = pre_pedido.contact_option
-    pedido.description = pre_pedido.description
+    pedido.interessado = scrapped_pedido.interessado
+    pedido.situation = scrapped_pedido.situation
+    pedido.request_date = scrapped_pedido.request_date
+    pedido.contact_option = scrapped_pedido.contact_option
+    pedido.description = scrapped_pedido.description
+    # TODO: usar deadline aqui
+    # pedido.deadline = scrapped_pedido.deadline
+    # TODO: salvar no pedido alguma informação sobre se pode fazer recurso ou não
 
     extensions.db.session.commit()
 
-    update_pedido_messages(pre_pedido, pedido)
+    update_pedido_messages(scrapped_pedido, pedido)
 
-    if pre_pedido.attachments:
-        pedido.attachments = create_pedido_attachments(pre_pedido)
+    if scrapped_pedido.attachments:
+        pedido.attachments = create_pedido_attachments(scrapped_pedido)
 
 
 def upload_attachment_to_internet_archive(pedido_protocol, filename):

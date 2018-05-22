@@ -73,3 +73,4 @@ captcha.jpg
 somCaptcha.wav
 .ropeproject
 prod_settings.py
+static/

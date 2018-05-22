@@ -15,6 +15,9 @@ Se está usando Postgres:
 $ pip install psycopg2
 ```
 
+Instalar o `geckodriver` no PATH.
+Baixar Firefox e setar caminho nas configurações.
+
 ## Prepare DB
 
 Create the database and user, set them in `settings/local_settings.py` as `SQLALCHEMY_DATABASE_URI`.
