@@ -3,7 +3,7 @@
 
 from sqlalchemy_utils import ArrowType
 
-from extensions import db
+from cuidando_utils import db
 
 
 class Vote(db.Model):

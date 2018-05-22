@@ -8,15 +8,13 @@ import arrow
 import bleach
 from sqlalchemy import desc
 from sqlalchemy.orm.exc import NoResultFound
-from flask.ext.restplus import Resource
-from flask.ext.mail import Message
+from flask_restplus import Resource
+from flask_mail import Message
 from itsdangerous import BadSignature, SignatureExpired
 
-from viralata.utils import decode_token
-from cutils import date_to_json, paginate, ExtraApi
+from cuidando_utils import date_to_json, paginate, ExtraApi, db
 
-from models import Comment, Thread, Author
-from extensions import db, sv
+from tagarela.models import Comment, Thread, Author
 
 
 api = ExtraApi(version='1.0',
@@ -44,12 +42,10 @@ class ThreadAPI(Resource):
         '''Get comments from a thread.'''
         return get_thread_comments(thread_name=thread_name)
 
-    @api.doc(parser=api.create_parser('token', 'text'))
-    def post(self, thread_name):
+    @api.parsed_args('token', 'text')
+    def post(self, author_name, thread_name, text):
         '''Add a comment to thread.'''
-        args, author_name = parse_and_decode()
-
-        text = bleach.clean(args['text'], strip=True)
+        text = bleach.clean(text, strip=True)
 
         # Get thread (add if needed)
         try:
@@ -73,12 +69,9 @@ class ThreadAPI(Resource):
 @api.route('/comment')
 class ListCommentsAPI(Resource):
 
-    @api.doc(parser=api.create_parser('page', 'per_page_num'))
-    def get(self):
+    @api.parsed_args('page', 'per_page_num')
+    def get(self, page, per_page_num):
         '''List comments by decrescent creation time.'''
-        args = api.general_parse()
-        page = args['page']
-        per_page_num = args['per_page_num']
         comments = (db.session.query(Comment, Thread.name)
                     .filter(Comment.thread_id == Thread.id)
                     .order_by(desc(Comment.created))
@@ -103,12 +96,10 @@ class ListCommentsAPI(Resource):
 @api.route('/comment/<int:comment_id>')
 class CommentAPI(Resource):
 
-    @api.doc(parser=api.create_parser('token', 'text'))
-    def post(self, comment_id):
+    @api.parsed_args('token', 'text')
+    def post(self, author_name, comment_id, text):
         '''Add a comment reply to this comment.'''
-        args, author_name = parse_and_decode()
-
-        text = bleach.clean(args['text'], strip=True)
+        text = bleach.clean(text, strip=True)
 
         parent = get_comment(comment_id)
         author_id = get_author_add_if_needed(author_name)
@@ -122,21 +113,19 @@ class CommentAPI(Resource):
         db.session.commit()
         return get_thread_comments(comment.thread)
 
-    @api.doc(parser=api.create_parser('token'))
-    def delete(self, comment_id):
+    @api.parsed_args('token')
+    def delete(self, author_name, comment_id):
         '''Delete a comment from a thread. Returns thread.'''
-        args, author_name = parse_and_decode()
         comment = check_comment_author(comment_id, author_name)
         thread = comment.thread
         delete_comment(comment)
         return get_thread_comments(thread)
 
-    @api.doc(parser=api.create_parser('token', 'text'))
-    def put(self, comment_id):
+    @api.parsed_args('token', 'text')
+    def put(self, author_name, comment_id, text):
         '''Edit a comment in a thread.'''
-        args, author_name = parse_and_decode()
         comment = check_comment_author(comment_id, author_name)
-        comment.text = args['text']
+        comment.text = text
         comment.modified = arrow.utcnow()
         db.session.commit()
         return get_thread_comments(comment.thread)
@@ -145,12 +134,10 @@ class CommentAPI(Resource):
 @api.route('/vote/<int:comment_id>')
 class VoteAPI(Resource):
 
-    @api.doc(parser=api.create_parser('token', 'vote'))
-    def post(self, comment_id):
+    @api.parsed_args('token', 'vote')
+    def post(self, author_name, comment_id, vote):
         '''Like/dislike a comment in a thread.
         If vote is False, dislike; else like.'''
-        args, author_name = parse_and_decode()
-        vote = args['vote']
         author_id = get_author_add_if_needed(author_name)
         comment = get_comment(comment_id)
         if comment.author_id == author_id:
@@ -286,12 +273,6 @@ def check_comment_author(comment_id, author_name):
         api.abort(400, 'You seem not to be the author of this comment...')
 
     return comment
-
-
-def parse_and_decode():
-    '''Return args and username'''
-    args = api.general_parse()
-    return args, decode_token(args['token'], sv, api)['username']
 
 
 def delete_comment(comment):
