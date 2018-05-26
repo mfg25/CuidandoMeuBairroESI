@@ -62,26 +62,29 @@ def clear_template_data(data):
 class SubscriptionsAPI(Resource):
 
     @api.parsed_args('subscriber', 'tag')
-    def get(self, subscriber=None, tag=None):
+    def post(self, subscriber=None, tag=None):
         '''Get subscriptions filtering by subscriber and tag.'''
+        # TODO: better doc, or change method
         q = db.session.query(Subscription)
         if subscriber:
             q = q.filter(Subscription.subscriber.has(name=subscriber))
-        if tag:
+        elif tag:
             q = q.filter(Subscription.tag.has(name=tag))
+        else:
+            return {'subscriptions': []}
         return {'subscriptions': [i.as_dict() for i in q.all()]}
 
     @api.parsed_args('token', 'subscriptions')
-    def post(self, subscriber_name, subscriptions):
+    def put(self, subscriber_name, subscriptions):
         '''Subscribe to receive notifications about tags.
         Receives a list of objects in this format:
             author: str (allowed to send notifications)
-            tag_name: str (tag to which subscribe)
+            tag: str (tag to which subscribe)
             template_data: dict (used in the message)
         '''
         subscriber = Subscriber.get_or_create(subscriber_name)
         for subscription_data in subscriptions:
-            tag_name = subscription_data['tag_name']
+            tag_name = subscription_data['tag']
             template_data = subscription_data.get('template_data', {})
             author = subscription_data['author']
             tag = Tag.get_or_create(tag_name)
@@ -92,6 +95,7 @@ class SubscriptionsAPI(Resource):
         try:
             db.session.commit()
         except sa.exc.IntegrityError:
+            db.session.rollback()
             api.abort(400, 'Maybe already subscribed?')
         return {'status': 'ok'}
 
@@ -103,6 +107,13 @@ class SubscriptionsAPI(Resource):
          .filter(Subscription.subscriber.has(name=subscriber_name))
          .filter(Subscription.tag.has(Tag.name.in_(tags)))
          .delete(synchronize_session=False))
+        # subscriptions = (
+        #     db.session.query(Subscription)
+        #     .filter(Subscription.subscriber.has(name=subscriber_name))
+        #     .filter(Subscription.tag.has(Tag.name.in_(tags)))
+        #     .all())
+        # for subscription in subscriptions:
+        #     db.session.delete(subscription)
         db.session.commit()
         return {'status': 'ok'}
 
@@ -111,7 +122,7 @@ class SubscriptionsAPI(Resource):
 class MessagesAPI(Resource):
 
     @api.parsed_args('token')
-    def get(self, subscriber_name):
+    def post(self, subscriber_name):
         '''Get messages destinated to a subscriber.'''
         subscriptions = (
             db.session.query(Subscription)
@@ -127,8 +138,8 @@ class MessagesAPI(Resource):
         return {'messages': messages}
 
     @api.parsed_args('token', 'messages')
-    def post(self, author_name, messages):
-        '''Add a message to be sent to subscribers.
+    def put(self, author_name, messages):
+        '''A list of messages to be sent to subscribers.
 
         title: str
         template: str
@@ -136,9 +147,5 @@ class MessagesAPI(Resource):
 
         Template uses: https://docs.python.org/3.6/library/string.html#template-strings
         '''
-        for message in messages:
-            tags = message['tags']
-            title = message['title']
-            template = message['template']
-            Message.create_if_subscribed(author_name, title, template, tags)
+        Message.create_if_subscribed(author_name, messages)
         return {'status': 'ok'}
