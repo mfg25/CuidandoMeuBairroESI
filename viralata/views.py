@@ -18,24 +18,24 @@ from cuidando_utils import db, sv, ExtraApi
 from viralata.models import User
 
 
-api = ExtraApi(version='1.0',
-               title='Vira-lata',
-               description='An authentication microservice.')
+class ViralataApi(ExtraApi):
+
+    # Replace API method
+    def decode_token(self, token):
+        decoded = self.decode_validate_token(token)
+
+        # Verify if main token is not invalid
+        if decoded['type'] == 'main':
+            user = get_user(decoded['username'])
+            if decoded['exp'] != user.last_token_exp:
+                self.abort_with_msg(400, 'Invalid main token!', ['token'])
+
+        return decoded
 
 
-# Replace API method
-def decode_token(self, token):
-    decoded = self.decode_validate_token(token)
-
-    # Verify if main token is not invalid
-    if decoded['type'] == 'main':
-        user = get_user(decoded['username'])
-        if decoded['exp'] != user.last_token_exp:
-            self.abort_with_msg(400, 'Invalid main token!', ['token'])
-
-    return decoded
-api.decode_token = decode_token # noqa
-
+api = ViralataApi(version='1.0',
+                  title='Vira-lata',
+                  description='An authentication microservice.')
 
 api.update_parser_arguments({
     'username': {
@@ -61,6 +61,11 @@ api.update_parser_arguments({
     'description': {
         'location': 'json',
         'help': 'The user description.',
+    },
+    'users': {
+        'location': 'json',
+        'type': list,
+        'help': 'A list of usernames.',
     },
 })
 
@@ -134,7 +139,7 @@ class RenewMicroToken(Resource):
     @api.parsed_args('token', parse_token=False)
     def post(self, token):
         '''Get a new micro token to be used with the other microservices.'''
-        decoded = decode_token(token)
+        decoded = self.decode_token(token)
         if decoded['type'] != 'main':
             # This seems not to be a main token. It must be main for security
             # reasons, for only main ones can be invalidated at logout.
@@ -145,7 +150,7 @@ class RenewMicroToken(Resource):
         token = create_token(decoded['username']),
         return {
             'microToken': token,
-            'microTokenValidPeriod': api.app.config[
+            'microTokenValidPeriod': current_app.config[
                 'MICRO_TOKEN_VALID_PERIOD'],
         }
 
@@ -161,15 +166,15 @@ class ResetPassword(Resource):
         check_user_email(user, email)
 
         msg = Message(
-            api.app.config['MAIL_SUBJECT'],
-            sender=api.app.config['SENDER_NAME'],
+            current_app.config['MAIL_SUBJECT'],
+            sender=current_app.config['SENDER_NAME'],
             recipients=[user.email])
 
         code = passlib.utils.generate_password(15)
-        exp = api.app.config['TIME_RESET_PASSWORD']
+        exp = current_app.config['TIME_RESET_PASSWORD']
         user.set_temp_password(code, exp)
         db.session.commit()
-        msg.body = (api.app.config['EMAIL_TEMPLATE']
+        msg.body = (current_app.config['EMAIL_TEMPLATE']
                     .format(code=code, exp_min=exp/60))
         api.mail.send(msg)
         return {
@@ -197,7 +202,7 @@ class Logout(Resource):
     def post(self, username):
         '''Invalidates the main token.'''
         args = api.general_parse()
-        decoded = decode_token(args['token'])
+        decoded = self.decode_token(args['token'])
         # Invalidates all main tokens
         get_user(decoded['username']).last_token_exp = 0
         db.session.commit()
@@ -271,32 +276,30 @@ class UserAPI(Resource):
 @api.route('/users')
 class UsersAPI(Resource):
 
-    @api.parsed_args('optional_token')
-    def get(self, username=None):
-        '''List registered users.
-        Also returns e-mails if token from special user is passed.'''
-        users = db.session.query(User).all()
+    @api.parsed_args('token', 'users')
+    def get(self, username, users=[]):
+        '''Get data about users. Must be a special user.'''
+        users = db.session.query(User).filter(User.username.in_(users)).all()
         if username and username in current_app.config['SPECIAL_USERS']:
             return {
-                'users': [{
-                    'username': u.username,
-                    'email': u.email,
-                } for u in users]
+                'users': {u.username: {'email': u.email} for u in users}
             }
         else:
-            return {
-                'users': [u.username for u in users]
-            }
+            api.abort_with_msg(400, 'User not found', ['username'])
+        # else:
+        #     return {
+        #         'users': [u.username for u in users]
+        #     }
 
     @api.parsed_args('username', 'password', 'email')
     def post(self, username, password, email):
         '''Register a new user.'''
         # TODO: case insensitive? ver isso na hora de login tb
         # username = username.lower()
-        if len(username) < 5 or len(username) > 20:
+        if len(username) < 5 or len(username) > 40:
             api.abort_with_msg(
                 400,
-                'Invalid username size. Must be between 5 and 20 characters.',
+                'Invalid username size. Must be between 5 and 40 characters.',
                 ['username'])
         if not re.match(r'[A-Za-z0-9]{5,}', username):
             api.abort_with_msg(400, 'Invalid characters in username...',
@@ -337,8 +340,8 @@ def create_tokens(username):
     return {
         'mainToken': main_token,
         'microToken': create_token(username),
-        'microTokenValidPeriod': api.app.config['MICRO_TOKEN_VALID_PERIOD'],
-        'mainTokenValidPeriod': api.app.config['MAIN_TOKEN_VALID_PERIOD'],
+        'microTokenValidPeriod': current_app.config['MICRO_TOKEN_VALID_PERIOD'],
+        'mainTokenValidPeriod': current_app.config['MAIN_TOKEN_VALID_PERIOD'],
     }
 
 
@@ -347,10 +350,10 @@ def create_token(username, main=False):
     "main" controls the type of the token.'''
 
     if main:
-        exp_minutes = api.app.config['MAIN_TOKEN_VALID_PERIOD']
+        exp_minutes = current_app.config['MAIN_TOKEN_VALID_PERIOD']
         token_type = 'main'
     else:
-        exp_minutes = api.app.config['MICRO_TOKEN_VALID_PERIOD']
+        exp_minutes = current_app.config['MICRO_TOKEN_VALID_PERIOD']
         token_type = 'micro'
 
     return sv.encode({
