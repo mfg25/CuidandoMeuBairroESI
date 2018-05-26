@@ -325,12 +325,12 @@ def update_pedido_messages(scrapped_pedido, pedido):
 
         # Insert if is a new msg
         if not already_inserted:
-            message = models.Message()
-            message.date = item.date
-            message.justification = item.justification
-            message.responsible = item.responsible
-            message.situation = item.situation
-            message.pedido_id = pedido.id
+            message = models.Message(
+                date=item.date,
+                justification=item.justification,
+                responsible=item.responsible,
+                situation=item.situation,
+                pedido_id=pedido.id)
             db.session.add(message)
             new_insetion = True
 

@@ -457,38 +457,37 @@ class ESicLivre(object):
     def active_loop(self):
         """Does routine stuff inside eSIC, like posting pedidos and recursos."""
 
-        # pending_pre_pedidos = db.session.query(
-        #     PrePedido).filter_by(state='WAITING').all()
+        pending_pre_pedidos = db.session.query(
+            PrePedido).filter_by(state='WAITING').all()
 
-        # for pre_pedido in pending_pre_pedidos:
+        for pre_pedido in pending_pre_pedidos:
+            # Is a new Pedido
+            if not pre_pedido.pedido_id:
+                protocolo, deadline = self.postar_pedido(
+                    pre_pedido.orgao_name, pre_pedido.text
+                )
+                pre_pedido.create_pedido(protocolo, deadline)
+                db.session.commit()
+                self.logger.info("Pedido sent!")
+            # Is a Recurso to a current Pedido
+            elif pre_pedido.pedido_id:
+                pedido = pre_pedido.pedido
+                protocolo = pedido.protocolo
+                deadline = self.postar_recurso(
+                    protocolo, pre_pedido.text
+                )
+                # TODO: falta colocar o deadline no Pedido
+                pedido.deadline = deadline
+                db.session.commit()
+                self.logger.info("Recurso sent!")
 
-        #     # Is a new Pedido
-        #     if not pre_pedido.pedido_id:
-        #         protocolo, deadline = self.postar_pedido(
-        #             pre_pedido.orgao_name, pre_pedido.text
-        #         )
-        #         pre_pedido.create_pedido(protocolo, deadline)
-        #         db.session.commit()
-        #         self.logger.info("Pedido sent!")
-        #     # Is a Recurso to a current Pedido
-        #     elif pre_pedido.pedido_id:
-        #         pedido = pre_pedido.pedido
-        #         protocolo = pedido.protocolo
-        #         deadline = self.postar_recurso(
-        #             protocolo, pre_pedido.text
-        #         )
-        #         # TODO: falta colocar o deadline no Pedido
-        #         pedido.deadline = deadline
-        #         db.session.commit()
-        #         self.logger.info("Recurso sent!")
+        last_update = db.session.query(PedidosUpdate).order_by(
+            PedidosUpdate.date.desc()).first()
 
-        # last_update = db.session.query(PedidosUpdate).order_by(
-        #     PedidosUpdate.date.desc()).first()
-
-        # if last_update and last_update.date.date() == arrow.now().date():
-        #     return None
-        # else:
-        #     pedidos_preproc.update_pedidos_list(self)
+        if last_update and last_update.date.date() == arrow.now().date():
+            return None
+        else:
+            pedidos_preproc.update_pedidos_list(self)
 
         self.logger.info("Nothing more to do...")
 

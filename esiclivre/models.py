@@ -1,9 +1,8 @@
 # coding: utf-8
 
-from __future__ import unicode_literals  # unicode by default
-
 import arrow
 import sqlalchemy as sa
+from flask import current_app
 import sqlalchemy_utils as sa_utils
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -159,42 +158,35 @@ class Pedido(db.Model):
     __tablename__ = 'pedido'
 
     id = db.Column(db.Integer, primary_key=True)
-
     protocol = db.Column(db.Integer, index=True, unique=True)
-
     interessado = db.Column(db.String(255))
-
     situation = db.Column(db.String(255), index=True)
-
     request_date = db.Column(sa_utils.ArrowType, index=True)
-
     contact_option = db.Column(db.String(255), nullable=True)
-
     description = db.Column(sa.UnicodeText())
-
     deadline = db.Column(sa_utils.ArrowType, index=True)
-
     orgao_name = db.Column(db.String(255))
-
     history = db.relationship("Message", backref="pedido")
-
+    keywords = db.relationship('Keyword', secondary=pedido_keyword, backref='pedidos')
+    recursos = db.relationship("PrePedido", backref="pedido")
     author = db.relationship(
         'Author', secondary=pedido_author, backref='pedidos', uselist=False
     )
-
-    keywords = db.relationship('Keyword', secondary=pedido_keyword, backref='pedidos')
-
     attachments = db.relationship(
         'Attachment', secondary=pedido_attachments, backref='pedido'
     )
 
-    recursos = db.relationship("PrePedido", backref="pedido")
+    def get_notification_id(self):
+        '''Used to identify this object to the notification system.'''
+        return 'cuidandodomeubairro/pedido/' + self.protocol
 
     @property
     def as_dict(self):
         return {
             'id': self.id,
             'protocol': self.protocol,
+            'notification_id': self.get_notification_id(),
+            'notification_author': current_app.config['VIRALATA_USER'],
             'interessado': self.interessado,
             'situation': self.situation,
             'request_date': self.request_date.isoformat(),
@@ -283,21 +275,14 @@ class Orgao(db.Model):
 
 
 class Message(db.Model):
-
     __tablename__ = 'message'
-
     id = db.Column(db.Integer, primary_key=True)
-
     situation = db.Column(db.String(255))
-
     justification = db.Column(sa.UnicodeText())
-
     responsible = db.Column(db.String(255))
-
     date = db.Column(sa_utils.ArrowType, index=True)
-
     pedido_id = db.Column('pedido_id', db.Integer, db.ForeignKey('pedido.id'))
-
+    notification_sent = db.Column(db.Boolean, default=False, nullable=False)
     # recurso_id = db.Column('recurso_id', db.Integer, db.ForeignKey('recurso.id'))
 
     @property

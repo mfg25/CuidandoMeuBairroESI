@@ -5,8 +5,9 @@ from __future__ import unicode_literals  # unicode by default
 import os
 
 import cuidando_utils
-from esiclivre.views import api
-from esiclivre.browser import ESicLivre
+from .views import api
+from .browser import ESicLivre
+from .sender import send_update_notifications
 
 
 def create_app(settings_folder):
@@ -37,6 +38,11 @@ def create_app(settings_folder):
     def browser_once():
         '''Run browser once.'''
         app.browser.rodar_uma_vez()
+
+    @app.cli.command()
+    def send_notifications():
+        '''Send notifications about Execucao updates.'''
+        send_update_notifications()
 
     return app
 
