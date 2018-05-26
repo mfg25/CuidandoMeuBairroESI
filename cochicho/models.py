@@ -34,6 +34,7 @@ class Subscription(db.Model):
     subscriber = db.relationship('Subscriber', backref='subscriptions')
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'), primary_key=True)
     tag = db.relationship('Tag', backref='subscriptions')
+    # Author allowed to send messages to the subscriber in this subscription
     author = db.Column(db.String(255), nullable=True)
     template_data = db.Column(postgresql.JSONB)
 
@@ -90,21 +91,35 @@ class Message(db.Model):
     destinations = db.relationship('Tag', secondary=message_tag, backref='messages')
 
     @classmethod
-    def create_if_subscribed(cls, author, title, template, destinations):
+    def create_if_subscribed(cls, author, messages):
         '''Create a message to be sent, only if destinations have subscribers.'''
-        tags = (db.session.query(Tag)
-                .filter(Tag.name.in_(destinations))
-                # Select tags only with subscribers
-                .filter(Tag.subscriptions.any()))
-        if tags:
-            message = cls(
-                created_at=arrow.now(), status=Status.unsent, author=author,
-                template=template, title=title)
-            # add destination tags
-            for tag in tags:
-                message.destinations.append(tag)
-            db.session.add(message)
-            db.session.commit()
+        messages_tags = list(set(tag for msg in messages for tag in msg['tags']))
+        subscribed_tags = (
+            db.session.query(Tag)
+            # Return only tags that will be used in this method call
+            .filter(Tag.name.in_(messages_tags))
+            # Select tags only with subscribers
+            .filter(Tag.subscriptions.any())
+            .all())
+
+        # Organize by tag name
+        subscribed_tags = {tag.name: tag for tag in subscribed_tags}
+
+        for message in messages:
+            tags = message['tags']
+            title = message['title']
+            template = message['template']
+            if tags:
+                message = cls(
+                    created_at=arrow.now(), status=Status.unsent, author=author,
+                    template=template, title=title)
+                # add destination tags
+                for tag in tags:
+                    tag = subscribed_tags.get(tag)
+                    if tag:
+                        message.destinations.append(tag)
+                        db.session.add(message)
+        db.session.commit()
 
     def as_dict(self, template_data):
         return {
