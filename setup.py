@@ -12,8 +12,14 @@ setup(
     url='https://gitlab.com/cuidandodomeubairro/cuidando_utils',
     packages=["cuidando_utils"],
     install_requires=[
-        'cryptography',
+        'Flask',
+        'Flask-CORS',
+        'Flask-Migrate',
+        'Flask-Restplus',
+        'Flask-SQLAlchemy',
         'pyjwt',
+        'requests',
+        'cryptography',
     ],
     classifiers=[
         "Development Status :: 4 - Beta",

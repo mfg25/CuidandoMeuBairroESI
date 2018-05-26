@@ -2,15 +2,23 @@
 # coding: utf-8
 
 from __future__ import unicode_literals  # unicode by default
+import os
 import datetime
 import json
 from functools import wraps
+import urllib
 
-from flask import current_app
-from flask_restplus import Api
 import jwt
+import requests
+from flask import Flask, current_app
+from flask_cors import CORS
+from flask_migrate import Migrate
+from flask_restplus import Api, apidoc
+from flask_sqlalchemy import SQLAlchemy
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from cryptography.hazmat.backends import default_backend
+
+from .auth import register, get_token
 # from cryptography.x509 import load_pem_x509_certificate
 
 # openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
@@ -20,23 +28,23 @@ from cryptography.hazmat.backends import default_backend
 
 
 class SignerVerifier(object):
-    """Class to encode and decode JWTs."""
+    '''Class to encode and decode JWTs.'''
 
     def __init__(self, **kwargs):
         self.defaults = {
-            "priv_key_path": None,
-            "priv_key_password": None,
-            "pub_key_path": None,
-            "algorithm": 'RS512',
-            "options": {
+            'priv_key_path': None,
+            'priv_key_password': None,
+            'pub_key_path': None,
+            'algorithm': 'RS512',
+            'options': {
                 'require_exp': True,
             }
         }
         self.config(init_defaults=True, **kwargs)
 
     def config(self, init_defaults=False, **kwargs):
-        """Configures this class, loading defaults if asked, and then the passed
-        args."""
+        '''Configures this class, loading defaults if asked, and then the passed
+        args.'''
 
         # Init defaults
         if init_defaults:
@@ -48,45 +56,45 @@ class SignerVerifier(object):
             if k in self.defaults:
                 setattr(self, k, v)
             else:
-                raise "Error! Unknown arg!: " + k
+                raise 'Error! Unknown arg!: ' + k
 
-        if "priv_key_path" in kwargs:
+        if 'priv_key_path' in kwargs:
             self.load_priv_key(self.priv_key_path, self.priv_key_password)
-        if "pub_key_path" in kwargs:
+        if 'pub_key_path' in kwargs:
             self.load_pub_key(self.pub_key_path)
 
     def load_priv_key(self, path, priv_key_password=None):
-        """Loads private and public key from a private key PEM file."""
-        with open(path, "rb") as key_file:
+        '''Loads private and public key from a private key PEM file.'''
+        with open(path, 'rb') as key_file:
             self.priv_key = load_pem_private_key(key_file.read(),
                                                  priv_key_password,
                                                  default_backend())
             self.pub_key = self.priv_key.public_key()
 
     def load_pub_key(self, path):
-        """Loads public key from a public key SSH file."""
-        with open(path, "r") as key_file:
+        '''Loads public key from a public key SSH file.'''
+        with open(path, 'r') as key_file:
             self.pub_key = key_file.read()
 
     def encode(self, data, exp_minutes=5):
-        """Encodes data. If has 'exp', sets expiration to it."""
+        '''Encodes data. If has 'exp', sets expiration to it.'''
         if self.priv_key:
-            data["exp"] = (datetime.datetime.utcnow() +
+            data['exp'] = (datetime.datetime.utcnow() +
                            datetime.timedelta(minutes=exp_minutes))
             return jwt.encode(
                 data,
                 self.priv_key,
                 algorithm=self.algorithm
-            ).decode("utf8")
+            ).decode('utf8')
         else:
-            raise "Error: No private key!"
+            raise 'Error: No private key!'
 
     def decode(self, data):
-        """Decodes data."""
+        '''Decodes data.'''
         if self.pub_key:
             return jwt.decode(data, self.pub_key, options=self.options)
         else:
-            raise "Error: No public key!"
+            raise 'Error: No public key!'
 
 
 def paginate(query, page, per_page_num):
@@ -110,18 +118,36 @@ class ExtraApi(Api):
                 'help': 'The authentication token.',
                 'required': True
             },
+            # 'optional_token': {
+            #     'location': 'json',
+            #     'help': 'Optional authentication token.',
+            #     'dest': 'token',
+            # },
             'page': {
                 'type': int,
                 'default': 0,
-                'help': 'Page doc!!',
+                'help': 'Page to be returned.',
             },
             'per_page_num': {
                 'type': int,
                 'default': 20,
-                'help': 'PPN doc!!',
+                'help': 'Number of items per page.',
             },
         }
         self.update_general_parser()
+
+    def init_app(self, app):
+        super().init_app(app)
+
+        @app.cli.command()
+        def create_db():
+            '''Clear the existing data and create new tables.'''
+            db.create_all()
+
+        @app.cli.command()
+        def register_viralata_user():
+            '''Register a user in a Viralata instance.'''
+            register()
 
     def update_general_parser(self):
         '''Create a new general parser with current parser_arguments.'''
@@ -143,7 +169,7 @@ class ExtraApi(Api):
         '''Parse arguments using any arguments from parser_argumentsar.'''
         return self.general_parser.parse_args()
 
-    def parsed_args(self, *args):
+    def parsed_args(self, *args, parse_token=True):
         '''Decorator'''
         parser = self.create_parser(*args)
 
@@ -152,7 +178,7 @@ class ExtraApi(Api):
             @self.doc(parser=parser)
             def wrapper(*args, **kw):
                 args_json = parser.parse_args()
-                if 'token' in args_json:
+                if parse_token and 'token' in args_json:
                     token = args_json.pop('token')
                     username = self.decode_token(token)['username']
                     return function(self, username, **args_json, **kw)
@@ -170,32 +196,94 @@ class ExtraApi(Api):
         }))
 
     def decode_validate_token(self, token):
-        """This tries to be a general function to decode and validade any token.
+        '''This tries to be a general function to decode and validade any token.
         Receives a token, a SignerVerifier and an API.
-        """
+        '''
         if not token:
-            self.abort(400, "Error: No token received!")
+            self.abort(400, 'Error: No token received!')
         try:
             decoded = current_app.sv.decode(token)
-            # options={"verify_exp": False})
+            # options={'verify_exp': False})
         except jwt.ExpiredSignatureError:
-            self.abort(400, "Error: Expired token!")
+            self.abort(400, 'Error: Expired token!')
         except jwt.DecodeError:
-            self.abort(400, "Error: Token decode error!")
+            self.abort(400, 'Error: Token decode error!')
 
         # Verify if token has all fields
         for fields in ['username', 'type', 'exp']:
             if fields not in decoded.keys():
-                self.abort(400, "Error: Malformed token! No: %s" % fields)
+                self.abort(400, 'Error: Malformed token! No: %s' % fields)
 
         return decoded
 
     def decode_token(self, token):
-        """This function tries to decode and valitade a token used by a client micro
+        '''This function tries to decode and valitade a token used by a client micro
         service. A client micro service is anyone without knowlegde of revoked main
-        tokens. Because of this, they should only accept micro tokens."""
+        tokens. Because of this, they should only accept micro tokens.'''
         decoded = self.decode_validate_token(token)
         # TODO: DESCOMENTAR!!!!!!
         # if decoded['type'] != 'micro':
         #     self.abort(400, "Error: This is not a micro token!")
         return decoded
+
+
+db = SQLAlchemy()
+sv = SignerVerifier()
+
+
+def create_app(settings_folder, api, init_sv=False):
+    # App
+    app = Flask(__name__)
+    app.config.from_pyfile(
+        os.path.join(settings_folder, 'common.py'), silent=False)
+    app.config.from_pyfile(
+        os.path.join(settings_folder, 'local_settings.py'), silent=False)
+    CORS(app, resources={r"*": {"origins": "*"}})
+
+    # DB
+    db.init_app(app)
+    app.db = db
+    Migrate(app, db)
+
+    # Signer/Verifier
+    if init_sv == 'public':
+        # Use public key
+        if app.config.get('PUBLIC_KEY_PATH'):
+            pub_key_path = app.config['PUBLIC_KEY_PATH']
+        else:
+            pub_key_path = os.path.join(settings_folder, 'keypub')
+        sv.config(pub_key_path=pub_key_path)
+        app.sv = sv
+    elif init_sv == 'private':
+        # Use private key
+        sv.config(priv_key_path=os.path.join(settings_folder, 'key'),
+                  priv_key_password=app.config['PRIVATE_KEY_PASSWORD'])
+        app.sv = sv
+
+    # API
+    api.init_app(app)
+    app.register_blueprint(apidoc.apidoc)
+    return app
+
+
+def request(verb, url, data, with_token=True):
+    '''Make a request to an endpoint.'''
+    if with_token:
+        data['token'] = get_token()
+    return getattr(requests, verb)(url, json=data).json()
+
+
+def send_notification_messages(messages):
+    '''Send notification messages to a Cochicho service.'''
+    if messages:
+        endpoint = urllib.parse.urljoin(
+            current_app.config['COCHICHO_ADDRESS'], 'messages')
+        r = request('put', endpoint, {'messages': messages})
+        if r.get('status') == 'ok':
+            return True
+        else:
+            raise 'Error sending notifications!'
+
+
+def scape_template(text):
+    return text.replace('$', '$$')
