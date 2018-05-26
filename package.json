@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --colors",
     "dist": "CONFIG_FILE_ENV=prod webpack -p -d",
-    "viewdist": "light-server -s . -p 5001"
+    "viewdist": "light-server -s . -p 5000"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",

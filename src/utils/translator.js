@@ -25,6 +25,8 @@ class Translator {
             'reply': 'comentar',
             'Not mapped': 'Não mapeadas',
             'Mapped': 'Mapeadas',
+            'Follow expense': 'Acompanhar despesa',
+            'Unfollow expense': 'Deixar de acompanhar despesa',
             'Comment': 'Comentário',
             'Report': 'Denunciar',
             'Question': 'Pergunta',

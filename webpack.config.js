@@ -79,8 +79,5 @@ module.exports = {
           /* chunkName= */"vendor",
           /* filename= */"vendor.bundle.js")
     ],
-    devServer: {
-        port: 5001
-    },
     devtool: "source-map"
 }

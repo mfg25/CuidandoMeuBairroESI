@@ -1,4 +1,5 @@
 <despesa-view class="">
+
     <div class="container-fluid light-dark-bg">
         <div class="row">
             <div class="container">
@@ -46,6 +47,19 @@
                         { t('data updated at') }: { updateTime }
                     </div>
                 </div>
+
+                <button type="submit"
+                        if="{ !checkSubscribed(pointinfo.notification_id) }"
+                        onclick="{ subscribeExpense }"
+                        class="btn btn-color-sec block-right relative margin-bottom">
+                  <spinneror condition="subscribeExpenseWaiting" scale="0.15">{ t("Follow expense") }</spinneror>
+                </button>
+                <button type="submit"
+                        if="{ checkSubscribed(pointinfo.notification_id) }"
+                        onclick="{ unsubscribeExpense }"
+                        class="btn btn-color-sec block-right relative margin-bottom">
+                  <spinneror condition="unsubscribeExpenseWaiting" scale="0.15">{ t("Unfollow expense") }</spinneror>
+                </button>
 
                 <div if="{ this.pointinfo }" class="top-bar orgao-box">
                     <span class="block-decorator"/>
@@ -101,6 +115,8 @@
     import {formatCur} from '../utils/helpers'
     import ajax from '../utils/ajax'
     import map from '../component/map/map.js'
+    import {checkIsLogged} from '../store/auth'
+    this.checkIsLogged = checkIsLogged
     this.formatCur = formatCur
     this.mixin('base')
     // this.code = opts.code
@@ -119,6 +135,8 @@
 
     this.getUpdateTime = () => {
         if (this.pointinfo) {
+            if (this.pointinfo.dataextracao)
+              return this.pointinfo.dataextracao
             if (this.pointinfo.datafinal)
                 return this.pointinfo.datafinal
             if (this.pointinfo['cd_anoexecucao'])
@@ -131,6 +149,12 @@
 
     // reset pointinfo so loading spinner appears
     this.watches('code', () => this.pointinfo = null)
+
+     /* this.watchDepends('subscriptions', 'username', () => {this.update()}) */
+     this.watches('subscriptions')
+     this.watches('username', () => {
+       riot.control.trigger(riot.VEL('subscriptions'), '', true)
+     })
 
     this.watchDepends('pointinfo', 'code', () => {
         if (this.pointinfo) {
@@ -171,7 +195,6 @@
                 codGrupo: 'grupo_despesa',
             }
             var strFilters = '&mesEmpenho=12&' + Object.keys(filters).map(k => k + '=' + this.pointinfo[filters[k]]).join('&')
-              console.log(this.pointinfo, strFilters)
             ajax({
                 url: 'https://gatewayapi.prodam.sp.gov.br:443/financas/orcamento/sof/v2.1.0/consultaEmpenhos?' + strFilters,
                 headers: {
@@ -183,6 +206,31 @@
             })
         }
     })
+
+     this.subscribeExpense = event => {
+       if (checkIsLogged(event)) {
+          this.safeTriggerChange('subscribeExpense', {
+            id: this.pointinfo.notification_id,
+            author: this.pointinfo.notification_author,
+          })
+       }
+     }
+
+     this.unsubscribeExpense = event => {
+       if (checkIsLogged(event)) {
+         this.safeTriggerChange('unsubscribeExpense', {
+           id: this.pointinfo.notification_id,
+         })
+       }
+     }
+
+     // check if subscribed to id
+     this.checkSubscribed = id => {
+       if (this.subscriptions && this.subscriptions.value && this.subscriptions.value[id])
+         return true
+       else
+         return false
+     }
 
     this.preunmount = () => {
         document.getElementById('bigmap-container')

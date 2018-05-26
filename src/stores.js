@@ -2,6 +2,7 @@ import config from 'config'
 
 import auth from './store/auth'
 import comments from './store/comments'
+import subscriptions from './store/subscriptions'
 import pedidos from './store/pedidos'
 import pointinfo from './store/pointinfo'
 import userinfo from './store/userinfo'
@@ -33,7 +34,7 @@ let esicApi = config.apiurl_esic
 // Store for list of points for map
 class Points extends MapStore {
     ajaxParams(key) {
-        let url = `${moneyApi}/execucao/minlist/${key}?state=1&capcor=1`,
+        let url = `${moneyApi}/minlist/${key}?state=1&capcor=1`,
             method = 'get'
         return {url, method}
     }
@@ -44,7 +45,7 @@ new Points('points')
 // Store for general data about an year
 class YearInfo extends MapStore {
     ajaxParams(key) {
-        let url = `${moneyApi}/execucao/info/${key}`,
+        let url = `${moneyApi}/info/${key}`,
             method = 'get'
         return {url, method}
     }
@@ -59,7 +60,7 @@ new YearInfo('yearinfo')
 class TableData extends MapStore {
     ajaxParams(key) {
         let [ year, page ] = key.split('-'),
-            url = `${moneyApi}/execucao/list?year=${year}&page=${page}&per_page_num=25`,
+            url = `${moneyApi}/list?year=${year}&page=${page}&per_page_num=25`,
             method = 'get',
             raw = true
         return {url, method, raw}
@@ -77,7 +78,7 @@ let tabledata = new TableData('tabledata')
 // Store for year list
 class Years extends MapStore {
     ajaxParams(key) {
-        let url = `${moneyApi}/execucao/info`,
+        let url = `${moneyApi}/info`,
             method = 'get'
         return {url, method}
     }
@@ -92,7 +93,7 @@ years.forceKey = 'years'
 // Store for money updates
 class MoneyUpdates extends MapStore {
     ajaxParams(key) {
-        let url = `${moneyApi}/execucao/updates?per_page_num=20&has_key=state`,
+        let url = `${moneyApi}/updates?per_page_num=20&has_key=state`,
             method = 'get'
         return {url, method}
     }

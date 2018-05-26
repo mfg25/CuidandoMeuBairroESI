@@ -15,7 +15,7 @@ class PointInfo extends MapStore {
     }
 
     ajaxParams(key) {
-        let url = `${api}/execucao/list?code=${key}`,
+        let url = `${api}/list?code=${key}`,
             method = 'get'
         return {url, method}
     }
@@ -42,7 +42,7 @@ class PointInfo extends MapStore {
         // If there are codes not yet loaded in this store, load
         if (toLoad.length) {
             // Request data
-            let url = `${api}/execucao/list`,
+            let url = `${api}/list`,
                 data = {codes: toLoad},
                 json = null
 

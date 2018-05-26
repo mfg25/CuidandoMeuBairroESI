@@ -145,6 +145,17 @@
             </form>
         </div>
     </div>
+    <!-- Subscriptions -------------------- -->
+    <h2>Itens Acompanhados</h2>
+    <li each={el in listUserSubscriptions()}>
+      <a href="{el.template_data.link}">{el.tag}</a>
+
+      <button type="submit"
+              onclick="{ fUnsubscribe(el.tag) }"
+              class="btn btn-color-sec block-right relative margin-bottom">
+        <spinneror condition="waitings[el.tag]" scale="0.15">{ t("Unfollow expense") }</spinneror>
+      </button>
+    </li>
 
 
     <script>
@@ -251,5 +262,27 @@
 
         this.safeTriggerChange('sendEditUserinfo', data)
     }
+
+
+     // Subscriptions --------------------------
+     this.waitings = {}
+     this.watches('subscriptions')
+     this.listUserSubscriptions = () => {
+       if (this.username == this.user || (this.subscriptions && this.subscriptions.value)) {
+         let subscriptions = []
+         for (let code in this.subscriptions.value) {
+           subscriptions.push(this.subscriptions.value[code])
+         }
+         return subscriptions
+       } else return []
+     }
+
+     this.unsubscribeExpense = id => {
+         this.safeTriggerChange('unsubscribeExpense', {id}, this.waitings)
+     }
+
+     this.fUnsubscribe = id => {
+       return () => this.unsubscribeExpense(id)
+     }
     </script>
 </pessoa-view>
