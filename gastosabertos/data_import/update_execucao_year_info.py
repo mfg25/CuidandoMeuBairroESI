@@ -15,7 +15,6 @@ from sqlalchemy.dialects import postgresql
 from docopt import docopt
 
 from gastosabertos.models import Execucao, ExecucaoYearInfo
-from utils import get_db
 
 
 def create_year_info_json(db, year):
@@ -89,6 +88,7 @@ def update_all_years_info(db):
 
 
 if __name__ == '__main__':
+    from utils import get_db
     db = get_db()
     arguments = docopt(__doc__)
     tables = [ExecucaoYearInfo.__table__]

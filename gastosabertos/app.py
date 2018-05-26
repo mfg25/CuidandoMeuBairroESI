@@ -12,7 +12,9 @@ import cuidando_utils
 # from .config import DefaultConfig, INSTANCE_FOLDER_PATH
 # from .extensions import db, api
 # from .execucao import execucao
-from gastosabertos.views import api
+from .views import api
+from .data_import import update_execucao
+from .sender import send_update_notifications
 
 
 # DEFAULT_BLUEPRINTS = (
@@ -42,6 +44,19 @@ def create_app(settings_folder):
 
     # # Full CORS!
     # CORS(app, resources={r"*": {"origins": "*"}})
+
+    @app.cli.command()
+    def update_data():
+        '''Download and import Execucao data.'''
+        update_execucao.update(
+            app.db,
+            app.config['STORAGE_FOLDER'],
+            app.config['PUBLIC_DOWNLOADS_FOLDER'])
+
+    @app.cli.command()
+    def send_notifications():
+        '''Send notifications about Execucao updates.'''
+        send_update_notifications()
 
     return app
 

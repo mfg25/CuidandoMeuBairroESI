@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import Column
+from sqlalchemy import Column, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.dialects import postgresql
 from geoalchemy2 import Geometry
 
@@ -20,6 +21,8 @@ class Execucao(db.Model):
     # If an attempt were made to gecode this row
     searched = Column(db.Boolean, default=False)
 
+    modifications = relationship('History', backref='execucao')
+
     state = Column(db.Enum('orcado', 'atualizado', 'empenhado', 'liquidado',
                            name='expense_state'),
                    default='orcado')
@@ -33,12 +36,16 @@ class Execucao(db.Model):
 
     @classmethod
     def point_found(cls):
-        return cls.point != None
+        return cls.point != None  # noqa
 
     @staticmethod
     def get_region(point):
         """Returns the region of a point."""
         return Regions.query.filter(Regions.geo.ST_Contains(point))
+
+    def get_notification_id(self):
+        '''Used to identify this object to the notification system.'''
+        return 'cuidandodomeubairro/despesa/' + self.code
 
 
 class Regions(db.Model):
@@ -60,10 +67,11 @@ class History(db.Model):
     __tablename__ = 'execucao_history'
 
     id = Column(db.Integer, primary_key=True)
-    code = Column(db.String(100))
+    code = Column(db.String(100), ForeignKey('execucao.code'))
     event = Column(db.String(20))
-    date = db.Column(db.DateTime, nullable=False)
+    date = Column(db.DateTime, nullable=False)
     data = Column(postgresql.JSONB)
+    notification_sent = Column(db.Boolean, default=False, nullable=False)
 
 
 class ExecucaoYearInfo(db.Model):

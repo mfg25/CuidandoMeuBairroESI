@@ -63,7 +63,8 @@ def normalize_csv(csv_path):
     # (it changed from mixed to upper at some point in History)
     table.columns = [c.lower() for c in table.columns]
     # Remove empty column, if exists
-    table = table.select(lambda x: x.find('unnamed'), axis=1)
+    table = table[[col for col in table.columns if 'unnamed' not in col]]
+    # table = table.select(lambda x: x.find('unnamed'), axis=1)
 
     # Remove last row when it is empty
     last_line = table.iloc[-1]

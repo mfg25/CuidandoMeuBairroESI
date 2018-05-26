@@ -20,7 +20,6 @@ import csv
 from docopt import docopt
 
 from gastosabertos.models import Execucao
-from utils import get_db
 
 # For Python 2...
 if 'unix' not in csv.list_dialects():
@@ -83,6 +82,7 @@ def generate_all(db, outfolder, years):
 
 
 if __name__ == '__main__':
+    from utils import get_db
     db = get_db()
 
     arguments = docopt(__doc__)

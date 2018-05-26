@@ -18,7 +18,6 @@ setup(
         'Flask-Restplus',
         'Flask-CORS',
         'geoalchemy2',
-        'fabric',
         'docopt',
         'pandas',
         'geopy',

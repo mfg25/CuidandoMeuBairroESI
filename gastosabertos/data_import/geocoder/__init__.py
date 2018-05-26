@@ -25,7 +25,7 @@ class GeoEntity(object):
         self.region = ''
 
     def geocode(self, geocoder):
-        """Geocodes all the terms of this entity"""
+        '''Geocodes all the terms of this entity'''
         for term in self.terms:
             # No need to geocode regions
             if not term.get('region'):
@@ -34,13 +34,13 @@ class GeoEntity(object):
                     term['geo'] = geo
                     if not self.region:
                         # TODO: descobrir regiao do ponto
-                        self.region = "???"
+                        self.region = '???'
             else:
                 self.region = term['region']
 
     def best_coords(self):
-        """Returns the best latitude, longitude and region found for this
-        entity."""
+        '''Returns the best latitude, longitude and region found for this
+        entity.'''
         lat, lon = None, None
         for term in self.terms:
             # print(term)
@@ -62,11 +62,11 @@ class GeoEntity(object):
 
 
 class Geocoder(object):
-    """A class to organize geoservers and geocode terms"""
+    '''A class to organize geoservers and geocode terms'''
 
-    def __init__(self, data_folder="data", terms_folder="terms"):
-        self.cache = shelve.open(os.path.join(data_folder, "cache.db"))
-        self.terms_db = TermsDB(terms_folder)
+    def __init__(self, geocoder_folder, data_folder='data'):
+        self.cache = shelve.open(os.path.join(data_folder, 'geo_cache.db'))
+        self.terms_db = TermsDB(os.path.join(geocoder_folder, 'terms'))
 
         # Coords limits for geolocation
         #                  bot left   top right
@@ -78,10 +78,10 @@ class Geocoder(object):
         self.gm = geopy.GoogleV3()
         self.server_options = {
             "osm": self.geocode_osm,
-            #"gm": self.geocode_gm,
+            # "gm": self.geocode_gm,
         }
-        self.shapefy_regions(os.path.join(data_folder,
-                                          "subprefeituras.geojson"))
+        self.shapefy_regions(os.path.join(geocoder_folder, 'data',
+                                          'subprefeituras.geojson'))
 
     def shapefy_regions(self, path_geojson):
         # TODO: permitir configurar...
@@ -94,7 +94,7 @@ class Geocoder(object):
                 self.regions[name] = poly
 
     def inside_limits(self, point):
-        """Checks if point is inside coords limits or possible region."""
+        '''Checks if point is inside coords limits or possible region.'''
         if not self.regions:
             # Use rectangle check
             lat, lon = point.latitude, point.longitude
@@ -113,14 +113,14 @@ class Geocoder(object):
             return False
 
     def geocode(self, term):
-        """Geocodes a term in all avaiable geoservers"""
+        '''Geocodes a term in all avaiable geoservers'''
         # TODO: permitir cofigurar isso...
         # limit string size
         s = term[:60]
         # check cache
         # TODO: remove this .encode for Python 3
         print(s)
-        cache_key = s.encode("utf-8")
+        cache_key = s#.encode('utf-8')
         term_geo = self.cache.get(cache_key)
         if not term_geo:
             term_geo = {}

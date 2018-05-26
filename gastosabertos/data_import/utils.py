@@ -4,11 +4,10 @@
 
 import sys
 
-from gastosabertos.app import create_app
-
 
 def get_db(instance=None):
     from cuidando_utils import db
+    from ..app import create_app
     app = create_app(instance)
     db.app = app
     return db

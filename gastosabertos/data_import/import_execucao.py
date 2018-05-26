@@ -23,8 +23,8 @@ from docopt import docopt
 from sqlalchemy.sql.expression import insert
 
 from gastosabertos.models import Execucao, History
-from utils import ProgressCounter, get_db
-from update_execucao_year_info import update_all_years_info
+from .update_execucao_year_info import update_all_years_info
+from .utils import ProgressCounter, get_db
 
 
 def remove_older_history(db, delta):
@@ -154,12 +154,20 @@ def update_from_csv(db, csv):
     modified_counter = 0
     added_counter = 0
 
-    for row_i, row in table.iterrows():
-        code = pks.iloc[row_i]
-        row_model = db.session.query(Execucao).filter_by(code=code).first()
+    ignore_modification_fields = ['datafinal', 'dataextracao']
+
+    execucoes = {
+        e.code: e for e in
+        db.session.query(Execucao).filter(Execucao.code.in_(pks)).all()}
+
+    for code, tuple_ in zip(pks, table.iterrows()):
+        row = tuple_[1]
+        # code = pks.iloc[row_i]
+        # row_model = db.session.query(Execucao).filter_by(code=code).first()
+        row_model = execucoes.get(code)
         new_row = prepare_row(code, row)
         date = datetime.datetime.strptime(
-            new_row['data']['datafinal'], '%Y-%m-%d')
+            new_row['data']['dataextracao'], '%Y-%m-%d %H:%M:%S')
         if row_model:
             modified = {}
 
@@ -173,19 +181,22 @@ def update_from_csv(db, csv):
                 old_value = row_model.data.get(key)
 
                 # Avoids confusion caused by new_value not been unicode
-                if type(new_value) is str:
-                    new_value = new_value
-                    new_row['data'][key] = new_value
+                # if type(new_value) is str:
+                #     new_value = new_value
+                #     new_row['data'][key] = new_value
 
                 # Avoids data that changed from 0 to None
                 if (old_value or new_value) and (old_value != new_value):
                     modified[key] = (old_value, new_value)
 
-            # Avoids registering row as modified if only datafinal changend
-            if len(modified) == 1 and 'datafinal' in modified:
-                modified = {}
+            # Avoids registering row as modified if only less important fields changed
+            really_modified = False
+            for key in modified:
+                if key not in ignore_modification_fields:
+                    really_modified = True
+                    break
 
-            if modified:
+            if really_modified:
                 db.session.add(
                     History(event='modified', code=code,
                             date=date, data=modified))
