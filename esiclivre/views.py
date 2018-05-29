@@ -1,18 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from __future__ import unicode_literals  # unicode by default
-
-# from multiprocessing import Process
-
 import arrow
 import bleach
 from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
 from flask_restplus import Resource
+from flask import current_app
 
-from esiclivre.models import Orgao, Author, PrePedido, Pedido, Message, Keyword
+from esiclivre.models import Orgao, Author, UserMessage, Pedido, Message, Keyword
 from cuidando_utils import db, paginate, ExtraApi
 
 
@@ -50,16 +47,6 @@ class ListOrgaos(Resource):
         return {
             "orgaos": [i[0] for i in db.session.query(Orgao.name).all()]
         }
-
-
-# @api.route('/captcha/<string:value>')
-# class SetCaptcha(Resource):
-
-#     def get(self, value):
-#         '''Sets a captcha to be tried by the browser.'''
-#         process = Process(target=set_captcha_func, args=(value,))
-#         process.start()
-#         return {}
 
 
 @api.route('/messages')
@@ -106,32 +93,38 @@ class PedidoApi(Resource):
 
         # Get author (add if needed)
         try:
-            author_id = db.session.query(
-                Author.id).filter_by(name=author_name).one()
+            author = db.session.query(Author).filter_by(name=author_name).one()
         except NoResultFound:
             author = Author(name=author_name)
             db.session.add(author)
             db.session.commit()
-            author_id = author.id
+
+        pedido = Pedido(author=author, orgao_name=orgao, description=text)
+        db.session.add(pedido)
 
         # get keywords
         for keyword_name in keywords:
             try:
-                keyword = (db.session.query(Keyword)
-                           .filter_by(name=keyword_name).one())
+                keyword = db.session.query(Keyword).filter_by(name=keyword_name).one()
             except NoResultFound:
                 keyword = Keyword(name=keyword_name)
                 db.session.add(keyword)
-                db.session.commit()
+            pedido.keywords.append(keyword)
 
-        pre_pedido = PrePedido(
-            author_id=author_id, orgao_name=orgao,
-            keywords=','.join(k for k in keywords),
-            text=text, state='WAITING', created_at=arrow.now())
+        pergunta = UserMessage(
+            author_id=author.id, pedido_id=pedido.id, orgao_name=orgao,
+            # keywords=','.join(k for k in keywords),
+            text=text, created_at=arrow.now(),
+            state=UserMessage.states.waiting,
+            type=UserMessage.types.pergunta)
 
-        db.session.add(pre_pedido)
+        db.session.add(pergunta)
         db.session.commit()
-        return {'status': 'ok'}
+        return {
+            'status': 'ok',
+            'subscribe_data': {
+                'id': pedido.get_notification_id(),
+                'author': current_app.config['VIRALATA_USER']}}
 
 
 @api.route('/recurso/<int:protocolo>')
@@ -140,8 +133,6 @@ class RecursoApi(Resource):
     @api.parsed_args('token', 'text')
     def post(self, author_name, protocolo, text):
         '''Adds a new recurso to be submited to eSIC.'''
-        # TODO: TIRARRRRRRRRRRR!
-        # author_name = 'abacate'
 
         text = bleach.clean(text, strip=True)
 
@@ -151,26 +142,30 @@ class RecursoApi(Resource):
 
         # Get author (add if needed)
         try:
-            author_id = db.session.query(
-                Author.id).filter_by(name=author_name).one()
+            author = db.session.query(Author.id).filter_by(name=author_name).one()
         except NoResultFound:
             author = Author(name=author_name)
             db.session.add(author)
             db.session.commit()
-            author_id = author.id
 
         try:
             pedido = db.session.query(Pedido).filter_by(protocol=protocolo).one()
         except NoResultFound:
             api.abort(404, 'Pedido not found')
 
-        if pedido.author.id != author_id:
-            api.abort(403, 'Only the author of pedido can add recurso')
+        if pedido.author != author:
+            api.abort(403, 'Only the author of pedido can add recurso.')
 
-        pre_pedido = PrePedido(
-            pedido_id=pedido.id, state='WAITING', text=text, author_id=author_id,
+        if not pedido.allow_recurso:
+            api.abort(403, 'Recurso not allowed at the moment.')
+
+        recurso = UserMessage(
+            pedido_id=pedido.id,
+            state=UserMessage.states.waiting,
+            text=text, author_id=author.id,
             created_at=arrow.now())
-        db.session.add(pre_pedido)
+        db.session.add(recurso)
+        pedido.allow_recurso = False
         db.session.commit()
         return {'status': 'ok'}
 
@@ -190,19 +185,6 @@ class GetPedidoProtocolo(Resource):
         return pedido.as_dict
 
 
-# @api.route('/recursos/protocolo/<int:protocolo>')
-# class GetRecursoProtocolo(Resource):
-
-#     def get(self, protocolo):
-#         '''Returns a recurso by its pedido protocolo.'''
-#         try:
-#             recurso = (db.session.query(Recurso)
-#                       .filter_by(protocol=protocolo).one())
-#         except NoResultFound:
-#             api.abort(404)
-#         return recurso.as_dict
-
-
 @api.route('/pedidos/id/<int:id_number>')
 class GetPedidoId(Resource):
 
@@ -215,37 +197,34 @@ class GetPedidoId(Resource):
         return pedido.as_dict
 
 
-# @api.route('/recursos/id/<int:id_number>')
-# class GetRecursoId(Resource):
-
-#     def get(self, id_number):
-#         '''Returns a Recurso by its pedido id.'''
-#         try:
-#             recurso = db.session.query(Recurso).filter_by(pedido_id=id_number).one()
-#         except NoResultFound:
-#             api.abort(404)
-#         return recurso.as_dict
-
-
 @api.route('/keywords/<string:keyword_name>')
 class GetPedidoKeyword(Resource):
 
     def get(self, keyword_name):
         '''Returns pedidos marked with a specific keyword.'''
         try:
-            pedidos = (db.session.query(Keyword)
-                       .options(joinedload('pedidos'))
-                       .options(joinedload('pedidos.history'))
-                       .filter_by(name=keyword_name).one()).pedidos
+            pedidos = (
+                db.session.query(Keyword)
+                .options(
+                    joinedload('pedidos')
+                    .joinedload('history'))
+                .filter_by(name=keyword_name).one()).pedidos
         except NoResultFound:
             pedidos = []
+
+        sent_pedidos = []
+        unsent_pedidos = []
+        for p in pedidos:
+            if p.request_date:
+                sent_pedidos.append(p)
+            else:
+                unsent_pedidos.append(p)
+        sent_pedidos = sorted(sent_pedidos, key=lambda p: p.request_date, reverse=True)
         return {
             'keyword': keyword_name,
-            'pedidos': [
-                pedido.as_dict for pedido in sorted(
-                    pedidos, key=lambda p: p.request_date, reverse=True
-                )
-            ],
+            'pedidos': [pedido.as_dict for pedido in unsent_pedidos + sent_pedidos],
+            # 'prepedidos': [p for p in list_all_user_messages()
+            #                if keyword_name in p['keywords']],
         }
 
 
@@ -278,11 +257,14 @@ class GetAuthor(Resource):
     def get(self, name):
         '''Returns pedidos made by an author.'''
         try:
-            author = (db.session.query(Author)
-                      .options(joinedload('pedidos'))
-                      .filter_by(name=name).one())
+            author = (
+                db.session.query(Author)
+                .options(
+                    joinedload('pedidos', innerjoin=True)
+                    .joinedload('keywords', innerjoin=True))
+                .filter_by(name=name).one())
         except NoResultFound:
-            api.abort(404)
+            api.abort(404, 'No pedido for this author.')
         return {
             'name': author.name,
             'pedidos': [
@@ -291,6 +273,7 @@ class GetAuthor(Resource):
                     'protocolo': p.protocol,
                     'orgao': p.orgao_name,
                     'situacao': p.situation,
+                    'notification_id': p.get_notification_id(),
                     'deadline': p.deadline.isoformat() if p.deadline else '',
                     'keywords': [kw.name for kw in p.keywords],
                 }
@@ -311,17 +294,17 @@ class ListAuthors(Resource):
         }
 
 
-@api.route('/prepedidos')
-class PrePedidoAPI(Resource):
+@api.route('/waiting')
+class UserMessagesAPI(Resource):
 
     def get(self):
-        '''List PrePedidos.'''
-        return {'prepedidos': list_all_prepedidos()}
+        '''List UserMessages.'''
+        return {'waiting': list_all_user_messages()}
 
 
-def list_all_prepedidos():
-    q = db.session.query(PrePedido, Author).filter_by(state='WAITING')
-    q = q.filter(PrePedido.author_id == Author.id)
+def list_all_user_messages():
+    q = db.session.query(UserMessage, Author).filter_by(state=UserMessage.states.waiting)
+    q = q.filter(UserMessage.author_id == Author.id)
 
     return [{
         'text': p.text,
@@ -330,8 +313,3 @@ def list_all_prepedidos():
         'keywords': p.keywords,
         'author': a.name,
     } for p, a in q.all()]
-
-
-# def set_captcha_func(value):
-#     '''Sets a captcha to be tried by the browser.'''
-#     api.browser.set_captcha(value)

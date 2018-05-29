@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import enum
+
 import arrow
 import sqlalchemy as sa
 from flask import current_app
@@ -15,12 +17,6 @@ pedido_attachments = sa.Table(
     db.Column('attachment_id', db.Integer, db.ForeignKey('attachment.id'))
 )
 
-# recurso_attachments = sa.Table(
-#     'recurso_attachments', db.metadata,
-#     db.Column('recurso_id', db.Integer, db.ForeignKey('recurso.id')),
-#     db.Column('attachment_recurso_id', db.Integer, db.ForeignKey('attachment_recurso.id'))
-# )
-
 pedido_keyword = sa.Table(
     'pedido_keyword', db.metadata,
     db.Column('pedido_id', db.Integer, db.ForeignKey('pedido.id')),
@@ -35,53 +31,30 @@ pedido_author = sa.Table(
 
 
 class PedidosUpdate(db.Model):
-
     __tablename__ = 'pedidos_update'
-
     id = db.Column(db.Integer, primary_key=True)
-
     date = db.Column(sa_utils.ArrowType, index=True)
 
 
-# class RecursosUpdate(db.Model):
-
-#     __tablename__ = 'recursos_update'
-
-#     id = db.Column(db.Integer, primary_key=True)
-
-#     date = db.Column(sa_utils.ArrowType, index=True)
-
-
-class PrePedido(db.Model):
-
+class UserMessage(db.Model):
+    '''Messages sent by users to start a Pedido or a Recurso.'''
     __tablename__ = 'pre_pedido'
-
     id = db.Column(db.Integer, primary_key=True)
-
     author_id = db.Column(db.Integer, nullable=False)
-
     orgao_name = db.Column(db.String(255), nullable=False, default='')
-
     text = db.Column(sa.UnicodeText(), nullable=False)
+    created_at = db.Column(sa_utils.ArrowType, nullable=False)
+    updated_at = db.Column(sa_utils.ArrowType)
+    pedido_id = db.Column(db.Integer, db.ForeignKey('pedido.id'), nullable=True)
 
     # separated by commas
     keywords = db.Column(db.String(255), nullable=False, default='')
 
-    state = db.Column(db.String(255), nullable=False)  # WAITING or PROCESSED
+    states = enum.Enum('UserMessageStates', 'waiting processed')
+    state = db.Column(db.Enum(states), default=states.waiting, nullable=False)
 
-    created_at = db.Column(sa_utils.ArrowType, nullable=False)
-
-    updated_at = db.Column(sa_utils.ArrowType)
-
-    # Used only if this PrePedido is a Recurso
-    # pedido = db.relationship('pedido')
-    pedido_id = db.Column(db.Integer, db.ForeignKey('pedido.id'), nullable=True)
-
-    # def __init__(self, **kw):
-    #     protocolo = kw.get('protocolo')
-    #     if protocolo:
-    #         pedido = db.session.query(Pedido).filter_by(protocol=protocolo).one()
-    #         self.pedido = pedido
+    types = enum.Enum('UserMessageTypes', 'pergunta recurso')
+    type = db.Column(db.Enum(types), nullable=False)
 
     @property
     def as_dict(self):
@@ -91,8 +64,8 @@ class PrePedido(db.Model):
             'orgao_name': self.orgao_name,
             'text': self.text,
             'keywords': [keyword for keyword in self.keywords.split(',')],
-            'tipo': self.tipo,
-            'state': self.state
+            'state': self.state,
+            'type': self.type
         }
 
     @property
@@ -111,64 +84,40 @@ class PrePedido(db.Model):
         ]
 
     def create_pedido(self, protocolo, deadline):
-
-        pedido = Pedido()
-
-        pedido.protocol = protocolo
-        pedido.deadline = deadline
-
-        pedido.orgao = self.orgao
-        pedido.author = self.author
-        pedido.keywords = self.all_keywords
-
-        pedido.description = self.text
-        pedido.request_date = arrow.utcnow()
-
+        pedido = Pedido(
+            protocol=protocolo,
+            deadline=deadline,
+            orgao=self.orgao,
+            author=self.author,
+            keywords=self.all_keywords,
+            description=self.text,
+            request_date=arrow.utcnow())
         db.session.add(pedido)
         db.session.commit()
-
         self.updated_at = arrow.utcnow()
-        self.state = 'PROCESSED'
-
-        db.session.add(self)
+        self.state = UserMessage.states.processed
+        # db.session.add(self)
         db.session.commit()
-
-    # def create_recurso(self, deadline):
-
-    #     recurso = Recurso()
-
-    #     recurso.deadline = deadline
-
-    #     recurso.orgao = self.orgao
-    #     pedido.justification = self.text
-    #     pedido.request_date = arrow.utcnow()
-
-    #     db.session.add(pedido)
-    #     db.session.commit()
-
-    #     self.updated_at = arrow.utcnow()
-    #     self.state = 'PROCESSED'
-
-    #     db.session.add(self)
-    #     db.session.commit()
+        return pedido
 
 
 class Pedido(db.Model):
-
     __tablename__ = 'pedido'
 
     id = db.Column(db.Integer, primary_key=True)
-    protocol = db.Column(db.Integer, index=True, unique=True)
+    protocol = db.Column(db.Integer, index=True, unique=True, nullable=True)
     interessado = db.Column(db.String(255))
     situation = db.Column(db.String(255), index=True)
     request_date = db.Column(sa_utils.ArrowType, index=True)
     contact_option = db.Column(db.String(255), nullable=True)
     description = db.Column(sa.UnicodeText())
-    deadline = db.Column(sa_utils.ArrowType, index=True)
-    orgao_name = db.Column(db.String(255))
-    history = db.relationship("Message", backref="pedido")
+    deadline = db.Column(sa_utils.ArrowType, index=True, nullable=True)
+    orgao_name = db.Column(db.String(255), nullable=True)
+    # If this Pedido is open to Recursos at the moment.
+    allow_recurso = db.Column(db.Boolean, default=False, nullable=False)
+    history = db.relationship('Message', backref='pedido')
     keywords = db.relationship('Keyword', secondary=pedido_keyword, backref='pedidos')
-    recursos = db.relationship("PrePedido", backref="pedido")
+    user_messages = db.relationship('UserMessage', backref='pedido')
     author = db.relationship(
         'Author', secondary=pedido_author, backref='pedidos', uselist=False
     )
@@ -178,7 +127,8 @@ class Pedido(db.Model):
 
     def get_notification_id(self):
         '''Used to identify this object to the notification system.'''
-        return 'cuidandodomeubairro/pedido/' + self.protocol
+        # return 'cuidandodomeubairro/pedido/protocolo/' + str(self.protocol)
+        return 'cuidandodomeubairro/pedido/id/' + str(self.id)
 
     @property
     def as_dict(self):
@@ -189,7 +139,8 @@ class Pedido(db.Model):
             'notification_author': current_app.config['VIRALATA_USER'],
             'interessado': self.interessado,
             'situation': self.situation,
-            'request_date': self.request_date.isoformat(),
+            'allow_recurso': self.allow_recurso,
+            'request_date': self.request_date.isoformat() if self.request_date else '',
             'contact_option': self.contact_option,
             'description': self.description,
             'deadline': self.deadline.isoformat() if self.deadline else '',
@@ -211,62 +162,15 @@ class Pedido(db.Model):
         self.keywords.append(keyword)
 
 
-# class Recurso(db.Model):
-
-#     __tablename__ = 'recurso'
-
-#     id = db.Column(db.Integer, primary_key=True, unique=True)
-
-#     pedido_id = db.Column('pedido_id', db.Integer, db.ForeignKey('pedido.id'), primary_key=True)
-
-#     protocol = db.Column(db.Integer, index=True, unique=True)
-
-#     situation = db.Column(db.String(255), index=True)
-
-#     request_date = db.Column(sa_utils.ArrowType, index=True)
-
-#     description = db.Column(sa.UnicodeText())
-
-#     deadline = db.Column(sa_utils.ArrowType, index=True)
-
-#     history = db.relationship("Message", backref="recurso")
-
-#     orgao_name = db.Column(db.String(255))
-
-#     attachments = db.relationship(
-#         'Attachment_Recurso', secondary=recurso_attachments, backref='recurso'
-#     )
-
-#     @property
-#     def as_dict(self):
-#         return {
-#             'id': self.id,
-# 	    	'pedido_id': self.pedido_id,
-#             'situation': self.situation,
-#             'request_date': self.request_date.isoformat(),
-#             'justification': self.description,
-#             'deadline': self.deadline.isoformat() if self.deadline else '',
-#             'orgao_name': self.orgao_name,
-#             'history': [m.as_dict for m in self.history],
-#             'attachments': [att.as_dict for att in self.attachments]
-#         }
-
-
 class OrgaosUpdate(db.Model):
-
     __tablename__ = 'orgaos_update'
-
     id = db.Column(db.Integer, primary_key=True)
-
     date = db.Column(sa_utils.ArrowType, index=True)
 
 
 class Orgao(db.Model):
-
     __tablename__ = 'orgao'
-
     id = db.Column(db.Integer, primary_key=True)
-
     name = db.Column(db.String(255), nullable=False, unique=True)
 
     @property
@@ -283,7 +187,6 @@ class Message(db.Model):
     date = db.Column(sa_utils.ArrowType, index=True)
     pedido_id = db.Column('pedido_id', db.Integer, db.ForeignKey('pedido.id'))
     notification_sent = db.Column(db.Boolean, default=False, nullable=False)
-    # recurso_id = db.Column('recurso_id', db.Integer, db.ForeignKey('recurso.id'))
 
     @property
     def as_dict(self):
@@ -294,16 +197,12 @@ class Message(db.Model):
             'responsible': self.responsible,
             'date': self.date.isoformat(),
             'pedido_id': self.pedido_id,
-            # 'recurso_id': self.recurso_id
         }
 
 
 class Author(db.Model):
-
     __tablename__ = 'author'
-
     id = db.Column(db.Integer, primary_key=True)
-
     name = db.Column(db.String(255), nullable=False, unique=True)
 
     @property
@@ -312,11 +211,8 @@ class Author(db.Model):
 
 
 class Keyword(db.Model):
-
     __tablename__ = 'keyword'
-
     id = db.Column(db.Integer, primary_key=True)
-
     name = db.Column(db.String(255), nullable=False, unique=True, index=True)
 
     @property
@@ -325,15 +221,10 @@ class Keyword(db.Model):
 
 
 class Attachment(db.Model):
-
     __tablename__ = 'attachment'
-
     id = db.Column(db.Integer, primary_key=True)
-
     name = db.Column(db.String(255), nullable=False)
-
     created_at = db.Column(sa_utils.ArrowType)
-
     ia_url = db.Column(sa_utils.URLType)
 
     @property
@@ -343,24 +234,3 @@ class Attachment(db.Model):
             'name': self.name,
             'ia_url': self.ia_url
         }
-
-
-# class Attachment_Recurso(db.Model):
-
-#     __tablename__ = 'attachment_recurso'
-
-#     id = db.Column(db.Integer, primary_key=True)
-
-#     name = db.Column(db.String(255), nullable=False)
-
-#     created_at = db.Column(sa_utils.ArrowType)
-
-#     ia_url = db.Column(sa_utils.URLType)
-
-#     @property
-#     def as_dict(self):
-#         return {
-#             'id': self.id,
-#             'name': self.name,
-#             'ia_url': self.ia_url
-#         }

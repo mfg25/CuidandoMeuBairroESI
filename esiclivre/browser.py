@@ -1,25 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# -----------------------------------------------------------------------------
-# Copyright 2014 Andrés Mantecon Ribeiro Martano
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# -----------------------------------------------------------------------------
-
-from __future__ import unicode_literals  # unicode by default
-
 import os
 import requests
 import shutil
@@ -29,15 +10,17 @@ import pickle
 from multiprocessing import Process, Manager
 
 import arrow
+import speech_recognition as sr
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.common.exceptions import TimeoutException
-import speech_recognition as sr
 
 from cuidando_utils import db
-from esiclivre.models import Orgao, PrePedido, PedidosUpdate, OrgaosUpdate
-from esiclivre.preprocessors import pedidos as pedidos_preproc
+
+from .models import Orgao, UserMessage, PedidosUpdate, OrgaosUpdate
+from .preprocessors import pedidos as pedidos_preproc
+# from .sender import subscribe_user_to_notifications
 
 
 class LoginNeeded(Exception):
@@ -49,8 +32,8 @@ class ESicLivre(object):
     _last_update_of_orgao_list = None
 
     def __init__(self, firefox=None, email=None, senha=None, pasta=None):
-        """'firefox' é o caminho para o binário do Firefox a ser usado.
-        'pasta' é o caminho para a pasta onde salvar os downloads."""
+        '''"firefox" é o caminho para o binário do Firefox a ser usado.
+        'pasta' é o caminho para a pasta onde salvar os downloads.'''
         self.firefox = firefox
         self.pasta = pasta
         self.email = email
@@ -103,17 +86,17 @@ class ESicLivre(object):
         return self.navegador.current_url == self.login_url
 
     def criar_navegador(self):
-        """Retorna um navegador firefox configurado para salvar arquivos
-        baixados em 'pasta'."""
-        self.logger.info("Configuring and initiating browser...")
+        '''Retorna um navegador firefox configurado para salvar arquivos
+        baixados em 'pasta'.'''
+        self.logger.info('Configuring and initiating browser...')
         fp = webdriver.FirefoxProfile()
-        fp.set_preference("browser.download.folderList", 2)
-        fp.set_preference("browser.download.manager.showWhenStarting", False)
-        fp.set_preference("browser.download.dir", self.pasta)
+        fp.set_preference('browser.download.folderList', 2)
+        fp.set_preference('browser.download.manager.showWhenStarting', False)
+        fp.set_preference('browser.download.dir', self.pasta)
         tipos = ','.join(['text/csv', 'audio/wav', 'audio/x-wav',
                           'image/jpeg', 'application/octet-stream'])
-        fp.set_preference("browser.helperApps.neverAsk.saveToDisk", tipos)
-        fp.set_preference("general.useragent.override", self.user_agent)
+        fp.set_preference('browser.helperApps.neverAsk.saveToDisk', tipos)
+        fp.set_preference('general.useragent.override', self.user_agent)
         # O binário do navegador deve estar na pasta firefox
         binary = FirefoxBinary(self.firefox)
         self.navegador = webdriver.Firefox(
@@ -122,16 +105,16 @@ class ESicLivre(object):
         self.navegador.implicitly_wait(20)
 
     def ir_para_registrar_pedido(self):
-        self.navegador.get(self.base_url + "/registrar_pedido_v2.aspx")
+        self.navegador.get(self.base_url + '/registrar_pedido_v2.aspx')
 
     def ir_para_consultar_pedido(self):
-        self.navegador.get(self.base_url + "/consultar_pedido_v2.aspx")
+        self.navegador.get(self.base_url + '/consultar_pedido_v2.aspx')
 
     def ir_para_login(self):
         self.navegador.get(self.login_url)
 
     def transcribe_audio_captcha(self):
-        self.logger.info("Transcribing audio captcha...")
+        self.logger.info('Transcribing audio captcha...')
         audio_path = os.path.join(self.pasta, self.nome_audio_captcha)
         with sr.WavFile(str(audio_path)) as source:
             audio = self.recognizer.record(source)
@@ -148,10 +131,10 @@ class ESicLivre(object):
             os.remove(cam_audio)
         except (OSError, IOError):
             pass
-        self.logger.info("Downloading audio captcha...")
+        self.logger.info('Downloading audio captcha...')
         # Esse número deve ser usado para evitar problemas com a cache
         n = random.randint(1, 400)
-        link = self.base_url + "/Account/pgAudio.ashx?%s" % n
+        link = self.base_url + '/Account/pgAudio.ashx?%s' % n
 
         self.navegador.set_page_load_timeout(1)
         try:
@@ -161,10 +144,10 @@ class ESicLivre(object):
         self.navegador.set_page_load_timeout(10)
 
         time.sleep(3)
-        while str(self.nome_audio_captcha + ".part") in os.listdir(self.pasta):
-            self.logger.info("Waiting download finish...")
+        while str(self.nome_audio_captcha + '.part') in os.listdir(self.pasta):
+            self.logger.info('Waiting download finish...')
             time.sleep(1)
-        self.logger.info("Downloaded.")
+        self.logger.info('Downloaded.')
 
     def baixar_imagem_captcha(self):
         # Removes the last downloaded audio file, avoiding adding (1) to
@@ -174,7 +157,7 @@ class ESicLivre(object):
             os.remove(cam_imagem)
         except (OSError, IOError):
             pass
-        link = self.base_url + "/Account/pgImagem.ashx"
+        link = self.base_url + '/Account/pgImagem.ashx'
 
         nome = 'ASP.NET_SessionId'
         cookie = self.navegador.get_cookie(nome)
@@ -192,20 +175,20 @@ class ESicLivre(object):
 
     def gerar_novo_captcha(self):
         self.navegador.find_element_by_id(
-            "ctl00_MainContent_btnAtualiza").click()
+            'ctl00_MainContent_btnAtualiza').click()
 
     def clicar_login_entrar(self):
         self.navegador.find_element_by_id('ctl00_MainContent_btnEnviar').click()
 
     def clicar_recorrer(self):
         self.navegador.find_element_by_id(
-            "ctl00_MainContent_btnSolicitarEsclarecimento").click()
+            'ctl00_MainContent_btnSolicitarEsclarecimento').click()
 
     def entrar_dados_login(self, captcha):
         params = {
-            "ctl00_MainContent_txt_email": self.email,
-            "ctl00_MainContent_txt_senha": self.senha,
-            "ctl00_MainContent_txtValorCaptcha": captcha,
+            'ctl00_MainContent_txt_email': self.email,
+            'ctl00_MainContent_txt_senha': self.senha,
+            'ctl00_MainContent_txtValorCaptcha': captcha,
         }
         for k, v in params.items():
             element = self.navegador.find_element_by_id(k)
@@ -224,28 +207,28 @@ class ESicLivre(object):
         self.clear_captcha()
 
     def criar_dicio_orgaos(self):
-        """Cria o dicionário com os órgãos e botões para selecioná-los.
-        Precisa estar na página de 'Registrar Pedido'."""
-        # Pega todos os elementos "options" dentro do seletor
+        '''Cria o dicionário com os órgãos e botões para selecioná-los.
+        Precisa estar na página de 'Registrar Pedido'.'''
+        # Pega todos os elementos 'options' dentro do seletor
         select = self.navegador.find_element_by_id(
-            "ctl00_MainContent_ddl_orgao")
-        options = select.find_elements_by_tag_name("option")
+            'ctl00_MainContent_ddl_orgao')
+        options = select.find_elements_by_tag_name('option')
         # Cria dicionário (nome do órgão: elemento da interface que pode ser
-        # clicado para selecioná-lo). Exclui o primeiro item que é "Selecione".
+        # clicado para selecioná-lo). Exclui o primeiro item que é 'Selecione'.
         return dict([(i.text, i) for i in options[1:]])
 
     def entrar_com_texto_pedido(self, texto):
         textarea = self.navegador.find_element_by_id(
-            "ctl00_MainContent_txt_descricao_solicitacao")
+            'ctl00_MainContent_txt_descricao_solicitacao')
         textarea.clear()
         textarea.send_keys(texto)
         # Autorizar divulgação da pergunta
-        self.navegador.find_element_by_id("ctl00_MainContent_rbdSim").click()
+        self.navegador.find_element_by_id('ctl00_MainContent_rbdSim').click()
 
     def clicar_enviar_pedido(self):
         # Enviar pedido de informação
         self.navegador.find_element_by_id(
-            "ctl00_MainContent_btnEnviarAntes").click()
+            'ctl00_MainContent_btnEnviarAntes').click()
 
     def check_login_needed(self):
         if self.esta_em_login():
@@ -254,36 +237,36 @@ class ESicLivre(object):
     # Funções Gerais
 
     def postar_pedido(self, orgao, texto):
-        self.logger.info("> going to new pedido page")
+        self.logger.info('> going to new pedido page')
         self.ir_para_registrar_pedido()
         self.check_login_needed()
         # TODO: testar se está na página de fazer pedido
-        self.logger.info("> getting orgaos buttons")
+        self.logger.info('> getting orgaos buttons')
         orgaos = self.criar_dicio_orgaos()
         # TODO: testar se órgão existe
-        self.logger.info("> selecting orgao")
+        self.logger.info('> selecting orgao')
         orgaos[orgao].click()
-        self.logger.info("> pedido text to input")
+        self.logger.info('> pedido text to input')
         self.entrar_com_texto_pedido(texto)
-        self.logger.info("> sending...")
+        self.logger.info('> sending...')
         self.clicar_enviar_pedido()
 
-        self.logger.info("> getting protocolo")
+        self.logger.info('> getting protocolo')
         # Returns protocolo
         protocolo = self.navegador.find_element_by_id(
-            "ctl00_MainContent_lbl_protocolo_confirmar"
+            'ctl00_MainContent_lbl_protocolo_confirmar'
         ).text
         deadline = self.navegador.find_element_by_id(
-            "ctl00_MainContent_lbl_prazo_atendimento_confirmar"
+            'ctl00_MainContent_lbl_prazo_atendimento_confirmar'
         ).text
         return int(protocolo), arrow.get(deadline, ['DD/MM/YYYY'])
 
     def postar_recurso(self, protocolo, texto):
-        self.logger.info("> estou indo para a página para consultar pedidos")
+        self.logger.info('> estou indo para a página para consultar pedidos')
         self.ir_para_consultar_pedido()
         self.check_login_needed()
 
-        self.logger.info("> estou indo para a pagina do pedido")
+        self.logger.info('> estou indo para a pagina do pedido')
         self.navegador.find_element_by_xpath(
             "//table//tr[td[text()='" + protocolo + "']]//a"
         ).click()
@@ -457,29 +440,42 @@ class ESicLivre(object):
     def active_loop(self):
         """Does routine stuff inside eSIC, like posting pedidos and recursos."""
 
-        pending_pre_pedidos = db.session.query(
-            PrePedido).filter_by(state='WAITING').all()
+        pending_user_messages = (
+            db.session.query(UserMessage)
+            .options(db.joinedload(UserMessage.pedido, innerjoin=True))
+            .filter_by(state=UserMessage.states.waiting)
+            .all())
 
-        for pre_pedido in pending_pre_pedidos:
+        for user_message in pending_user_messages:
             # Is a new Pedido
-            if not pre_pedido.pedido_id:
+            if user_message.type == UserMessage.types.pergunta:
                 protocolo, deadline = self.postar_pedido(
-                    pre_pedido.orgao_name, pre_pedido.text
+                    user_message.orgao_name, user_message.text
                 )
-                pre_pedido.create_pedido(protocolo, deadline)
+                pedido = user_message.pedido
+                pedido.protocol = protocolo
+                pedido.deadline = deadline
+                now = arrow.utcnow()
+                pedido.request_date = now
+                self.updated_at = now
+                self.state = UserMessage.states.processed
+                # user_message.create_pedido(protocolo, deadline)
                 db.session.commit()
-                self.logger.info("Pedido sent!")
+                self.logger.info('Pedido sent.')
+                # subscribe_user_to_notifications(
+                #     pedido.author, pedido.get_notification_id())
+                # self.logger.info('User subscribed for pedido notifications.')
             # Is a Recurso to a current Pedido
-            elif pre_pedido.pedido_id:
-                pedido = pre_pedido.pedido
-                protocolo = pedido.protocolo
+            elif user_message.type == UserMessage.types.recurso:
+                pedido = user_message.pedido
+                protocolo = pedido.protocol
                 deadline = self.postar_recurso(
-                    protocolo, pre_pedido.text
+                    protocolo, user_message.text
                 )
                 # TODO: falta colocar o deadline no Pedido
                 pedido.deadline = deadline
                 db.session.commit()
-                self.logger.info("Recurso sent!")
+                self.logger.info('Recurso sent!')
 
         last_update = db.session.query(PedidosUpdate).order_by(
             PedidosUpdate.date.desc()).first()
@@ -489,7 +485,7 @@ class ESicLivre(object):
         else:
             pedidos_preproc.update_pedidos_list(self)
 
-        self.logger.info("Nothing more to do...")
+        self.logger.info('Nothing more to do...')
 
     def update_orgaos_list(self):
         db.session.query(Orgao).delete()

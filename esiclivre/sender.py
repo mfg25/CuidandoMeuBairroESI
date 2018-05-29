@@ -1,6 +1,7 @@
+import urllib
 from flask import current_app
 
-from cuidando_utils import scape_template, send_notification_messages, db
+from cuidando_utils import scape_template, send_notification_messages, db, request
 
 from .models import Message
 
@@ -24,3 +25,13 @@ def send_update_notifications():
 
     send_notification_messages(notifications)
     db.session.commit()
+
+
+# def subscribe_user_to_notifications(subscriber, tag):
+#     endpoint = urllib.parse.urljoin(
+#         current_app.config['COCHICHO_ADDRESS'], 'subscriptions')
+#     request('put', endpoint, [{
+#         'tag': tag,
+#         'subscriber': subscriber,
+#         'author': current_app.config['VIRALATA_USER'],
+#     }])
