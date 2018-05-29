@@ -14,6 +14,7 @@ import './component/spinner.html'
 import './component/spinneror.html'
 
 import './component/perguntas/newperguntaform.html'
+import './component/perguntas/newrecursoform.html'
 import './component/perguntas/perguntas.html'
 import './component/comments/comments.html'
 import './component/comments/comment.html'

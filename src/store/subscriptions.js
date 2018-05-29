@@ -14,7 +14,7 @@ class Subscriptions extends MapStore {
         this.forceKey = 's'
         registerSignals(
             this,
-            'subscribeExpense subscribePedido unsubscribeExpense',
+            'subscribe unsubscribe',
             true
         )
     }
@@ -36,7 +36,7 @@ class Subscriptions extends MapStore {
         return subscriptions
     }
 
-    async subscribe(tag, author, errorMsg) {
+    async _subscribe(tag, author, errorMsg) {
       let params = {
         url: `${api}/subscriptions`,
         method: 'put',
@@ -60,17 +60,22 @@ class Subscriptions extends MapStore {
         return json
     }
 
-    // Subscribe to expense
-    async subscribeExpense(params) {
-      return await this.subscribe(params.id, params.author, 'Error to subscribe')
+    // Subscribe
+    async subscribe(params) {
+      return await this._subscribe(params.id, params.author, 'Error to subscribe')
     }
 
-  // Subscribe to pedido
-  async subscribePedido(params) {
-    return await this.subscribe(params.id, params.author, 'Error to subscribe')
+  // Unsubscribe
+  async unsubscribe(params) {
+    return await this._unsubscribe(params.id, 'Error to subscribe')
   }
 
-  async unsubscribe(tag, errorMsg) {
+  // // Subscribe to pedido
+  // async subscribePedido(params) {
+  //   return await this.subscribe(params.id, params.author, 'Error to subscribe')
+  // }
+
+  async _unsubscribe(tag, errorMsg) {
     let params = {
       url: `${api}/subscriptions`,
       method: 'delete',
@@ -90,10 +95,6 @@ class Subscriptions extends MapStore {
     return json
   }
 
-  // Unsubscribe to expense
-  async unsubscribeExpense(params) {
-    return await this.unsubscribe(params.id, 'Error to subscribe')
-  }
 }
 
 let subscriptions = new Subscriptions('subscriptions')

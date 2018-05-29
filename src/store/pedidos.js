@@ -4,6 +4,7 @@ import MapStore from './mapStore'
 import auth from './auth'
 import {registerSignals} from '../utils/helpers'
 import msgs from './msgs'
+import subscriptions from './subscriptions'
 
 var api = config.apiurl_esic
 
@@ -26,7 +27,7 @@ function pedidosCompare(a, b) {
 class Pedidos extends MapStore {
     constructor(signal) {
         super(signal)
-        registerSignals(this, 'sendPedido', true)
+        registerSignals(this, 'sendPedido sendRecurso', true)
     }
 
     ajaxParams(key) {
@@ -38,7 +39,8 @@ class Pedidos extends MapStore {
     processResponse(json) {
         // Substitute strings for Dates
         for (let pedido of json.pedidos) {
-            pedido.request_date = new Date(pedido.request_date)
+            if (pedido.request_date)
+              pedido.request_date = new Date(pedido.request_date)
             for (let message of pedido.history) {
                 message.date = new Date(message.date)
             }
@@ -76,12 +78,34 @@ class Pedidos extends MapStore {
                 // Force pedidos reload for this despesa
                 this.load(params.keywords[0], true)
                 msgs.addSuccess('Question sent')
+                subscriptions.subscribePedido(ret.subscribe_data)
             }
         } catch(err) {
             msgs.addError('error_send_question')
         }
         return ret
     }
+
+  // Send a new recurso
+  async sendRecurso(params) {
+    let url = `${api}/recurso/${params.protocolo}`,
+        data = {
+          'token': await auth.getMicroToken(),
+          'text': params.text,
+        },
+        ret = null
+    try {
+      ret = await ajax({url, data, method: 'post'})
+      if (ret) {
+        // Force pedidos reload for this despesa
+        this.load(params.keywords[0], true)
+        msgs.addSuccess('Appeal sent')
+      }
+    } catch(err) {
+      msgs.addError('error_send_question')
+    }
+    return ret
+  }
 }
 
 let pedidos = new Pedidos('pedidos')

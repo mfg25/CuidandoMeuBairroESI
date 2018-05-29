@@ -145,16 +145,25 @@
             </form>
         </div>
     </div>
+
     <!-- Subscriptions -------------------- -->
     <h2>Itens Acompanhados</h2>
     <li each={el in listUserSubscriptions()}>
       <a href="{el.template_data.link}">{el.tag}</a>
 
       <button type="submit"
-              onclick="{ fUnsubscribe(el.tag) }"
+              onclick="{ unsubscribe }"
               class="btn btn-color-sec block-right relative margin-bottom">
-        <spinneror condition="waitings[el.tag]" scale="0.15">{ t("Unfollow expense") }</spinneror>
+        <spinneror condition="{ waitings[el.tag] && waitings[el.tag]['unsubscribeWaiting'] }" scale="0.15">{ t("Unfollow") }</spinneror>
       </button>
+    </li>
+
+    <!-- Perguntas -------------------- -->
+    <h2>Perguntas Feitas</h2>
+    <li each={pedido in listUserPedidos()}>
+      <a href="{ getRoute(pedido.keywords[0]) }">
+        {pedido.protocolo} - {pedido.orgao} - {pedido.situacao}
+      </a>
     </li>
 
 
@@ -277,12 +286,29 @@
        } else return []
      }
 
-     this.unsubscribeExpense = id => {
-         this.safeTriggerChange('unsubscribeExpense', {id}, this.waitings)
+     this.unsubscribe = event => {
+         var id = event.item.el.tag
+         if (!this.waitings[id]) this.waitings[id] = {}
+         this.safeTriggerChange('unsubscribe', {id}, this.waitings[id])
      }
 
-     this.fUnsubscribe = id => {
-       return () => this.unsubscribeExpense(id)
+     // Pedidos ----------------------------------
+     this.watchDepends('userPedidos', 'user', () => {
+       this.update()
+     })
+     this.listUserPedidos = () => {
+       if (this.userPedidos)
+         return this.userPedidos
+       else
+         return []
      }
+     // this.getFRoute = (keyword) => {
+     //  return this.fRoute('despesa', {year: keyword.slice(0,4), code: keyword})
+     // }
+     this.getRoute = (keyword) => {
+       // TODO: fazendo o routing na mão!!! Arrumar!
+       return window.location.protocol + '//' + window.location.host + '?/despesa/' + keyword.slice(0,4) + '/' + keyword
+     }
+
     </script>
 </pessoa-view>

@@ -17,6 +17,10 @@
         <new-pergunta-form/>
     </modal>
 
+    <modal>
+      <new-recurso-form/>
+    </modal>
+
     <ul class="list-bare">
         <li class="top-bar"
             each="{ pedidos.prepedidos }">
@@ -38,7 +42,7 @@
                 <div class="col-xs-12 col-sm-4">
                     <div class="row text-center">
                         <div class="col-xs-6">
-                                { formatDate(request_date) }
+                                { request_date ? formatDate(request_date) : '' }
                         </div>
                         <div class="col-xs-6">
                             <a onclick={ fRoute('pessoa ' + author) }>
@@ -48,6 +52,26 @@
                     </div>
                 </div>
             </div>
+
+              <button onclick={ openNewRecursoForm }
+                      if="{ allow_recurso }"
+                      class="btn btn-color-sec block-right">
+                { t('Appeal') }
+                <span class="right-arrow"/>
+              </button>
+
+              <button type="submit"
+                      if="{ !checkSubscribed(notification_id) }"
+                      onclick="{ subscribe }"
+                      class="btn btn-color-sec block-right relative margin-bottom">
+                <spinneror condition="{ waitings[notification_id] && waitings[notification_id]['subscribeWaiting'] }" scale="0.15">{ t("Follow question") }</spinneror>
+              </button>
+              <button type="submit"
+                      if="{ checkSubscribed(notification_id) }"
+                      onclick="{ unsubscribe }"
+                      class="btn btn-color-sec block-right relative margin-bottom">
+                <spinneror condition="{ waitings[notification_id] && waitings[notification_id]['unsubscribeWaiting'] }" scale="0.15">{ t("Unfollow question") }</spinneror>
+              </button>
 
             <div class="text-right"
                 if="{ !visible }">
@@ -100,9 +124,17 @@
     this.mixin('base')
     this.openNewPerguntaForm = (event) => {
         if (checkIsLogged(event)) {
-            this.tags.modal.openModal(event)
+            this.tags.modal[0].openModal(event)
         }
     }
+
+     this.openNewRecursoForm = (event) => {
+       if (checkIsLogged(event)) {
+         this.tags.modal[1].openModal(event, event.item.protocol)
+       }
+     }
+
+
 
     this.showRespostas = function () {
         // 'this' here is a pedido
@@ -116,5 +148,37 @@
     this.watchDepends('pedidos', 'code', () => {
         this.update()
     })
+
+
+     // Subscription -----------------------------
+
+     this.waitings = {}
+     this.watches('subscriptions')
+
+     this.subscribe = event => {
+       if (checkIsLogged(event)) {
+         var id = event.item.notification_id
+         if (!this.waitings[id]) this.waitings[id] = {}
+         this.safeTriggerChange('subscribe', {id, author: event.item.notification_author}, this.waitings[id])
+       }
+     }
+
+     this.unsubscribe = event => {
+       if (checkIsLogged(event)) {
+         var id = event.item.notification_id
+         if (!this.waitings[id]) this.waitings[id] = {}
+         this.safeTriggerChange('unsubscribe', {id}, this.waitings[id])
+       }
+     }
+
+     // check if subscribed to id
+     this.checkSubscribed = id => {
+       if (this.subscriptions && this.subscriptions.value && this.subscriptions.value[id])
+         return true
+       else
+         return false
+     }
+
+
     </script>
 </perguntas>

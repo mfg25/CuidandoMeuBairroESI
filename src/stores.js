@@ -162,4 +162,17 @@ class Orgaos extends MapStore {
 let orgaos = new Orgaos('orgaos')
 orgaos.forceKey = 'orgaos'
 
+// Store for pedidos made by a user
+class UserPedidos extends MapStore {
+  ajaxParams(key) {
+    let url = `${esicApi}/authors/${key}`,
+        method = 'get'
+    return {url, method}
+  }
+  processResponse(json) {
+    return json.pedidos.reverse()
+  }
+}
+new UserPedidos('userPedidos')
+
 export default {tabledata}

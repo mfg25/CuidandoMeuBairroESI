@@ -215,16 +215,18 @@ class Router {
         // console.log('router:paramsToUrl')
         // Loads new view if different from current
         let newViewName = this.routes[this.params._root].view
-        if (newViewName != this._currentView.name)
-            this.loadView(newViewName)
+      if (newViewName != this._currentView.name) {
+          this.loadView(newViewName)
+      }
 
         this._broadcastParams()
 
         // Changes the url if different from current
         this._currentUrl = this._createUrl()
-        if (location.search.slice(this._hashMark.length) != this._currentUrl)
+      if (location.search.slice(this._hashMark.length) != this._currentUrl) {
             window.history.pushState(null, null, this._hashMark + this._currentUrl)
             // location.search = this._currentUrl
+      }
     }
 
     _mainParamsToObj(mainParamsValues) {

@@ -33,8 +33,9 @@
     this.modalIsOpen = false
 
     // Open the modal
-    this.openModal = (event) => {
+    this.openModal = (event, data) => {
         this.modalIsOpen = true
+       this.data = data
         onClickedOutside(this['modal-dialog'], () => {
             this.closeModal()
             this.update()

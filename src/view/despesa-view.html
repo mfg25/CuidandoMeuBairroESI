@@ -52,13 +52,13 @@
                         if="{ !checkSubscribed(pointinfo.notification_id) }"
                         onclick="{ subscribeExpense }"
                         class="btn btn-color-sec block-right relative margin-bottom">
-                  <spinneror condition="subscribeExpenseWaiting" scale="0.15">{ t("Follow expense") }</spinneror>
+                  <spinneror condition="subscribeWaiting" scale="0.15">{ t("Follow expense") }</spinneror>
                 </button>
                 <button type="submit"
                         if="{ checkSubscribed(pointinfo.notification_id) }"
                         onclick="{ unsubscribeExpense }"
                         class="btn btn-color-sec block-right relative margin-bottom">
-                  <spinneror condition="unsubscribeExpenseWaiting" scale="0.15">{ t("Unfollow expense") }</spinneror>
+                  <spinneror condition="unsubscribeWaiting" scale="0.15">{ t("Unfollow expense") }</spinneror>
                 </button>
 
                 <div if="{ this.pointinfo }" class="top-bar orgao-box">
@@ -209,7 +209,7 @@
 
      this.subscribeExpense = event => {
        if (checkIsLogged(event)) {
-          this.safeTriggerChange('subscribeExpense', {
+          this.safeTriggerChange('subscribe', {
             id: this.pointinfo.notification_id,
             author: this.pointinfo.notification_author,
           })
@@ -218,7 +218,7 @@
 
      this.unsubscribeExpense = event => {
        if (checkIsLogged(event)) {
-         this.safeTriggerChange('unsubscribeExpense', {
+         this.safeTriggerChange('unsubscribe', {
            id: this.pointinfo.notification_id,
          })
        }
