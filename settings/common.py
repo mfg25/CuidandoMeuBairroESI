@@ -1,5 +1,3 @@
-from __future__ import unicode_literals  # unicode by default
-
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Max age for tokens used to delete reported comments
