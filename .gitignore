@@ -70,3 +70,5 @@ r.js
 compiled_templates
 .ropeproject
 key.pub
+.env
+OLD/
