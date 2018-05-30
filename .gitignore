@@ -63,8 +63,8 @@ bower_components
 
 local_settings.py
 prod_settings.py
-wsgi.py
 key
 keypub
 r.js
 compiled_templates
+.env
