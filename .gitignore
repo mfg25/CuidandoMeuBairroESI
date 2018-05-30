@@ -61,3 +61,5 @@ settings/local_settings.py
 *.db
 
 data/contratos/*
+OLD/
+.env
