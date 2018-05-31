@@ -10,10 +10,9 @@ import json
 from flask_restplus import Resource
 import sqlalchemy as sa
 
-from cuidando_utils import ExtraApi
+from cuidando_utils import ExtraApi, db
 
 from cochicho.models import Subscriber, Tag, Subscription, Message
-from cochicho.extensions import db
 
 
 api = ExtraApi(
@@ -130,7 +129,6 @@ class MessagesAPI(Resource):
                 db.joinedload(Subscription.tag, innerjoin=True)
                 .joinedload(Tag.messages, innerjoin=True))
             .filter(Subscription.subscriber.has(name=subscriber_name))).all()
-        # TODO: Check author allowed
         messages = []
         for subscription in subscriptions:
             for message in subscription.tag.messages:

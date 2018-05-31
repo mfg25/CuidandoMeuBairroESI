@@ -10,9 +10,7 @@ from sqlalchemy_utils import ArrowType
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm.exc import NoResultFound
 
-from cuidando_utils import date_to_json
-
-from cochicho.extensions import db
+from cuidando_utils import date_to_json, db
 
 
 class Status(enum.Enum):
@@ -28,7 +26,7 @@ message_tag = sa.Table(
 
 
 class Subscription(db.Model):
-    __tablename__ = 'association'
+    __tablename__ = 'subscription'
     subscriber_id = db.Column(
         db.Integer, db.ForeignKey('subscriber.id'), primary_key=True)
     subscriber = db.relationship('Subscriber', backref='subscriptions')

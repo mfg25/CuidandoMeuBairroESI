@@ -4,9 +4,9 @@ from flask import current_app
 import flask_mail
 
 import cuidando_utils
+from cuidando_utils import db
 
-from cochicho.extensions import db
-from cochicho.models import Message, Status, Tag, Subscription
+from .models import Message, Status, Tag, Subscription
 
 
 def send_all(api):

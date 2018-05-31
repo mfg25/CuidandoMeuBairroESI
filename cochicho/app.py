@@ -5,8 +5,8 @@ from flask_mail import Mail
 
 import cuidando_utils
 
-from cochicho.views import api
-from cochicho.sender import send_all
+from .views import api
+from .sender import send_all
 
 
 def create_app(settings_folder):
