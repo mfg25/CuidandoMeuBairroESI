@@ -44,7 +44,9 @@ class ESicLivre(object):
         self.logger = None
 
         manager = Manager()
-        self.safe_dict = manager.dict()
+        # TODO: não tem problema essa troca? então reestruturar tudo abaixo
+        # self.safe_dict = manager.dict()
+        self.safe_dict = {}
         self.clear_captcha()
         self.stop()
 

@@ -296,7 +296,7 @@ def fix_attachment_name_and_extension():
     # o download falhou).
     download_dir = flask.current_app.config['DOWNLOADS_PATH']
     for _file in os.listdir(download_dir):
-        _file = _file.decode('utf8')
+        # _file = _file.decode('utf8')
         # logger.info("file: {}".format(_file))
         _file_fullpath = '{}/{}'.format(download_dir, _file)
 
@@ -418,7 +418,8 @@ def upload_attachment_to_internet_archive(pedido_protocol, filename):
     download_dir = flask.current_app.config['DOWNLOADS_PATH']
     downloaded_attachments = os.listdir(download_dir)
 
-    if filename not in [a.decode('utf8') for a in downloaded_attachments]:
+    # if filename not in [a.decode('utf8') for a in downloaded_attachments]:
+    if filename not in downloaded_attachments:
         logger.info("Arquivo {!r} não existe!.".format(filename))
         # TODO: O que fazer se o arquivo não estiver disponivel?
         # Já temos um caso onde o download não completa, mas por falha no
