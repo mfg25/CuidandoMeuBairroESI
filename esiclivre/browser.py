@@ -454,13 +454,17 @@ class ESicLivre(object):
                 protocolo, deadline = self.postar_pedido(
                     user_message.orgao_name, user_message.text
                 )
-                pedido = user_message.pedido
-                pedido.protocol = protocolo
-                pedido.deadline = deadline
-                now = arrow.utcnow()
-                pedido.request_date = now
-                self.updated_at = now
-                self.state = UserMessage.states.processed
+                # TODO: essa primeira parte do if é só transitória
+                if not user_message.pedido:
+                    user_message.create_pedido(protocolo, deadline)
+                else:
+                    pedido = user_message.pedido
+                    pedido.protocol = protocolo
+                    pedido.deadline = deadline
+                    now = arrow.utcnow()
+                    pedido.request_date = now
+                    user_message.updated_at = now
+                    user_message.state = UserMessage.states.processed
                 # user_message.create_pedido(protocolo, deadline)
                 db.session.commit()
                 self.logger.info('Pedido sent.')
