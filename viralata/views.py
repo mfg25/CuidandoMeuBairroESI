@@ -330,7 +330,7 @@ class ListUsersAPI(Resource):
         '''Get usernames.'''
         usernames = db.session.query(User.username).all()
         return {
-            'users': usernames
+            'users': [u[0] for u in usernames]
         }
 
 
