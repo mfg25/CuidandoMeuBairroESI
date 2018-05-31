@@ -33,8 +33,8 @@ def create_app(settings_folder):
             senha=app.config['ESIC_PASSWORD'],
             pasta=app.config['DOWNLOADS_PATH'],
         ).run()
-        subprocess.check_call('killall Xvfb', shell=True)
-        subprocess.check_call('killall firefox', shell=True)
+        subprocess.call('killall Xvfb', shell=True)
+        subprocess.call('killall firefox', shell=True)
 
     @app.cli.command()
     def send_notifications():
