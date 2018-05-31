@@ -140,8 +140,14 @@ class ExtraApi(Api):
         super().init_app(app)
 
         @app.cli.command()
-        def create_db():
+        def reset_db():
             '''Clear the existing data and create new tables.'''
+            db.drop_all()
+            db.create_all()
+
+        @app.cli.command()
+        def create_db():
+            '''Create new tables.'''
             db.create_all()
 
         @app.cli.command()
