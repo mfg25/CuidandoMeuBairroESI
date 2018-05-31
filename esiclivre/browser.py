@@ -2,14 +2,15 @@
 # coding: utf-8
 
 import os
-import requests
-import shutil
+# import requests
+# import shutil
 import random
 import time
 import pickle
-from multiprocessing import Process, Manager
+# from multiprocessing import Process, Manager
 
 import arrow
+from flask import current_app
 import speech_recognition as sr
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
@@ -31,27 +32,27 @@ class ESicLivre(object):
 
     _last_update_of_orgao_list = None
 
-    def __init__(self, firefox=None, email=None, senha=None, pasta=None):
+    def __init__(self, firefox, email, senha, pasta):
         '''"firefox" é o caminho para o binário do Firefox a ser usado.
         'pasta' é o caminho para a pasta onde salvar os downloads.'''
         self.firefox = firefox
         self.pasta = pasta
         self.email = email
         self.senha = senha
+        # self.app = app
 
         self.navegador = None
-        self.app = None
-        self.logger = None
+        # self.logger = None
 
-        manager = Manager()
+        # manager = Manager()
         # TODO: não tem problema essa troca? então reestruturar tudo abaixo
         # self.safe_dict = manager.dict()
-        self.safe_dict = {}
-        self.clear_captcha()
-        self.stop()
+        # self.safe_dict = {}
+        # self.clear_captcha()
+        # self.stop()
 
-        self.try_break_audio_captcha = True
-        self.nome_audio_captcha = "somCaptcha.wav"
+        # self.try_break_audio_captcha = True
+        self.nome_audio_captcha = 'somCaptcha.wav'
         self.recognizer = sr.Recognizer()
 
         self.user_agent = (
@@ -63,40 +64,42 @@ class ESicLivre(object):
 
         self.logado = False
         self.ja_tentou_cookies_salvos = False
-        self.rodar_apenas_uma_vez = False
+        # self.rodar_apenas_uma_vez = False
 
-    def config(self, **kwargs):
-        for k, v in kwargs.items():
-            setattr(self, k, v)
+    # def config(self, **kwargs):
+    #     for k, v in kwargs.items():
+    #         setattr(self, k, v)
 
     def salvar_cookies(self):
         '''Salva os cookies atuais do navegador.'''
-        pickle.dump(self.navegador.get_cookies(), open("cookies.pkl", "wb"))
+        pickle.dump(self.navegador.get_cookies(), open('cookies.pkl', 'wb'))
 
     def carregar_cookies(self):
         '''Carrega os cookies do navegador salvos anteriormente.'''
         try:
-            cookies = pickle.load(open("cookies.pkl", "rb"))
+            cookies = pickle.load(open('cookies.pkl', 'rb'))
         except IOError:
+            print('! Couldn\' load cookies.')
             return False
         for cookie in cookies:
             self.navegador.add_cookie(cookie)
         return True
 
     def esta_em_login(self):
-        # Verifica se está na página de login
+        '''Verifica se está na página de login.'''
         return self.navegador.current_url == self.login_url
 
     def criar_navegador(self):
         '''Retorna um navegador firefox configurado para salvar arquivos
         baixados em 'pasta'.'''
-        self.logger.info('Configuring and initiating browser...')
+        print('Configuring and initiating browser...')
         fp = webdriver.FirefoxProfile()
         fp.set_preference('browser.download.folderList', 2)
         fp.set_preference('browser.download.manager.showWhenStarting', False)
         fp.set_preference('browser.download.dir', self.pasta)
-        tipos = ','.join(['text/csv', 'audio/wav', 'audio/x-wav',
-                          'image/jpeg', 'application/octet-stream'])
+        tipos = ','.join([
+            'text/csv', 'audio/wav', 'audio/x-wav',
+            'image/jpeg', 'application/octet-stream'])
         fp.set_preference('browser.helperApps.neverAsk.saveToDisk', tipos)
         fp.set_preference('general.useragent.override', self.user_agent)
         # O binário do navegador deve estar na pasta firefox
@@ -115,8 +118,8 @@ class ESicLivre(object):
     def ir_para_login(self):
         self.navegador.get(self.login_url)
 
-    def transcribe_audio_captcha(self):
-        self.logger.info('Transcribing audio captcha...')
+    def try_to_transcribe_audio_captcha(self):
+        print('Transcribing audio captcha...')
         audio_path = os.path.join(self.pasta, self.nome_audio_captcha)
         with sr.WavFile(str(audio_path)) as source:
             audio = self.recognizer.record(source)
@@ -133,7 +136,7 @@ class ESicLivre(object):
             os.remove(cam_audio)
         except (OSError, IOError):
             pass
-        self.logger.info('Downloading audio captcha...')
+        print('Downloading audio captcha...')
         # Esse número deve ser usado para evitar problemas com a cache
         n = random.randint(1, 400)
         link = self.base_url + '/Account/pgAudio.ashx?%s' % n
@@ -147,33 +150,33 @@ class ESicLivre(object):
 
         time.sleep(3)
         while str(self.nome_audio_captcha + '.part') in os.listdir(self.pasta):
-            self.logger.info('Waiting download finish...')
+            print('Waiting download finish...')
             time.sleep(1)
-        self.logger.info('Downloaded.')
+        print('Downloaded.')
 
-    def baixar_imagem_captcha(self):
-        # Removes the last downloaded audio file, avoiding adding (1) to
-        # the end of the file name
-        cam_imagem = os.path.join(self.pasta, self.nome_audio_captcha)
-        try:
-            os.remove(cam_imagem)
-        except (OSError, IOError):
-            pass
-        link = self.base_url + '/Account/pgImagem.ashx'
+    # def baixar_imagem_captcha(self):
+    #     # Removes the last downloaded audio file, avoiding adding (1) to
+    #     # the end of the file name
+    #     cam_imagem = os.path.join(self.pasta, self.nome_audio_captcha)
+    #     try:
+    #         os.remove(cam_imagem)
+    #     except (OSError, IOError):
+    #         pass
+    #     link = self.base_url + '/Account/pgImagem.ashx'
 
-        nome = 'ASP.NET_SessionId'
-        cookie = self.navegador.get_cookie(nome)
-        headers = {
-            'User-Agent': self.user_agent,
-        }
-        if cookie and cookie.get('value', False):
-            headers.update({'Cookie': '{0}={1}'.format(nome, cookie['value'])})
+    #     nome = 'ASP.NET_SessionId'
+    #     cookie = self.navegador.get_cookie(nome)
+    #     headers = {
+    #         'User-Agent': self.user_agent,
+    #     }
+    #     if cookie and cookie.get('value', False):
+    #         headers.update({'Cookie': '{0}={1}'.format(nome, cookie['value'])})
 
-        r = requests.get(link, stream=True, headers=headers)
-        r.raw.decode_content = True
-        import tempfile
-        with tempfile.NamedTemporaryFile() as out_file:
-            shutil.copyfileobj(r.raw, out_file)
+    #     r = requests.get(link, stream=True, headers=headers)
+    #     r.raw.decode_content = True
+    #     import tempfile
+    #     with tempfile.NamedTemporaryFile() as out_file:
+    #         shutil.copyfileobj(r.raw, out_file)
 
     def gerar_novo_captcha(self):
         self.navegador.find_element_by_id(
@@ -203,10 +206,10 @@ class ESicLivre(object):
         self.entrar_dados_login(captcha)
         self.clicar_login_entrar()
 
-    def preparar_receber_captcha(self):
-        self.ir_para_login()
-        self.baixar_imagem_captcha()
-        self.clear_captcha()
+    # def preparar_receber_captcha(self):
+    #     self.ir_para_login()
+    #     self.baixar_imagem_captcha()
+    #     self.clear_captcha()
 
     def criar_dicio_orgaos(self):
         '''Cria o dicionário com os órgãos e botões para selecioná-los.
@@ -228,7 +231,7 @@ class ESicLivre(object):
         self.navegador.find_element_by_id('ctl00_MainContent_rbdSim').click()
 
     def clicar_enviar_pedido(self):
-        # Enviar pedido de informação
+        '''Enviar pedido de informação'''
         self.navegador.find_element_by_id(
             'ctl00_MainContent_btnEnviarAntes').click()
 
@@ -239,21 +242,21 @@ class ESicLivre(object):
     # Funções Gerais
 
     def postar_pedido(self, orgao, texto):
-        self.logger.info('> going to new pedido page')
+        print('> going to new pedido page')
         self.ir_para_registrar_pedido()
         self.check_login_needed()
         # TODO: testar se está na página de fazer pedido
-        self.logger.info('> getting orgaos buttons')
+        print('> getting orgaos buttons')
         orgaos = self.criar_dicio_orgaos()
         # TODO: testar se órgão existe
-        self.logger.info('> selecting orgao')
+        print('> selecting orgao')
         orgaos[orgao].click()
-        self.logger.info('> pedido text to input')
+        print('> pedido text to input')
         self.entrar_com_texto_pedido(texto)
-        self.logger.info('> sending...')
+        print('> sending...')
         self.clicar_enviar_pedido()
 
-        self.logger.info('> getting protocolo')
+        print('> getting protocolo')
         # Returns protocolo
         protocolo = self.navegador.find_element_by_id(
             'ctl00_MainContent_lbl_protocolo_confirmar'
@@ -264,17 +267,17 @@ class ESicLivre(object):
         return int(protocolo), arrow.get(deadline, ['DD/MM/YYYY'])
 
     def postar_recurso(self, protocolo, texto):
-        self.logger.info('> estou indo para a página para consultar pedidos')
+        print('> estou indo para a página para consultar pedidos')
         self.ir_para_consultar_pedido()
         self.check_login_needed()
 
-        self.logger.info('> estou indo para a pagina do pedido')
+        print('> estou indo para a pagina do pedido')
         self.navegador.find_element_by_xpath(
             "//table//tr[td[text()='" + protocolo + "']]//a"
         ).click()
 
         try:
-            self.logger.info("> estou tentando ir para pagina de recurso de segunda instancia")
+            print("> estou tentando ir para pagina de recurso de segunda instancia")
             self.navegador.find_element_by_id(
                 "ctl00_MainContent_btnAbrirRecurso"
             ).click()
@@ -282,8 +285,8 @@ class ESicLivre(object):
             select = Select(self.navegador.find_element_by_tag_name("select"))
             select.select_by_value("13")
         except Exception as e:
-            self.logger.info(e)
-            self.logger.info("> estou indo para a pagina do para abrir recurso")
+            print(e)
+            print("> estou indo para a pagina do para abrir recurso")
             self.navegador.find_element_by_id(
                 "ctl00_MainContent_btnSolicitarEsclarecimento"
             ).click()
@@ -299,7 +302,7 @@ class ESicLivre(object):
                 "ctl00_MainContent_btnEnviar"
             ).click()
         except Exception as e:
-            self.logger.info(e)
+            print(e)
             self.navegador.find_element_by_id(
                 "ctl00_MainContent_btnEnviarRecurso"
             ).click()
@@ -314,60 +317,93 @@ class ESicLivre(object):
     def set_captcha(self, value):
         self.safe_dict['captcha'] = value
 
-    def get_captcha(self):
-        return self.safe_dict['captcha']
+    # def get_captcha(self):
+    #     return self.safe_dict['captcha']
 
-    def clear_captcha(self):
-        self.safe_dict['captcha'] = ''
+    # def clear_captcha(self):
+    #     self.safe_dict['captcha'] = ''
 
-    def stop(self):
-        process = Process(target=self.__stop_func__)
-        process.start()
+    # def stop(self):
+    #     process = Process(target=self.__stop_func__)
+    #     process.start()
 
-    def start(self):
-        process = Process(target=self.__run__)
-        process.start()
+    # def start(self):
+    #     process = Process(target=self.__run__)
+    #     process.start()
 
-    def rodar_uma_vez(self):
-        self.rodar_apenas_uma_vez = True
-        self.__run__()
+    # def rodar_uma_vez(self):
+    #     self.rodar_apenas_uma_vez = True
+    #     self.__run__()
 
-    def take_care_of_captcha(self):
+    def transcribe_captcha(self):
         if not self.esta_em_login():
             self.ir_para_login()
         f = True
         while f:
             self.baixar_audio_captcha()
-            captcha = self.transcribe_audio_captcha()
+            captcha = self.try_to_transcribe_audio_captcha()
             if captcha:
-                captcha = captcha.replace("ver ", "v")
-                captcha = captcha.replace(" ", "")
-                self.logger.info("Transcribed captcha: %s" % captcha)
+                captcha = captcha.replace('ver ', 'v')
+                captcha = captcha.replace(' ', '')
+                print('Transcribed captcha: %s' % captcha)
                 if len(captcha) == 4:
+                    # Transcrição do captcha possivelmente válida, vamos tentar logar
                     break
+            # Transcrição certamente válida, pedir outro captcha
             self.gerar_novo_captcha()
         return captcha
 
-    def __run__(self):
-        if not self.safe_dict.get('running'):
-            # Get context needed for DB
-            with self.app.app_context():
-                # Set flag that can be used later to stop running
-                self.safe_dict['running'] = True
-                self.criar_navegador()
+    def run(self):
+        # if not self.safe_dict.get('running'):
+        # Get context needed for DB
+        with current_app.app_context():
+            # Set flag that can be used later to stop running
+            # self.safe_dict['running'] = True
+            self.criar_navegador()
 
-                try:
-                    self.preparar_receber_captcha()
-                    # Main loop
-                    while self.safe_dict['running']:
-                        self.main_loop()
-                except:
-                    raise
-                finally:
-                    self.navegador.quit()
+            try:
+                # self.preparar_receber_captcha()
+                # Main loop
+                # while self.safe_dict['running']:
+                #     self.main_loop()
+                if not self.ja_tentou_cookies_salvos:
+                    self.login_com_cookies_salvos()
+                    self.ja_tentou_cookies_salvos = True
 
-    def __stop_func__(self):
-        self.safe_dict['running'] = False
+                if not self.logado:
+                    self.login_com_captcha()
+
+                if self.logado:
+                    try:
+                        self.verificar_lista_orgaos()
+
+                        self.post_user_messages()
+
+                        self.update_pedidos_data()
+
+                    except LoginNeeded:
+                        print('Seems to have been logged out...')
+
+                    # print('Need new captcha...')
+                    # self.preparar_receber_captcha()
+            except Exception as e:
+                print(e)
+            finally:
+                self.navegador.quit()
+
+    def update_pedidos_data(self):
+        '''Scrape pedidos data.'''
+        last_update = db.session.query(PedidosUpdate).order_by(
+            PedidosUpdate.date.desc()).first()
+
+        if last_update and last_update.date.date() == arrow.now().date():
+            return None
+        else:
+            pedidos_preproc.update_pedidos_list(self)
+        pedidos_preproc.update_pedidos_list(self)
+
+    # def __stop_func__(self):
+    #     self.safe_dict['running'] = False
 
     def verificar_lista_orgaos(self):
         last_update = db.session.query(OrgaosUpdate).order_by(
@@ -376,7 +412,7 @@ class ESicLivre(object):
         if last_update and last_update.date.date() == arrow.now().date():
             return None
         else:
-            self.logger.info('Atualizando lista de orgaos...')
+            print('Atualizando lista de orgaos...')
             self.update_orgaos_list()
             db.session.add(OrgaosUpdate(date=arrow.now()))
             db.session.commit()
@@ -388,59 +424,34 @@ class ESicLivre(object):
         self.ir_para_consultar_pedido()
         if not self.esta_em_login():
             self.logado = True
-            self.logger.info("Old cookies seems to work!")
+            print('Old cookies seems to work!')
+        else:
+            print('Old cookies failed...')
 
     def login_com_captcha(self):
         '''Tenta interagir com captcha'''
         tentativas = 0
         while not self.logado and tentativas < 10:
             tentativas += 1
-            if self.try_break_audio_captcha:
-                captcha = self.take_care_of_captcha()
-            else:
-                captcha = self.get_captcha()
-            self.logger.info("Current captcha: %s" % captcha)
+            # if self.try_break_audio_captcha:
+            captcha = self.transcribe_captcha()
+            # else:
+            #     captcha = self.get_captcha()
+            print('Current captcha: %s' % captcha)
+
             # If captcha is unset, may need to wait someone to set it
             # If is set, login
-            if captcha:
-                self.logger.info("Trying to login...")
-                self.entrar_no_sistema(captcha)
+            # if captcha:
+            print('Trying to login...')
+            self.entrar_no_sistema(captcha)
+
             if not self.esta_em_login():
                 self.logado = True
                 self.salvar_cookies()
-                self.logger.info("Seems to have logged in!")
+                print('Seems to have logged in!')
 
-    # Subprocess Functions
-
-    def main_loop(self):
-        if not self.ja_tentou_cookies_salvos:
-            self.login_com_cookies_salvos()
-            self.ja_tentou_cookies_salvos = True
-
-        if not self.logado:
-            self.login_com_captcha()
-
-        if self.logado:
-            try:
-                self.verificar_lista_orgaos()
-
-                while self.safe_dict['running']:
-                    self.active_loop()
-
-                    if self.rodar_apenas_uma_vez:
-                        self.safe_dict['running'] = False
-                        return True
-
-                    time.sleep(5)
-
-            except LoginNeeded:
-                self.logger.info("Seems to have been logged out...")
-
-            self.logger.info("Need new captcha...")
-            self.preparar_receber_captcha()
-
-    def active_loop(self):
-        """Does routine stuff inside eSIC, like posting pedidos and recursos."""
+    def post_user_messages(self):
+        '''Post pedidos and recursos.'''
 
         pending_user_messages = (
             db.session.query(UserMessage)
@@ -455,22 +466,22 @@ class ESicLivre(object):
                     user_message.orgao_name, user_message.text
                 )
                 # TODO: essa primeira parte do if é só transitória
-                if not user_message.pedido:
-                    user_message.create_pedido(protocolo, deadline)
-                else:
-                    pedido = user_message.pedido
-                    pedido.protocol = protocolo
-                    pedido.deadline = deadline
-                    now = arrow.utcnow()
-                    pedido.request_date = now
-                    user_message.updated_at = now
-                    user_message.state = UserMessage.states.processed
+                # if not user_message.pedido:
+                #     user_message.create_pedido(protocolo, deadline)
+                # else:
+                pedido = user_message.pedido
+                pedido.protocol = protocolo
+                pedido.deadline = deadline
+                now = arrow.utcnow()
+                pedido.request_date = now
+                user_message.updated_at = now
+                user_message.state = UserMessage.states.processed
                 # user_message.create_pedido(protocolo, deadline)
                 db.session.commit()
-                self.logger.info('Pedido sent.')
+                print('Pedido sent.')
                 # subscribe_user_to_notifications(
                 #     pedido.author, pedido.get_notification_id())
-                # self.logger.info('User subscribed for pedido notifications.')
+                # print('User subscribed for pedido notifications.')
             # Is a Recurso to a current Pedido
             elif user_message.type == UserMessage.types.recurso:
                 pedido = user_message.pedido
@@ -481,17 +492,7 @@ class ESicLivre(object):
                 # TODO: falta colocar o deadline no Pedido
                 pedido.deadline = deadline
                 db.session.commit()
-                self.logger.info('Recurso sent!')
-
-        last_update = db.session.query(PedidosUpdate).order_by(
-            PedidosUpdate.date.desc()).first()
-
-        if last_update and last_update.date.date() == arrow.now().date():
-            return None
-        else:
-            pedidos_preproc.update_pedidos_list(self)
-
-        self.logger.info('Nothing more to do...')
+                print('Recurso sent!')
 
     def update_orgaos_list(self):
         db.session.query(Orgao).delete()
@@ -505,9 +506,5 @@ class ESicLivre(object):
 
         if new_orgaos:
             db.session.commit()
-
             self._last_update_of_orgao_list = arrow.utcnow()
-
-            self.logger.info("Last update of the 'orgaos' list: {}".format(
-                self._last_update_of_orgao_list
-            ))
+            print(f'Last update of the orgaos list: {self._last_update_of_orgao_list}')

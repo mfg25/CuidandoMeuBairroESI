@@ -8,7 +8,7 @@ export DISPLAY=:10
 echo "Ativando virtualenv"
 source env/bin/activate
 echo "Rodando script"
-python manage.py run
+flask run_browser
 echo "Desativando virtualenv"
 deactivate
 echo "Matando monitor fantasma"

@@ -13,18 +13,6 @@ from .sender import send_update_notifications
 def create_app(settings_folder):
     app = cuidando_utils.create_app(settings_folder, api, init_sv='public')
 
-    # Browser
-    browser = ESicLivre()
-    browser.config(
-        firefox=app.config['FIREFOX_PATH'],
-        email=app.config['ESIC_EMAIL'],
-        senha=app.config['ESIC_PASSWORD'],
-        pasta=app.config['DOWNLOADS_PATH'],
-        logger=app.logger,
-        app=app,
-        )
-    app.browser = browser
-
     # TODO: colocar isso em um lugar descente...
     # @app.route('/static/<path:path>')
     # def send_templates(path):
@@ -35,9 +23,14 @@ def create_app(settings_folder):
     #     return send_file('static/captcha.jpg')
 
     @app.cli.command()
-    def browser_once():
-        '''Run browser once.'''
-        app.browser.rodar_uma_vez()
+    def run_browser():
+        '''Run browser.'''
+        ESicLivre(
+            firefox=app.config['FIREFOX_PATH'],
+            email=app.config['ESIC_EMAIL'],
+            senha=app.config['ESIC_PASSWORD'],
+            pasta=app.config['DOWNLOADS_PATH'],
+        ).run()
 
     @app.cli.command()
     def send_notifications():
