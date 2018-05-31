@@ -322,6 +322,18 @@ class UsersAPI(Resource):
         return create_tokens(username)
 
 
+@api.route('/users_list')
+class ListUsersAPI(Resource):
+
+    @api.parsed_args()
+    def get(self):
+        '''Get usernames.'''
+        usernames = db.session.query(User.username).all()
+        return {
+            'users': usernames
+        }
+
+
 # def create_token(username, exp_minutes=5):
 #     '''Returns a token.'''
 #     return sv.encode({
