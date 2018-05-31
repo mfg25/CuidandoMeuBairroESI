@@ -397,18 +397,17 @@ class ESicLivre(object):
             PedidosUpdate.date.desc()).first()
 
         if last_update and last_update.date.date() == arrow.now().date():
+            print('Pedidos já foram scrapeados hoje.')
             return None
         else:
             pedidos_preproc.update_pedidos_list(self)
-
-    # def __stop_func__(self):
-    #     self.safe_dict['running'] = False
 
     def verificar_lista_orgaos(self):
         last_update = db.session.query(OrgaosUpdate).order_by(
             OrgaosUpdate.date.desc()).first()
 
         if last_update and last_update.date.date() == arrow.now().date():
+            print('Lista de orgaos já foi atualizada hoje.')
             return None
         else:
             print('Atualizando lista de orgaos...')
@@ -460,6 +459,8 @@ class ESicLivre(object):
             .options(db.joinedload(UserMessage.pedido))
             .filter_by(state=UserMessage.states.waiting)
             .all())
+
+        print(f'Postando {len(pending_user_messages)} pedidos/recurso...')
 
         for user_message in pending_user_messages:
             # Is a new Pedido
