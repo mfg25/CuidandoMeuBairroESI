@@ -20,7 +20,6 @@ class Subscriptions extends MapStore {
     }
     ajaxParams(key) {
       // TODO: Não enviar se user for none
-      console.log('request!', key, auth.getUsername(), this._map)
       return {
         url: `${api}/subscriptions`,
         method: 'post',
@@ -30,7 +29,6 @@ class Subscriptions extends MapStore {
     }
     processResponse(json) {
         // orderComments(json.comments)
-      console.log('response', json)
       let subscriptions = {}
       json.subscriptions.forEach((s) => subscriptions[s.tag] = s)
         return subscriptions

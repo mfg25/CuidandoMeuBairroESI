@@ -78,7 +78,7 @@ class Pedidos extends MapStore {
                 // Force pedidos reload for this despesa
                 this.load(params.keywords[0], true)
                 msgs.addSuccess('Question sent')
-                subscriptions.subscribePedido(ret.subscribe_data)
+                subscriptions.subscribe(ret.subscribe_data)
             }
         } catch(err) {
             msgs.addError('error_send_question')
