@@ -6,7 +6,6 @@ import os
 import datetime
 import json
 from functools import wraps
-import urllib
 
 import jwt
 import requests
@@ -282,7 +281,7 @@ def request(verb, url, data, with_token=True):
 def send_notification_messages(messages):
     '''Send notification messages to a Cochicho service.'''
     if messages:
-        endpoint = urllib.parse.urljoin(
+        endpoint = os.path.join(
             current_app.config['COCHICHO_ADDRESS'], 'messages')
         r = request('put', endpoint, {'messages': messages})
         if r.get('status') == 'ok':
