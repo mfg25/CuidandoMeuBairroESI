@@ -347,7 +347,7 @@ class ESicLivre(object):
         return captcha
 
     def __run__(self):
-        if not self.safe_dict['running']:
+        if not self.safe_dict.get('running'):
             # Get context needed for DB
             with self.app.app_context():
                 # Set flag that can be used later to stop running
