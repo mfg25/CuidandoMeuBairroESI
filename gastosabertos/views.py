@@ -187,8 +187,8 @@ def headers_with_counter(total):
     return {
         # Add 'Access-Control-Expose-Headers' header here is a workaround
         # until Flask-Restful adds support to it.
-        b'Access-Control-Expose-Headers': b'X-Total-Count',
-        b'X-Total-Count': total
+        'Access-Control-Expose-Headers': 'X-Total-Count',
+        'X-Total-Count': total
     }
 
 
