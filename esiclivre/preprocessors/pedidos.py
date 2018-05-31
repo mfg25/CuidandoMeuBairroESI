@@ -168,8 +168,11 @@ class ParsedPedido(object):
             return None
 
         # Get the current pedido and its attachments from the DB
-        db_pedido = db.session.query(models.Pedido).filter_by(
-            protocol=self.protocol).options(joinedload('attachments')).first()
+        db_pedido = (
+            db.session.query(models.Pedido)
+            .filter_by(protocol=self.protocol)
+            .options(joinedload('attachments', innerjoin=True))
+            .one())
         db_attachments = db_pedido.attachments if db_pedido else []
 
         for attachment in self.attachments:
