@@ -444,7 +444,7 @@ class ESicLivre(object):
 
         pending_user_messages = (
             db.session.query(UserMessage)
-            .options(db.joinedload(UserMessage.pedido, innerjoin=True))
+            .options(db.joinedload(UserMessage.pedido))
             .filter_by(state=UserMessage.states.waiting)
             .all())
 

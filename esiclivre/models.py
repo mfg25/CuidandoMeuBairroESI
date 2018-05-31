@@ -87,7 +87,7 @@ class UserMessage(db.Model):
         pedido = Pedido(
             protocol=protocolo,
             deadline=deadline,
-            orgao=self.orgao,
+            orgao_name=self.orgao_name,
             author=self.author,
             keywords=self.all_keywords,
             description=self.text,
