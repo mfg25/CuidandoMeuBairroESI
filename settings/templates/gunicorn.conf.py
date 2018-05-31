@@ -1,6 +1,6 @@
-bind = 'unix:%(remote_folder)s/%(service)s/gunicorn.sock'
+bind = 'unix:%(code_folder)s/gunicorn.sock'
 workers = 3
-accesslog = '%(logs_folder)s/%(service)s/access.log'
-errorlog = '%(logs_folder)s/%(service)s/error.log'
+accesslog = '%(logs_folder)s/access.log'
+errorlog = '%(logs_folder)s/error.log'
 loglevel = 'debug'
 proc_name = '%(service)s'
