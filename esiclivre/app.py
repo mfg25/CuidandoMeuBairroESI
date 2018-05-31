@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from __future__ import unicode_literals  # unicode by default
 import os
+import subprocess
 
 import cuidando_utils
 from .views import api
@@ -25,12 +25,16 @@ def create_app(settings_folder):
     @app.cli.command()
     def run_browser():
         '''Run browser.'''
+        subprocess.check_call('Xvfb :10 -ac &', shell=True)
+        os.environ['DISPLAY'] = ':10'
         ESicLivre(
             firefox=app.config['FIREFOX_PATH'],
             email=app.config['ESIC_EMAIL'],
             senha=app.config['ESIC_PASSWORD'],
             pasta=app.config['DOWNLOADS_PATH'],
         ).run()
+        subprocess.check_call('killall Xvfb', shell=True)
+        subprocess.check_call('killall firefox', shell=True)
 
     @app.cli.command()
     def send_notifications():

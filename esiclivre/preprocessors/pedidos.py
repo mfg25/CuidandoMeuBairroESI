@@ -1,10 +1,6 @@
 # coding: utf-8
 
-from __future__ import print_function
-from __future__ import unicode_literals  # unicode by default
-
 import collections
-import logging
 import os
 import string
 import time
@@ -12,15 +8,15 @@ import time
 import arrow
 import bs4
 import dateutil.parser
-import flask
+from flask import current_app
 import internetarchive
+from internetarchive import get_session
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
 
 from cuidando_utils import db
 
 from esiclivre import models
-
 
 VALID_ATTACHMENTS_NAME_CHARS = string.ascii_lowercase + string.digits + '.-_'
 
@@ -213,12 +209,12 @@ class ParsedPedido(object):
             # arquivos serem baixados ou completar N tentativas
 
             max_retries = 0
-            if str('.part') in os.listdir(flask.current_app.config['DOWNLOADS_PATH']):  # noqa
+            if str('.part') in os.listdir(current_app.config['DOWNLOADS_PATH']):  # noqa
                 print("Existe algum download inacabado...")
                 while max_retries != 10:
 
                     download_dir = os.listdir(
-                        flask.current_app.config['DOWNLOADS_PATH']
+                        current_app.config['DOWNLOADS_PATH']
                     )
 
                     uncomplete_download = next(
@@ -294,7 +290,7 @@ def fix_attachment_name_and_extension():
     # mudar extensão para lowercase
     # apagar arquivos .part (nessa etapa, se um arquivo ainda é .part é porque
     # o download falhou).
-    download_dir = flask.current_app.config['DOWNLOADS_PATH']
+    download_dir = current_app.config['DOWNLOADS_PATH']
     for _file in os.listdir(download_dir):
         # _file = _file.decode('utf8')
         # print("file: {}".format(_file))
@@ -349,7 +345,7 @@ def create_pedido_attachments(scrapped_pedido):
         attachment.ia_url = (
             u'{base}/{prefix}_pedido_{protocol}/{filename}'.format(
                 base=base_url,
-                prefix=flask.current_app.config['ATTACHMENT_URL_PREFIX'],
+                prefix=current_app.config['ATTACHMENT_URL_PREFIX'],
                 protocol=scrapped_pedido.protocol,
                 filename=item.filename
             )
@@ -369,7 +365,7 @@ def save_pedido_into_db(scrapped_pedido):
     pedido = pedido.options(joinedload('history')).first()
     if not pedido:
         # if not, create one
-        default_author = flask.current_app.config['DEFAULT_AUTHOR']
+        default_author = current_app.config['DEFAULT_AUTHOR']
         try:
             author = db.session.query(models.Author).filter(
                 models.Author.name == default_author
@@ -415,7 +411,7 @@ def save_pedido_into_db(scrapped_pedido):
 
 def upload_attachment_to_internet_archive(pedido_protocol, filename):
 
-    download_dir = flask.current_app.config['DOWNLOADS_PATH']
+    download_dir = current_app.config['DOWNLOADS_PATH']
     downloaded_attachments = os.listdir(download_dir)
 
     # if filename not in [a.decode('utf8') for a in downloaded_attachments]:
@@ -433,12 +429,14 @@ def upload_attachment_to_internet_archive(pedido_protocol, filename):
         # except:
         #     mediatype = None
 
-        item = internetarchive.Item('{prefix}_pedido_{protocol}'.format(
-            prefix=flask.current_app.config['ATTACHMENT_URL_PREFIX'],
+        ia_session = get_session(config={'s3': {
+            'access': current_app.config['IAS3_ACCESS_KEY'],
+            'secret': current_app.config['IAS3_SECRET_KEY']}})
+        item = ia_session.Item('{prefix}_pedido_{protocol}'.format(
+            prefix=current_app.config['ATTACHMENT_URL_PREFIX'],
             protocol=pedido_protocol))
         metadata = dict(
             # mediatype=mediatype,
-            # creator='OKF',
             created_at=arrow.now().isoformat()
         )
         result = item.upload(
