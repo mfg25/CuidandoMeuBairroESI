@@ -22,8 +22,6 @@ from cuidando_utils import db
 from esiclivre import models
 
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 VALID_ATTACHMENTS_NAME_CHARS = string.ascii_lowercase + string.digits + '.-_'
 
 
@@ -119,8 +117,8 @@ class ParsedPedido(object):
             #     self.protocol, attachment.filename
             # )
 
-            logger.info("anexo")
-            logger.info(attachment.filename)
+            print("anexo")
+            print(attachment.filename)
             result += (attachment,)
         return result
 
@@ -189,7 +187,7 @@ class ParsedPedido(object):
 
             # Download and upload attachments that created_at changed
             if not old_created_at or (attachment.created_at != old_created_at):
-                logger.info(
+                print(
                     'Anexo modificado ou novo. Baixando e enviando para IA.')
 
                 attachments_el = self._browser.navegador.find_element_by_id(
@@ -217,7 +215,7 @@ class ParsedPedido(object):
 
             max_retries = 0
             if str('.part') in os.listdir(flask.current_app.config['DOWNLOADS_PATH']):  # noqa
-                logger.info("Existe algum download inacabado...")
+                print("Existe algum download inacabado...")
                 while max_retries != 10:
 
                     download_dir = os.listdir(
@@ -230,10 +228,10 @@ class ParsedPedido(object):
                     )
 
                     if not uncomplete_download:
-                        logger.info("Sem downloads inacabados...")
+                        print("Sem downloads inacabados...")
                         break
                     else:
-                        logger.info("Aguardar 10 segundos...")
+                        print("Aguardar 10 segundos...")
                         time.sleep(10)
                         max_retries += 1
 
@@ -300,7 +298,7 @@ def fix_attachment_name_and_extension():
     download_dir = flask.current_app.config['DOWNLOADS_PATH']
     for _file in os.listdir(download_dir):
         # _file = _file.decode('utf8')
-        # logger.info("file: {}".format(_file))
+        # print("file: {}".format(_file))
         _file_fullpath = '{}/{}'.format(download_dir, _file)
 
         if _file.endswith('.part'):
@@ -423,7 +421,7 @@ def upload_attachment_to_internet_archive(pedido_protocol, filename):
 
     # if filename not in [a.decode('utf8') for a in downloaded_attachments]:
     if filename not in downloaded_attachments:
-        logger.info("Arquivo {!r} não existe!.".format(filename))
+        print("Arquivo {!r} não existe!.".format(filename))
         # TODO: O que fazer se o arquivo não estiver disponivel?
         # Já temos um caso onde o download não completa, mas por falha no
         # servidor do esic.
@@ -450,15 +448,12 @@ def upload_attachment_to_internet_archive(pedido_protocol, filename):
 
         if not result or result[0].status_code != 200:
             # TODO: O que fazer nessa situação?
-            logger.info("Erro ao executar upload.")
+            print("Erro ao executar upload.")
         else:
             os.remove('{}/{}'.format(download_dir, filename))
 
 
 def update_pedidos_list(browser):
-    global logger
-    logger = browser.logger
-
     # garantir que a tela inicial seja a de consulta de pedidos.
     browser.ir_para_consultar_pedido()
 
@@ -476,4 +471,4 @@ def update_pedidos_list(browser):
     )
     db.session.commit()
 
-    logger.info("Pedidos atualizados. Atualização registrada.")
+    print("Pedidos atualizados. Atualização registrada.")

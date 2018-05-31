@@ -400,7 +400,6 @@ class ESicLivre(object):
             return None
         else:
             pedidos_preproc.update_pedidos_list(self)
-        pedidos_preproc.update_pedidos_list(self)
 
     # def __stop_func__(self):
     #     self.safe_dict['running'] = False
