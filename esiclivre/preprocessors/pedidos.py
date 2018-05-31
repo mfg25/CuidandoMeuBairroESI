@@ -89,8 +89,7 @@ class ParsedPedido(object):
         return desc.text.strip()
 
     def _get_attachments(self):
-        grid = self._main_data.select(
-            '#ctl00_MainContent_grid_anexos_resposta')
+        grid = self._main_data.select('#ctl00_MainContent_grid_anexos_resposta')
 
         if not grid:
             return ()  # 'Sem anexos.'

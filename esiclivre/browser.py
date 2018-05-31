@@ -430,7 +430,7 @@ class ESicLivre(object):
     def login_com_captcha(self):
         '''Tenta interagir com captcha'''
         tentativas = 0
-        while not self.logado and tentativas < 10:
+        while not self.logado and tentativas < 40:
             tentativas += 1
             # if self.try_break_audio_captcha:
             captcha = self.transcribe_captcha()
@@ -442,7 +442,10 @@ class ESicLivre(object):
             # If is set, login
             # if captcha:
             print('Trying to login...')
-            self.entrar_no_sistema(captcha)
+            try:
+                self.entrar_no_sistema(captcha)
+            except Exception as e:
+                print(e)
 
             if not self.esta_em_login():
                 self.logado = True
