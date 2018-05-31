@@ -1,4 +1,4 @@
-import urllib
+import os
 
 from flask import current_app
 import flask_mail
@@ -65,5 +65,5 @@ def send_message(conn, sender, message, dest, template_data):
 
 
 def get_subscribers_emails(subscribers):
-    endpoint = urllib.parse.urljoin(current_app.config['VIRALATA_ADDRESS'], 'users')
+    endpoint = os.path.join(current_app.config['VIRALATA_ADDRESS'], 'users')
     return cuidando_utils.request('get', endpoint, {'users': subscribers})['users']
