@@ -171,7 +171,7 @@ class ParsedPedido(object):
         db_pedido = (
             db.session.query(models.Pedido)
             .filter_by(protocol=self.protocol)
-            .options(joinedload('attachments', innerjoin=True))
+            .options(joinedload('attachments'))
             .one())
         db_attachments = db_pedido.attachments if db_pedido else []
 
