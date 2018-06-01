@@ -21,12 +21,15 @@ def create_app(settings_folder):
         '''Run browser.'''
         subprocess.check_call('Xvfb :10 -ac &', shell=True)
         os.environ['DISPLAY'] = ':10'
-        ESicLivre(
-            firefox=app.config['FIREFOX_PATH'],
-            email=app.config['ESIC_EMAIL'],
-            senha=app.config['ESIC_PASSWORD'],
-            pasta=app.config['DOWNLOADS_PATH'],
-        ).run(force_update)
+        try:
+            ESicLivre(
+                firefox=app.config['FIREFOX_PATH'],
+                email=app.config['ESIC_EMAIL'],
+                senha=app.config['ESIC_PASSWORD'],
+                pasta=app.config['DOWNLOADS_PATH'],
+            ).run(force_update)
+        except Exception as e:
+            print(e)
         subprocess.call('killall Xvfb', shell=True)
         subprocess.call('killall firefox', shell=True)
 

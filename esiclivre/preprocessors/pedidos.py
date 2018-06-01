@@ -84,6 +84,7 @@ class ParsedPedido(object):
         _, desc = data.select('td')
         return desc.text.strip()
 
+    @property
     def allow_recurso(self):
         '''Return True if recurso is allowed.'''
         for id_ in [
@@ -258,8 +259,7 @@ class Pedidos(object):
             self.set_full_data(browser)
             self._full_data.find_elements_by_tag_name('a')[pos].click()
 
-            pagesource = bs4.BeautifulSoup(browser.navegador.page_source,
-                                           "html5lib")
+            pagesource = bs4.BeautifulSoup(browser.navegador.page_source, 'html5lib')
 
             self._pedido_pagesource.append(pagesource)
             pedido = self.process_pedidos(browser, pagesource)
