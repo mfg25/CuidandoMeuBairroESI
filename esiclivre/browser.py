@@ -366,9 +366,10 @@ class ESicLivre(object):
                 # Main loop
                 # while self.safe_dict['running']:
                 #     self.main_loop()
-                if not self.ja_tentou_cookies_salvos:
-                    self.login_com_cookies_salvos()
-                    self.ja_tentou_cookies_salvos = True
+
+                # if not self.ja_tentou_cookies_salvos:
+                #     self.login_com_cookies_salvos()
+                #     self.ja_tentou_cookies_salvos = True
 
                 if not self.logado:
                     self.login_com_captcha()
@@ -429,7 +430,7 @@ class ESicLivre(object):
     def login_com_captcha(self):
         '''Tenta interagir com captcha'''
         tentativas = 0
-        while not self.logado and tentativas < 40:
+        while not self.logado and tentativas < 50:
             tentativas += 1
             # if self.try_break_audio_captcha:
             captcha = self.transcribe_captcha()
@@ -448,7 +449,7 @@ class ESicLivre(object):
 
             if not self.esta_em_login():
                 self.logado = True
-                self.salvar_cookies()
+                # self.salvar_cookies()
                 print('Seems to have logged in!')
 
     def post_user_messages(self):
