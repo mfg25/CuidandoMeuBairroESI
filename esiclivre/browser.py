@@ -353,7 +353,7 @@ class ESicLivre(object):
             self.gerar_novo_captcha()
         return captcha
 
-    def run(self):
+    def run(self, force_update):
         # if not self.safe_dict.get('running'):
         # Get context needed for DB
         with current_app.app_context():
@@ -380,7 +380,7 @@ class ESicLivre(object):
 
                         self.post_user_messages()
 
-                        self.update_pedidos_data()
+                        self.update_pedidos_data(force_update)
 
                     except LoginNeeded:
                         print('Seems to have been logged out...')
@@ -392,16 +392,18 @@ class ESicLivre(object):
             finally:
                 self.navegador.quit()
 
-    def update_pedidos_data(self):
+    def update_pedidos_data(self, force_update=False):
         '''Scrape pedidos data.'''
         last_update = db.session.query(PedidosUpdate).order_by(
             PedidosUpdate.date.desc()).first()
 
-        if last_update and last_update.date.date() == arrow.now().date():
-            print('Pedidos já foram scrapeados hoje.')
-            return None
-        else:
+        if (force_update or
+           (last_update and last_update.date.date() != arrow.now().date())):
             pedidos_preproc.update_pedidos_list(self)
+            return True
+        else:
+            print('Pedidos já foram scrapeados hoje.')
+            return False
 
     def verificar_lista_orgaos(self):
         last_update = db.session.query(OrgaosUpdate).order_by(

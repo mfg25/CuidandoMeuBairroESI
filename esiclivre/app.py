@@ -4,6 +4,8 @@
 import os
 import subprocess
 
+import click
+
 import cuidando_utils
 from .views import api
 from .browser import ESicLivre
@@ -13,17 +15,9 @@ from .sender import send_update_notifications
 def create_app(settings_folder):
     app = cuidando_utils.create_app(settings_folder, api, init_sv='public')
 
-    # TODO: colocar isso em um lugar descente...
-    # @app.route('/static/<path:path>')
-    # def send_templates(path):
-    #     return send_from_directory('static/', path)
-
-    # @app.route('/captcha')
-    # def send_captcha():
-    #     return send_file('static/captcha.jpg')
-
     @app.cli.command()
-    def run_browser():
+    @click.option('-f', '--force-update', is_flag=True, help='force pedidos update')
+    def run_browser(force_update):
         '''Run browser.'''
         subprocess.check_call('Xvfb :10 -ac &', shell=True)
         os.environ['DISPLAY'] = ':10'
@@ -32,7 +26,7 @@ def create_app(settings_folder):
             email=app.config['ESIC_EMAIL'],
             senha=app.config['ESIC_PASSWORD'],
             pasta=app.config['DOWNLOADS_PATH'],
-        ).run()
+        ).run(force_update)
         subprocess.call('killall Xvfb', shell=True)
         subprocess.call('killall firefox', shell=True)
 
