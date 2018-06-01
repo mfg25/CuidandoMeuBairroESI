@@ -399,8 +399,8 @@ class ESicLivre(object):
 
         if (force_update or
            (last_update and last_update.date.date() != arrow.now().date())):
-            pedidos_preproc.update_pedidos_list(self)
             print('Atualizando dados sobre pedidos...')
+            pedidos_preproc.update_pedidos_list(self)
             return True
         else:
             print('Pedidos já foram scrapeados hoje.')
