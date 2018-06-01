@@ -189,12 +189,11 @@ class ExtraApi(Api):
                     username = self.decode_token(token)['username']
                     return function(self, username, **args_json, **kw)
                 elif parse_token and 'optional_token' in args_json:
-                    try:
-                        token = args_json.pop('optional_token')
-                    except KeyError:
-                        username = None
-                    else:
+                    token = args_json.pop('optional_token')
+                    if token:
                         username = self.decode_token(token)['username']
+                    else:
+                        username = None
                     return function(self, username, **args_json, **kw)
                 else:
                     return function(self, **args_json, **kw)
