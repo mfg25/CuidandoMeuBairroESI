@@ -45,7 +45,7 @@
                                 { request_date ? formatDate(request_date) : '' }
                         </div>
                         <div class="col-xs-6">
-                            <a onclick={ fRoute('pessoa ' + author) }>
+                            <a onclick={ fRoute('pessoa', {user: author}) }>
                                 { author }
                             </a>
                         </div>
