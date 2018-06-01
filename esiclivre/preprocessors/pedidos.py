@@ -257,7 +257,15 @@ class Pedidos(object):
         for pos in range(total_of_pedidos):
 
             self.set_full_data(browser)
-            self._full_data.find_elements_by_tag_name('a')[pos].click()
+
+            tries = 0
+            while browser.current_url.endswith('consultar_pedido_v2.aspx'):
+                self._full_data.find_elements_by_tag_name('a')[pos].click()
+                time.sleep(1)
+                if tries > 10:
+                    print('Error: Couldn\'t open pedido page!')
+                    exit()
+                tries += 1
 
             pagesource = bs4.BeautifulSoup(browser.navegador.page_source, 'html5lib')
 
