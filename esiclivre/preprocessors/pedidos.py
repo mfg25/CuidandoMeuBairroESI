@@ -259,7 +259,7 @@ class Pedidos(object):
             self.set_full_data(browser)
 
             tries = 0
-            while browser.current_url.endswith('consultar_pedido_v2.aspx'):
+            while browser.navegador.current_url.endswith('consultar_pedido_v2.aspx'):
                 self._full_data.find_elements_by_tag_name('a')[pos].click()
                 time.sleep(1)
                 if tries > 10:
