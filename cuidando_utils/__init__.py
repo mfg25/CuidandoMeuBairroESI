@@ -120,7 +120,8 @@ class ExtraApi(Api):
             'optional_token': {
                 'location': 'json',
                 'help': 'Optional authentication token.',
-                'dest': 'token',
+                # 'dest': 'token',
+                'required': False
             },
             'page': {
                 'type': int,
