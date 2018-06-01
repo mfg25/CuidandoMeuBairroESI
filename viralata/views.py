@@ -212,7 +212,7 @@ class Logout(Resource):
 @api.route('/users/<string:username>')
 class UserAPI(Resource):
 
-    @api.parsed_args('token')
+    @api.parsed_args('optional_token')
     def get(self, token_username, username):
         '''Get information about an user.'''
         try:
