@@ -254,7 +254,9 @@ class Pedidos(object):
     def get_all_pages_source(self, browser):
 
         total_of_pedidos = len(self._full_data.find_elements_by_tag_name('a'))
+        print('pedidos per order in consultar_pedido page: ')
         for pos in range(total_of_pedidos):
+            print(f' {pos}')
 
             self.set_full_data(browser)
 
@@ -262,9 +264,16 @@ class Pedidos(object):
             while browser.navegador.current_url.endswith('consultar_pedido_v2.aspx'):
                 self._full_data.find_elements_by_tag_name('a')[pos].click()
                 time.sleep(1)
+
+                # Sometimes the link get stuck. Change page and go back.
+                if tries >= 1:
+                    self._full_data.find_elements_by_tag_name('a')[pos-tries].click()
+                    time.sleep(2)
+                    browser.navegador.back()
+
                 if tries > 10:
                     print('Error: Couldn\'t open pedido page!')
-                    exit()
+                    raise
                 tries += 1
 
             pagesource = bs4.BeautifulSoup(browser.navegador.page_source, 'html5lib')
