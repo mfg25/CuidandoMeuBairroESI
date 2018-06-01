@@ -270,6 +270,8 @@ class Pedidos(object):
                     self._full_data.find_elements_by_tag_name('a')[pos-tries].click()
                     time.sleep(2)
                     browser.navegador.back()
+                    time.sleep(2)
+                    self.set_full_data(browser)
 
                 if tries > 10:
                     print('Error: Couldn\'t open pedido page!')
