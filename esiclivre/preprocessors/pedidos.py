@@ -262,10 +262,13 @@ class Pedidos(object):
 
             tries = 0
             while browser.navegador.current_url.endswith('consultar_pedido_v2.aspx'):
-                self._full_data.find_elements_by_tag_name('a')[pos].click()
-                time.sleep(1)
 
-                # Sometimes the link get stuck. Change page and go back.
+                if tries > 10:
+                    print('Error: Couldn\'t open pedido page!')
+                    raise
+
+                # Sometimes the link get stuck. Change page to next pedido and go back.
+                # Reloading the page, or changing to previous pedido don't work...
                 if tries >= 1:
                     # browser.navegador.refresh()
                     self._full_data.find_elements_by_tag_name('a')[pos+tries].click()
@@ -274,9 +277,8 @@ class Pedidos(object):
                     time.sleep(2)
                     self.set_full_data(browser)
 
-                if tries > 10:
-                    print('Error: Couldn\'t open pedido page!')
-                    raise
+                self._full_data.find_elements_by_tag_name('a')[pos].click()
+                time.sleep(1)
                 tries += 1
 
             pagesource = bs4.BeautifulSoup(browser.navegador.page_source, 'html5lib')
