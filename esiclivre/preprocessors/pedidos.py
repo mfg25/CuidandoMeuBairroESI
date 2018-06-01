@@ -267,7 +267,8 @@ class Pedidos(object):
 
                 # Sometimes the link get stuck. Change page and go back.
                 if tries >= 1:
-                    self._full_data.find_elements_by_tag_name('a')[pos-tries].click()
+                    # browser.navegador.refresh()
+                    self._full_data.find_elements_by_tag_name('a')[pos+tries].click()
                     time.sleep(2)
                     browser.navegador.back()
                     time.sleep(2)
