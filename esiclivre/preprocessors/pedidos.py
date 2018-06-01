@@ -84,6 +84,16 @@ class ParsedPedido(object):
         _, desc = data.select('td')
         return desc.text.strip()
 
+    def allow_recurso(self):
+        '''Return True if recurso is allowed.'''
+        for id_ in [
+            'ctl00_MainContent_btnAbrirRecurso'
+            'ctl00_MainContent_btnSolicitarEsclarecimento'
+        ]:
+            if self._raw_data.select(f'#{id_}'):
+                return True
+        return False
+
     def _get_attachments(self):
         grid = self._main_data.select('#ctl00_MainContent_grid_anexos_resposta')
 
@@ -397,6 +407,7 @@ def save_pedido_into_db(scrapped_pedido):
     pedido.request_date = scrapped_pedido.request_date
     pedido.contact_option = scrapped_pedido.contact_option
     pedido.description = scrapped_pedido.description
+    pedido.allow_recurso = scrapped_pedido.allow_recurso
     # TODO: usar deadline aqui
     # pedido.deadline = scrapped_pedido.deadline
     # TODO: salvar no pedido alguma informação sobre se pode fazer recurso ou não
