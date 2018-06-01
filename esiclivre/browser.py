@@ -447,13 +447,12 @@ class ESicLivre(object):
             print('Trying to login...')
             try:
                 self.entrar_no_sistema(captcha)
+                if not self.esta_em_login():
+                    self.logado = True
+                    # self.salvar_cookies()
+                    print('Seems to have logged in!')
             except Exception as e:
                 print(e)
-
-            if not self.esta_em_login():
-                self.logado = True
-                # self.salvar_cookies()
-                print('Seems to have logged in!')
 
     def post_user_messages(self):
         '''Post pedidos and recursos.'''
