@@ -117,11 +117,11 @@ class ExtraApi(Api):
                 'help': 'The authentication token.',
                 'required': True
             },
-            # 'optional_token': {
-            #     'location': 'json',
-            #     'help': 'Optional authentication token.',
-            #     'dest': 'token',
-            # },
+            'optional_token': {
+                'location': 'json',
+                'help': 'Optional authentication token.',
+                'dest': 'token',
+            },
             'page': {
                 'type': int,
                 'default': 0,
@@ -175,7 +175,7 @@ class ExtraApi(Api):
         return self.general_parser.parse_args()
 
     def parsed_args(self, *args, parse_token=True):
-        '''Decorator'''
+        '''Use this function as a decorator.'''
         parser = self.create_parser(*args)
 
         def real_decorator(function):
@@ -186,6 +186,14 @@ class ExtraApi(Api):
                 if parse_token and 'token' in args_json:
                     token = args_json.pop('token')
                     username = self.decode_token(token)['username']
+                    return function(self, username, **args_json, **kw)
+                elif parse_token and 'optional_token' in args_json:
+                    try:
+                        token = args_json.pop('optional_token')
+                    except KeyError:
+                        username = None
+                    else:
+                        username = self.decode_token(token)['username']
                     return function(self, username, **args_json, **kw)
                 else:
                     return function(self, **args_json, **kw)
