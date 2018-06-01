@@ -147,24 +147,28 @@
     </div>
 
     <!-- Subscriptions -------------------- -->
-    <h2>Itens Acompanhados</h2>
-    <li each={el in listUserSubscriptions()}>
-      <a href="{el.template_data.link}">{el.tag}</a>
+    <div if={listUserSubscriptions().length}>
+      <h2>Itens Acompanhados</h2>
+      <li each={el in listUserSubscriptions()}>
+        <a href="{el.template_data.link}">{el.tag}</a>
 
-      <button type="submit"
-              onclick="{ unsubscribe }"
-              class="btn btn-color-sec block-right relative margin-bottom">
-        <spinneror condition="{ waitings[el.tag] && waitings[el.tag]['unsubscribeWaiting'] }" scale="0.15">{ t("Unfollow") }</spinneror>
-      </button>
-    </li>
+        <button type="submit"
+                onclick="{ unsubscribe }"
+                class="btn btn-color-sec block-right relative margin-bottom">
+          <spinneror condition="{ waitings[el.tag] && waitings[el.tag]['unsubscribeWaiting'] }" scale="0.15">{ t("Unfollow") }</spinneror>
+        </button>
+      </li>
+    </div>
 
     <!-- Perguntas -------------------- -->
-    <h2>Perguntas Feitas</h2>
-    <li each={pedido in listUserPedidos()}>
-      <a href="{ getRoute(pedido.keywords[0]) }">
-        {pedido.protocolo} - {pedido.orgao} - {pedido.situacao}
-      </a>
-    </li>
+    <div if={listUserPedidos().length}>
+      <h2>Perguntas Feitas</h2>
+      <li each={pedido in listUserPedidos()}>
+        <a href="{ getRoute(pedido.keywords[0]) }">
+          {pedido.protocolo} - {pedido.orgao} - {pedido.situacao}
+        </a>
+      </li>
+    </div>
 
 
     <script>
@@ -277,7 +281,7 @@
      this.waitings = {}
      this.watches('subscriptions')
      this.listUserSubscriptions = () => {
-       if (this.username == this.user || (this.subscriptions && this.subscriptions.value)) {
+       if (this.username == this.user && (this.subscriptions && this.subscriptions.value)) {
          let subscriptions = []
          for (let code in this.subscriptions.value) {
            subscriptions.push(this.subscriptions.value[code])
