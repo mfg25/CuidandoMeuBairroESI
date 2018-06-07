@@ -54,8 +54,8 @@
             </div>
 
               <button onclick={ openNewRecursoForm }
-                      if="{ allow_recurso }"
-                      class="btn btn-color-sec block-right">
+                      if="{ allow_recurso && this.username == this.author }"
+                      class="btn btn-color-sec block-right margin-bottom">
                 { t('Appeal') }
                 <span class="right-arrow"/>
               </button>
@@ -122,6 +122,7 @@
     import {formatDate} from '../../utils/helpers'
     this.formatDate = formatDate
     this.mixin('base')
+    this.watches('username')
     this.openNewPerguntaForm = (event) => {
         if (checkIsLogged(event)) {
             this.tags.modal[0].openModal(event)
