@@ -88,7 +88,7 @@ class ParsedPedido(object):
     def allow_recurso(self):
         '''Return True if recurso is allowed.'''
         for id_ in [
-            'ctl00_MainContent_btnAbrirRecurso'
+            'ctl00_MainContent_btnAbrirRecurso',
             'ctl00_MainContent_btnSolicitarEsclarecimento'
         ]:
             if self._raw_data.select(f'#{id_}'):
@@ -489,6 +489,7 @@ def update_pedidos_list(browser):
 
     pedidos = Pedidos()
     pedidos.set_full_data(browser)
+    # linhas = pedidos._full_data.find_elements_by_tag_name('tr')[1:]
     pedidos.get_all_pages_source(browser)
     # pedidos.process_pedidos(browser)
 
