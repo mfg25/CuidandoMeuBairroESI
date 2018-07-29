@@ -16,7 +16,7 @@ Mais informações também nessa [wiki](https://pt.wikiversity.org/wiki/Projeto_
 
 Abaixo estão representados os diversos módulos nos quais esse projeto se baseia:
 
-![Alt text](https://gitlab.com/cuidandodomeubairro/geral/raw/master/images/cuidando2_arq2.svg)
+![Alt text](images/cuidando2_arq2.svg)
 
 As setas avermelhadas indicam conexões em que as escritas provavelmente necessitarão de um [token](https://github.com/okfn-brasil/viralata#protocol).
 
