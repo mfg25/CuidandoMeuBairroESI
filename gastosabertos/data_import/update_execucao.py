@@ -40,13 +40,8 @@ def update(db, storing_folder, public_downloads, remove_old=False):
     current_year = str(date.today().year)
     tmp_folder = os.path.join('/', 'tmp')
 
-    # newfilepath = os.path.join(storing_folder,
-    #                             '{0}.{1}'.format(str(date.today()), 'csv'))
-    # update_from_csv(get_db(), newfilepath)
-
     filepath = download_year(current_year, tmp_folder)
 
-    # arqs = sorted(os.listdir(storing_folder))
     last_file = os.path.join(storing_folder, 'last.ods')
     if os.path.exists(last_file) and filecmp.cmp(filepath, last_file):
         print('File seems the same, nothing to do...')
@@ -54,7 +49,6 @@ def update(db, storing_folder, public_downloads, remove_old=False):
     else:
         print('File changed! Updating...')
         csvfilepath = convert_to_csv(filepath, tmp_folder)
-        # extension = filepath.rpartion('.')[2]
         newfilepath = os.path.join(storing_folder,
                                    '{0}.{1}'.format(str(date.today()), 'csv'))
         shutil.move(csvfilepath, newfilepath)
