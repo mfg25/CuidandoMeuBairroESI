@@ -47,11 +47,7 @@ def generate_year(db, year, outfolder):
 
         # Add row.data fields taking care of unicode
         for k, v in row.data.items():
-            try:
-                data[k] = v.encode('utf-8')
-            except AttributeError:
-                # For non strings types
-                data[k] = v
+            data[k] = v
 
         lon, lat = get_lonlat(geo)
         data['longitude'] = lon
