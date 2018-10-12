@@ -26,6 +26,7 @@ setup(
         'arrow',
         'psycopg2-binary',  # for Postgres support
         'internetarchive',
+        'pandas'
     ],
     keywords=['esic', 'microservice'],
     classifiers=[

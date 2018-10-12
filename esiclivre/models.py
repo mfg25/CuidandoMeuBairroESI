@@ -115,7 +115,7 @@ class Pedido(db.Model):
     orgao_name = db.Column(db.String(255), nullable=True)
     # If this Pedido is open to Recursos at the moment.
     allow_recurso = db.Column(db.Boolean, default=False, nullable=False)
-    history = db.relationship('Message', backref='pedido')
+    history = db.relationship('Message', backref='pedido', order_by='Message.date')
     keywords = db.relationship('Keyword', secondary=pedido_keyword, backref='pedidos')
     user_messages = db.relationship('UserMessage', backref='pedido')
     author = db.relationship(

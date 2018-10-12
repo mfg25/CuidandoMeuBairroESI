@@ -3,11 +3,14 @@
 
 import arrow
 import bleach
+
+import sqlalchemy as sa
 from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
 from flask_restplus import Resource
 from flask import current_app
+import pandas as pd
 
 from esiclivre.models import Orgao, Author, UserMessage, Pedido, Message, Keyword
 from cuidando_utils import db, paginate, ExtraApi
@@ -313,3 +316,46 @@ def list_all_user_messages():
         'keywords': p.keywords,
         'author': a.name,
     } for p, a in q.all()]
+
+
+@api.route('/stats/<string:grouping>')
+class StatisticsAPI(Resource):
+
+    def get(self, grouping='day'):
+        '''Statistics about pedidos.'''
+
+        groups = {
+            'day': 'D',
+            'month': 'MS',
+            'year': 'YS'
+        }
+
+        if grouping not in groups:
+            api.abort(404)
+
+        by_orgao = (
+            db.session.query(
+                Pedido.orgao_name, sa.func.count(Pedido.orgao_name))
+            .filter(Pedido.orgao_name.isnot(None))
+            .group_by(Pedido.orgao_name)
+            .all())
+        by_orgao = [{
+            'name': i[0],
+            'count': i[1]
+        } for i in by_orgao]
+        by_orgao.sort(key=lambda i: i['count'], reverse=True)
+
+        pedidos = db.session.query(Pedido).options(joinedload('history')).all()
+        df = pd.DataFrame(
+            [(i.history[0].date.datetime, i) for i in pedidos if i.history],
+            columns=['date', 'pedido'])
+        dates = (
+            df.groupby(pd.Grouper(key='date', freq=groups[grouping]))
+            .count().reset_index()
+            .assign(date=lambda x: (x.date.astype(int) / 1e6).astype(int))
+            .values.tolist())
+
+        return {
+            'orgaos': by_orgao,
+            'dates': dates
+        }
