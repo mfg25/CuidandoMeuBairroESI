@@ -26,6 +26,7 @@ Linkando para os respectivos repositórios:
 - [Vira-Lata](https://gitlab.com/cuidandodomeubairro/viralata): Autenticação via token (usados para acessar os outros serviços) e informações sobre o usuário. ([endpoint](https://devcolab.each.usp.br/viralata))
 - [Tagarela](https://gitlab.com/cuidandodomeubairro/tagarela): Comentários. ([endpoint](https://devcolab.each.usp.br/tagarela))
 - [EsicLivre](https://gitlab.com/cuidandodomeubairro/esiclivre): Interface com eSIC para a realização de pedidos de informação. ([endpoint](https://devcolab.each.usp.br/esiclivre))
+- [Website](https://gitlab.com/cuidandodomeubairro/website-vuejs): Cliente JS que é aberto pelo navegador e acessa os demais serviços.
 
 ### Motivação
 
