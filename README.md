@@ -18,14 +18,14 @@ Abaixo estão representados os diversos módulos nos quais esse projeto se basei
 
 ![Diagrama da Arquitetura](images/cuidando2_arq2.svg)
 
-As setas avermelhadas indicam conexões em que as escritas provavelmente necessitarão de um [token](https://github.com/okfn-brasil/viralata#protocol).
+As setas avermelhadas indicam conexões em que as escritas provavelmente necessitarão de um [token](https://gitlab.com/cuidandodomeubairro/viralata#protocol).
 
 Linkando para os respectivos repositórios:
 
-- [Gastos Abertos](https://github.com/cdmb/gastos_abertos): Geolocalização e fornecimento dos dados de execução orçamentária. ([endpoint](http://demo.gastosabertos.org))
-- [Vira-Lata](https://github.com/okfn-brasil/viralata): Autenticação via token (usados para acessar os outros serviços) e informações sobre o usuário. ([endpoint](http://cuidando.org.br:5002))
-- [Tagarela](https://github.com/okfn-brasil/tagarela): Comentários. ([endpoint](http://cuidando.org.br:5002))
-- [EsicLivre](https://github.com/okfn-brasil/esiclivre): Interface com eSIC para a realização de pedidos de informação. ([endpoint](http://cuidando.org.br:5004) - ainda não online)
+- [Gastos Abertos](https://gitlab.com/cuidandodomeubairro/gastos-abertos): Geolocalização e fornecimento dos dados de execução orçamentária. ([endpoint](https://devcolab.each.usp.br/gastos_abertos))
+- [Vira-Lata](https://gitlab.com/cuidandodomeubairro/viralata): Autenticação via token (usados para acessar os outros serviços) e informações sobre o usuário. ([endpoint](https://devcolab.each.usp.br/viralata))
+- [Tagarela](https://gitlab.com/cuidandodomeubairro/tagarela): Comentários. ([endpoint](https://devcolab.each.usp.br/tagarela))
+- [EsicLivre](https://gitlab.com/cuidandodomeubairro/esiclivre): Interface com eSIC para a realização de pedidos de informação. ([endpoint](https://devcolab.each.usp.br/esiclivre))
 
 ### Motivação
 
