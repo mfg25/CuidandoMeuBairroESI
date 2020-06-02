@@ -14,8 +14,15 @@ Documentos:
 
 ### Documentos Próprios
 - [Inovações na relação entre Estado e Sociedade - Semana de Ouvidoria e Acesso à Informação](/Documentos próprios- Publicações/2-gisele-craveiro.pdf)
-- [Cuidando Meu Bairro - Apresentação](/)
-- (/Documentos Próprios- Publicações
+- [Cuidando Meu Bairro - Apresentação](/Documentos próprios- Publicações/Apresentando_ Cuidando do Meu Bairro.pptx)
+- [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
+- [Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/Caring for my Neighborhood.pdf)
+- [Artigo - Exploring the impacts of web publishing of budgetary information at the sub-national level in Brazil](/Documentos próprios- Publicações/CaringforMyNeighbourhood-Report.pdf)
+- [Guia de Facilitação](/Documentos próprios- Publicações/Guia de Facilitação.docx)
+- [ Ecossistemas de produção e consumo de dados](/Documentos próprios- Publicações/Painel-3-a-Ecossistemas-GiseleCraveiro.pdf)
+- [ Apresentação Cuidando - Atualizada](/Documentos próprios- Publicações/apresentacao cuidando atualizada.pptx)
+- [ Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
+- 
 (links para a página deles no Gitlab)
 
 - [Mais um documento](https://gitlab.com/cuidandodomeubairro/documentos/raw/master/Men%C3%A7%C3%A3o%20em%20documentos/MateriaDiarioSP.pdf)
