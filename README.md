@@ -13,7 +13,7 @@ Documentos:
 - [ Monitoramento do Orçamento Público e Dados Abertos](/Menção em documentos/porto-alegre-para-onde-foi-o-meu-dinheiro-e-cuidando-do-meu-bairro.pdf)
 
 ### Documentos Próprios
-- [Inovações na relação entre Estado e Sociedade - Semana de Ouvidoria e Acesso à Informação](/Documentos Próprios- Publicações/2-gisele-craveiro.pdf)
+- [Inovações na relação entre Estado e Sociedade - Semana de Ouvidoria e Acesso à Informação](/Documentos próprios- Publicações/2-gisele-craveiro.pdf)
 - [Cuidando Meu Bairro - Apresentação](/)
 - (/Documentos Próprios- Publicações
 (links para a página deles no Gitlab)
