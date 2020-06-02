@@ -22,7 +22,7 @@ Documentos:
 - [ Ecossistemas de produção e consumo de dados](/Documentos próprios- Publicações/Painel-3-a-Ecossistemas-GiseleCraveiro.pdf)
 - [ Apresentação Cuidando - Atualizada](/Documentos próprios- Publicações/apresentacao cuidando atualizada.pptx)
 - [ Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
-- 
+
 (links para a página deles no Gitlab)
 
 - [Mais um documento](https://gitlab.com/cuidandodomeubairro/documentos/raw/master/Men%C3%A7%C3%A3o%20em%20documentos/MateriaDiarioSP.pdf)
