@@ -25,6 +25,7 @@ Documentos:
 - [ Artigo - Caring for My Neighborhood: a platform for public oversight 2](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
 #### Guias: 
 - [Guia de Facilitação](/Documentos próprios- Publicações/Guia de Facilitação.docx)
+- - [Guia de Facilitação - pdf](/Documentos próprios- Publicações/Guia de Facilitação.pdf)
 #### Outros:
 - [ Ecossistemas de produção e consumo de dados](/Documentos próprios- Publicações/Painel-3-a-Ecossistemas-GiseleCraveiro.pdf)
 
