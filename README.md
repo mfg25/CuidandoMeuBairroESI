@@ -14,18 +14,20 @@ Documentos:
 
 ### Documentos Próprios
 
-#### Artigos:
+#### Apresentações:
 - [Inovações na relação entre Estado e Sociedade - Semana de Ouvidoria e Acesso à Informação](/Documentos próprios- Publicações/2-gisele-craveiro.pdf)
-- [Cuidando Meu Bairro - Apresentação](/Documentos próprios- Publicações/Apresentando_ Cuidando do Meu Bairro.pptx)
+- [ Apresentação Cuidando - Atualizada](/Documentos próprios- Publicações/apresentacao cuidando atualizada.pptx)
+- [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
 #### Artigos:
 - [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
 - [Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/Caring for my Neighborhood.pdf)
 - [Artigo - Exploring the impacts of web publishing of budgetary information at the sub-national level in Brazil](/Documentos próprios- Publicações/CaringforMyNeighbourhood-Report.pdf)
-- [ Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
+- [ Artigo - Caring for My Neighborhood: a platform for public oversight 2](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
 #### Guias: 
 - [Guia de Facilitação](/Documentos próprios- Publicações/Guia de Facilitação.docx)
+#### Outros:
 - [ Ecossistemas de produção e consumo de dados](/Documentos próprios- Publicações/Painel-3-a-Ecossistemas-GiseleCraveiro.pdf)
-- [ Apresentação Cuidando - Atualizada](/Documentos próprios- Publicações/apresentacao cuidando atualizada.pptx)
+
 
 
 
