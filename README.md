@@ -26,7 +26,7 @@ Documentos:
 #### Guias: 
 - [Guia de Facilitação](/Documentos próprios- Publicações/Guia de Facilitação.docx)
 - - [Guia de Facilitação - pdf](https://gitlab.com/cuidandodomeubairro/documentos/-/blob/ca5d3f1527ea49c156f27e3212bc0028fa5a7406/Documentos%20pr%C3%B3prios-%20Publica%C3%A7%C3%B5es/Guia_de_Facilita%C3%A7%C3%A3o.pdf)
-- 
+
 #### Outros:
 - [ Ecossistemas de produção e consumo de dados](/Documentos próprios- Publicações/Painel-3-a-Ecossistemas-GiseleCraveiro.pdf)
 
