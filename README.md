@@ -28,7 +28,7 @@
 
 ### Vídeos:
 - https://www.youtube.com/watch?v=nD5wGFvtPDo	
-- https://www.youtube.com/watch?v=LpGmQZ5gpHQ	
+- [Nossa São Paulo: Cuindando meu bairro - Agosto/2013] (https://www.youtube.com/watch?v=LpGmQZ5gpHQ)	
 - https://www.youtube.com/watch?v=JBRZLzaFJ3k	
 - https://www.youtube.com/watch?v=56FrhkNzvFg	
 - https://www.youtube.com/watch?v=BWXtdDpIFsM&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=2	
