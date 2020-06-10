@@ -13,22 +13,23 @@ Documentos:
 - [ Monitoramento do Orçamento Público e Dados Abertos](/Menção em documentos/porto-alegre-para-onde-foi-o-meu-dinheiro-e-cuidando-do-meu-bairro.pdf)
 
 ### Documentos Próprios
-
-#### Apresentações:
-- [Inovações na relação entre Estado e Sociedade - Semana de Ouvidoria e Acesso à Informação](/Documentos próprios- Publicações/2-gisele-craveiro.pdf)
-- [ Apresentação Cuidando - Atualizada](/Documentos próprios- Publicações/apresentacao cuidando atualizada.pptx)
-- [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
-#### Artigos:
+#### Artigos e Relatórios:
 - [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
 - [Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/Caring for my Neighborhood.pdf)
 - [Artigo - Exploring the impacts of web publishing of budgetary information at the sub-national level in Brazil](/Documentos próprios- Publicações/CaringforMyNeighbourhood-Report.pdf)
 - [ Artigo - Caring for My Neighborhood: a platform for public oversight 2](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
-#### Guias: 
+
+#### Apresentações e Guias:
+##### Apresentações:
+
+- [Inovações na relação entre Estado e Sociedade - Semana de Ouvidoria e Acesso à Informação](/Documentos próprios- Publicações/2-gisele-craveiro.pdf)
+- [ Apresentação Cuidando - Atualizada](/Documentos próprios- Publicações/apresentacao cuidando atualizada.pptx)
+- [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
+
+##### Guias: 
 - [Guia de Facilitação](/Documentos próprios- Publicações/Guia de Facilitação.docx)
 - - [Guia de Facilitação - pdf](https://gitlab.com/cuidandodomeubairro/documentos/-/blob/ca5d3f1527ea49c156f27e3212bc0028fa5a7406/Documentos%20pr%C3%B3prios-%20Publica%C3%A7%C3%B5es/Guia_de_Facilita%C3%A7%C3%A3o.pdf)
 
-#### Outros:
-- [ Ecossistemas de produção e consumo de dados](/Documentos próprios- Publicações/Painel-3-a-Ecossistemas-GiseleCraveiro.pdf)
 
 
 
