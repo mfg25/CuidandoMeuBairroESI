@@ -34,13 +34,13 @@
 
 ## Notícias, Parcerias, Prêmios, Citações em sites, Eventos:
 
-###Parceirias:
+### Parceirias:
 - https://br.okfn.org/2014/04/29/open-knowledge-brasil-e-finalista-do-desafio-de-impacto-social-google-brasil/
 - https://idatosabiertos.org/cuidando-2-0-melhorando-a-transparencia-do-orcamento-da-cidade-com-os-pedidos-de-informacao-de-seus-cidadaos/
 - http://www.governoaberto.cgu.gov.br/noticias/2015/conheca-os-membros-do-grupo-de-trabalho-da-sociedade-civil
 - https://www.acileme.com.br/noticias:observatorio-social--de-olho-nos-gastos-publicos
 
-###Prêmios:
+### Prêmios:
 - http://www.educacaofiscal.sp.gov.br/pages/Noticias/Registro/Noticia_65.shtm
 - http://www.avina.net/avina/pt/brasil-proyecto-cuidando-do-meu-bairro-gana-primer-lugar-del-premio-nacional-de-educacion-fiscal/
 - http://www.fiscosul.org.br/noticias/projeto-de-sao-paulo-fica-em-1o-lugar-no-premio-de-educacao-fiscal-2016/38
@@ -79,4 +79,56 @@
 - https://sengece.org.br/governo-e-sociedade-juntos-para-controlar-contas-e-planejar-politicas-publicas/
 - [Pariticipação do Evento da Prefeitura São Paulo Aberta - Nov/2013](http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/)
 
+### Observatório Social do Brasil - São Paulo
+- https://osbrasil.org.br/colab-usp-treinara-observadores-para-o-monitoramento-do-orcamento-publico/
+- https://osbrasil.org.br/osb-sp-estabelece-parceria-com-faculdade-da-usp-para-fomentar-o-controle-social/
+- https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1027949807303433/?type=3
+- https://www.facebook.com/OSBSP/posts/1388841184547625
+- https://www.facebook.com/OSBSP/posts/1309999869098424
+- https://www.facebook.com/OSBSP/posts/1014249702006777
+- https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1331850760246668/?type=3
+- https://www.facebook.com/OSBSP/posts/1331207083644369
+- https://www.facebook.com/OSBSP/posts/1055001291264951
+- https://www.facebook.com/OSBSP/posts/1010093285755752
+- https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1421171834647893/?type=3
+- http://saopaulo.osbrasil.org.br/observatorio-social-e-each-usp-firmam-convenio-para-monitorar-orcamento-de-sao-paulo/
+- https://queminova.catracalivre.com.br/influencia/curso-gratuito-e-online-mostra-como-cuidar-do-seu-bairro/
+- https://www.facebook.com/OSBSP/posts/1080825178682562
+- https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1238113762953702/?type=3
+- http://saopaulo.osbrasil.org.br/em-acao-osb-sp-e-colab-usp-comecam-a-colocar-em-pratica-os-projetos-para-2017/
+- https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1031466510285096/?type=3
+- https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1652871018144639/?type=3
+- http://saopaulo.osbrasil.org.br/conviteoficina-projeto-cuidando-do-meu-bairro/
+- http://saopaulo.osbrasil.org.br/oficina-projeto-cuidando-do-meu-bairro/
+- http://saopaulo.osbrasil.org.br/apresentacoes-divulgam-os-trabalhos-do-osb-sao-paulo/
+- http://saopaulo.osbrasil.org.br/noticia-evento-de-apresentacao-do-osb-sp-na-camara-municipal/
+- http://saopaulo.osbrasil.org.br/noticia-secundaria-1/
+- http://saopaulo.osbrasil.org.br/boletim-osb-sp-colab-usp-ensina-a-monitorar-o-orcamento-publico-de-sao-paulo/
+- http://saopaulo.osbrasil.org.br/controle-social-incremento-a-transparencia/
+- http://saopaulo.osbrasil.org.br/reuniao-de-apresentacao-osb-sp/
+- http://saopaulo.osbrasil.org.br/palestra-e-oficina-durante-evento-com-mpf-e-defensoria-publica-de-sp/
+- http://saopaulo.osbrasil.org.br/noticias-palestra-e-oficina-durante-evento-com-mpf-e-defensoria-publica-de-sp/
+- http://saopaulo.osbrasil.org.br/projetos/
+- http://saopaulo.osbrasil.org.br/em-acao-osb-sp-e-colab-usp-comecam-a-colocar-em-pratica-os-projetos-para-2017/
+- http://saopaulo.osbrasil.org.br/observatorio-social-e-each-usp-firmam-convenio-para-monitorar-orcamento-de-sao-paulo/
+
+### Oficinas:
+- http://www.jornal3idade.com.br/?p=9987
+- http://www.fecap.br/portal/noticias/detalhes.php?id=378
+- http://www.apf.org.br/fundacoes/index.php/noticias/todas-as-noticias/2614-colab-usp-treinara-cidadaos-para-o-monitoramento-do-orcamento-publico-da-cidade-de-sao-paulo.html
+- http://www.revistacircuito.com/arquivos/11955
+- http://www.krisos.com.br/blog/bairro-butanta/oficina-apresenta-aplicativo-de-monitoramento-das-politicas-publicas-no-butanta/
+- http://jornalperspectiva.com.br/noticias/colab-usp-treinara-cidadaos-para-monitorar-orcamento-publico/
+- http://dmptsp.org.br/portal/local/6049-acompanhe-a-programacao-das-oficinas-entre-os-dias-17-e-19-de-novembro
+- https://pt.slideshare.net/mobile/juplass/goberno-aberrto-guia-de-oficinasmaro-e-abril
+
+### Pref
+- http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/
+- http://www.prefeitura.sp.gov.br/cidade/secretarias/controladoria_geral/noticias/?p=143483&amp
+- http://www2.camara.leg.br/camaranoticias/radio/materias/RADIOAGENCIA/521488-PESQUISADORES-DEFENDEM-MAIS-PARTICIPACAO-DOS-CIDADAOS-NA-GESTAO-PUBLICA.html
+
+### COLAB:
+- https://colab.each.usp.br/blog/tag/cuidando-do-meu-bairro/
+- https://andresmrm.github.io/oficina-cuidando/#cuidando-do-meu-bairro
+- https://colab.each.usp.br/blog/2015/09/03/a-revolucao-dos-dados-esta-chegando-a-iii-conferencia-internacional-de-dados-abertos-publica-o-relatorio-final-tracando-um-roteiro-guia-para-dados-abertos/
 
