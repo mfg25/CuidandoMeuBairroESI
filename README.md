@@ -24,12 +24,13 @@
 - [Guia de Facilitação - pdf](https://gitlab.com/cuidandodomeubairro/documentos/-/blob/ca5d3f1527ea49c156f27e3212bc0028fa5a7406/Documentos%20pr%C3%B3prios-%20Publica%C3%A7%C3%B5es/Guia_de_Facilita%C3%A7%C3%A3o.pdf)
 
 ## Vídeos:
-- [Nossa São Paulo: Cuindando meu bairro - Agosto/2013](https://www.youtube.com/watch?v=LpGmQZ5gpHQ)	
-- [Entrevista Gisele Craveiro Arquivo Futuro- Emancipação da Cidadania - Outubro/2017](https://www.youtube.com/watch?v=JBRZLzaFJ3k)
+- [Aula Orçamento Público/Rede Fé e Polítca- Novembro/2012](https://www.youtube.com/watch?v=qdqj_7AdXDA)
+- [Nossa São Paulo: Cuindando meu bairro - Agosto/2013](https://www.youtube.com/watch?v=LpGmQZ5gpHQ)
 - [VideoCast - Câmara Municipal de São de Paulo - Nov/2014](https://www.youtube.com/watch?v=56FrhkNzvFg)
+- [Entrevista Gisele Craveiro Arquivo Futuro- Emancipação da Cidadania - Outubro/2017](https://www.youtube.com/watch?v=JBRZLzaFJ3k)
 - [Entrevista Gisele Craveiro Arquivo Futuro - Orçamento Dinâmico - Outubro/2017](https://www.youtube.com/watch?v=BWXtdDpIFsM&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=2)	
 - [Entrevista Gisele Craveiro Arquivo Futuro - Perguntas ao Poder Público- Outubro/2017](https://www.youtube.com/watch?v=1EkHwPPqhn4&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=3)	
-- [Aula Orçamento Público/Rede Fé e Polítca- Novembro/2012](https://www.youtube.com/watch?v=qdqj_7AdXDA)	
+- [Observatório Social do Brasil - Árvore do Dinheiro - Cuidando do meu bairro](https://www.youtube.com/watch?v=eU18gtlDhaY)	
 
 ## Notícias, Parcerias, Prêmios, Citações em sites, Eventos:
 
