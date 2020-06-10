@@ -1,6 +1,6 @@
 # Documentos sobre o projeto Cuidando do Meu Bairro
 
-##Artigos e Relatórios:
+## Artigos e Relatórios:
 - [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
 - [Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/Caring for my Neighborhood.pdf)
 - [Artigo - Exploring the impacts of web publishing of budgetary information at the sub-national level in Brazil](/Documentos próprios- Publicações/CaringforMyNeighbourhood-Report.pdf)
@@ -27,14 +27,12 @@
 - [Guia de Facilitação - pdf](https://gitlab.com/cuidandodomeubairro/documentos/-/blob/ca5d3f1527ea49c156f27e3212bc0028fa5a7406/Documentos%20pr%C3%B3prios-%20Publica%C3%A7%C3%B5es/Guia_de_Facilita%C3%A7%C3%A3o.pdf)
 
 ### Vídeos:
-- https://www.youtube.com/watch?v=nD5wGFvtPDo	
 - [Nossa São Paulo: Cuindando meu bairro - Agosto/2013](https://www.youtube.com/watch?v=LpGmQZ5gpHQ)	
-- https://www.youtube.com/watch?v=JBRZLzaFJ3k	
-- https://www.youtube.com/watch?v=56FrhkNzvFg	
-- https://www.youtube.com/watch?v=BWXtdDpIFsM&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=2	
-- https://www.youtube.com/watch?v=1EkHwPPqhn4&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=3	
-- https://www.youtube.com/watch?v=JBRZLzaFJ3k&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=4	
-- https://www.youtube.com/watch?v=qdqj_7AdXDA	
+- [Entrevista Gisele Craveiro Arquivo Futuro- Emancipação da Cidadania - Outubro/2017](https://www.youtube.com/watch?v=JBRZLzaFJ3k)
+- [VideoCast - Câmara Municipal de São de Paulo - Nov/2014](https://www.youtube.com/watch?v=56FrhkNzvFg)
+- [Entrevista Gisele Craveiro Arquivo Futuro - Orçamento Dinâmico - Outubro/2017](https://www.youtube.com/watch?v=BWXtdDpIFsM&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=2)	
+- [Entrevista Gisele Craveiro Arquivo Futuro - Perguntas ao Poder Público](https://www.youtube.com/watch?v=1EkHwPPqhn4&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=3)	
+- [Aula Orçamento Público/Rede Fé e Polítca- Novembro/2012](https://www.youtube.com/watch?v=qdqj_7AdXDA)	
 
 
 
