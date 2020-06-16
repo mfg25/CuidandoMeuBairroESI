@@ -80,7 +80,7 @@
 
 ### Eventos:
 - http://humanitas360.org/evento-tecnologia-e-mudanca-social/
-- [Seminário Inovação e Sustentabilidade na Gestão Municipal - Janeiro/2013](http://www.acmd.org.br/programa-cidades-sustentaveis-promove-seminario-para-gestores-das-cidades/)0
+- [Seminário do Programa Cidades Sustentáveis – Inovação e Sustentabilidade na Gestão Municipal - Janeiro/2013](http://www.acmd.org.br/programa-cidades-sustentaveis-promove-seminario-para-gestores-das-cidades/)
 - [Encontro São Paulo Aberta - Outubro/2013](http://polis.org.br/noticias/participacao-social-encontro-sao-paulo-aberta-traz-debates-sobre-transparencia-acesso-a-informacao-e-participacao-social/)
 - [Pariticipação do Evento da Prefeitura São Paulo Aberta - Nov/2013](http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/)
 - [ Seminário Internacional Brasil 100% Digital, em Brasília, Abril/2015](https://sengece.org.br/governo-e-sociedade-juntos-para-controlar-contas-e-planejar-politicas-publicas/)
