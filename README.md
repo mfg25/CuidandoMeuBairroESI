@@ -49,8 +49,8 @@
 ### Parceirias:
 - [Open Knowledge](https://br.okfn.org/2014/04/29/open-knowledge-brasil-e-finalista-do-desafio-de-impacto-social-google-brasil/)
 - [ILDA - Dados Abietos](https://idatosabiertos.org/cuidando-2-0-melhorando-a-transparencia-do-orcamento-da-cidade-com-os-pedidos-de-informacao-de-seus-cidadaos/)
-- [Controladoria-Geral da União - Governo Aberto: Membros do Grupo de Trabalho](- http://www.governoaberto.cgu.gov.br/noticias/2015/conheca-os-membros-do-grupo-de-trabalho-da-sociedade-civil)
-- [Associação Comercial, Industrial e Agrícola de Leme - ACIL](- https://www.acileme.com.br/noticias:observatorio-social--de-olho-nos-gastos-publicos)
+- [Controladoria-Geral da União - Governo Aberto: Membros do Grupo de Trabalho](http://www.governoaberto.cgu.gov.br/noticias/2015/conheca-os-membros-do-grupo-de-trabalho-da-sociedade-civil)
+- [Associação Comercial, Industrial e Agrícola de Leme - ACIL](https://www.acileme.com.br/noticias:observatorio-social--de-olho-nos-gastos-publicos)
 
 ### Prêmios:
 - http://www.educacaofiscal.sp.gov.br/pages/Noticias/Registro/Noticia_65.shtm
