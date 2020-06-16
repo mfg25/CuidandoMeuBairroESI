@@ -1,15 +1,18 @@
 # Documentos sobre o projeto Cuidando do Meu Bairro
+###No decorrer dos anos de elaboração do projeto Cuidando meu Bairro, diversas forma de interação do projeto foram desenvolvidas, seja como por artigos, apresentações, vídeos e etc. 
+###Abaixo segue uma relação dessas produções:
 
 ## Artigos e Relatórios:
 - [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
 - [Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/Caring for my Neighborhood.pdf)
 - [Artigo - Exploring the impacts of web publishing of budgetary information at the sub-national level in Brazil](/Documentos próprios- Publicações/CaringforMyNeighbourhood-Report.pdf)
 - [ Artigo - Caring for My Neighborhood: a platform for public oversight 2](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
+- AMORIM, Ivan Trizi et al. Monitoramento participativo e accountability governamental: o estudo de caso do "cuidando do meu bairro". Confins, [s.l.], n. 39, 2 mar. 2019. OpenEdition. http://dx.doi.org/10.4000/confins.18367. Disponível em: (https://journals.openedition.org/confins/18367)
+- AMORIM, Ivan Trizi. PLATAFORMAS DIGITAIS INDEPENDENTES NA PROMOÇÃO DA ACCOUNTABILITY: “Cuidando do Meu Bairro” (CMB). 2018. 47 f. Especialização - Curso de Especialização em Gestão Pública Municipal, Departamento Acadêmico de Gestão e Economia, Universidade Tecnológica Federal do Paraná, Curitiba, 2018. Disponível em: <http://repositorio.roca.utfpr.edu.br/jspui/handle/1/10475>. Acesso em: 10 jun. 2020.
 
 ## Menção em documentos: 
 - [Cuidando Meu Bairro - Oficina Ministério Público Federal](/Menção em documentos/Cuidando do meu Bairro-Oficina MPF-Vila Prudente.ppt)
 - [Guia de Boas Praticas Transparêcia Participação Social](/Menção em documentos/Guia_de_Boas Praticas_Transparecia_Participacao_Social_SG.pdf)
-- [Matéria no Diário de São Paulo - 2014](https://gitlab.com/cuidandodomeubairro/documentos/raw/master/Men%C3%A7%C3%A3o%20em%20documentos/MateriaDiarioSP.pdf) 
 - [Observando a Cidade](/Menção em documentos/Observando-a-cidade-2.pdf)
 - [Panorama sobre a utilização de dados governamentais abertos no Brasil](/Menção em documentos/Panorama-sobre-a-utilização-de-dados-governamentais-abertos-no-Brasil.pdf)
 - [ Monitoramento do Orçamento Público e Dados Abertos](/Menção em documentos/porto-alegre-para-onde-foi-o-meu-dinheiro-e-cuidando-do-meu-bairro.pdf)
@@ -30,15 +33,24 @@
 - [Entrevista Gisele Craveiro Arquivo Futuro- Emancipação da Cidadania - Outubro/2017](https://www.youtube.com/watch?v=JBRZLzaFJ3k)
 - [Entrevista Gisele Craveiro Arquivo Futuro - Orçamento Dinâmico - Outubro/2017](https://www.youtube.com/watch?v=BWXtdDpIFsM&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=2)	
 - [Entrevista Gisele Craveiro Arquivo Futuro - Perguntas ao Poder Público- Outubro/2017](https://www.youtube.com/watch?v=1EkHwPPqhn4&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=3)	
-- [Observatório Social do Brasil - Árvore do Dinheiro - Cuidando do meu bairro](https://www.youtube.com/watch?v=eU18gtlDhaY)	
+- [Observatório Social do Brasil - Árvore do Dinheiro - Cuidando do meu bairro - Agosto/2018](https://www.youtube.com/watch?v=eU18gtlDhaY)	
+- [Entrevista Emilly Espindola USP OSB-SP - parte 1 - Janeiro/2019](https://www.youtube.com/watch?v=73xAxjMzgaY&t=1s)
+- [Entrevista Emilly Espindola USP OSB-SP - parte 2 - Janeiro/2019](https://www.youtube.com/watch?v=bsrjJPnEjO0&t=2s)
 
 ## Notícias, Parcerias, Prêmios, Citações em sites, Eventos:
 
+###Notícias: 
+- [Matéria no Diário de São Paulo - 2014](https://gitlab.com/cuidandodomeubairro/documentos/raw/master/Men%C3%A7%C3%A3o%20em%20documentos/MateriaDiarioSP.pdf) 
+- [Observatório Social do Brasil - SP e Colab USP renovam convênio](https://www.osb-saopaulo.org.br/osb-sp-e-colab-usp-renovam-convenio-de-cooperacao-por-mais-dois-anos/?fbclid=IwAR0nfosY1NfIgsfrlhxXiieCW34Hkj6uuA0sJiPv_CHS4oVRNix2J_jLX-w)
+- [Oficina CIC-Norte do Jova Rural Novembro/2018](https://www.diariozonanorte.com.br/democracia-e-cidadania-foram-os-temas-debatidos-pelo-observatorio-social-do-brasil-no-cic-norte-do-jova-rural/)
+- [Informações sobre o Projeto Cuidando do Meu Bairro OSB-SP](https://www.osb-saopaulo.org.br/como-funciona/cuidando-do-meu-bairro/)
+- [Oficina parceria com a prefeitura de São Paulo para Beneficiários do Zeladores Comunitários janeiro/2016](https://www.prefeitura.sp.gov.br/cidade/secretarias/desenvolvimento/noticias/?p=209741)
+
 ### Parceirias:
-- https://br.okfn.org/2014/04/29/open-knowledge-brasil-e-finalista-do-desafio-de-impacto-social-google-brasil/
-- https://idatosabiertos.org/cuidando-2-0-melhorando-a-transparencia-do-orcamento-da-cidade-com-os-pedidos-de-informacao-de-seus-cidadaos/
-- http://www.governoaberto.cgu.gov.br/noticias/2015/conheca-os-membros-do-grupo-de-trabalho-da-sociedade-civil
-- https://www.acileme.com.br/noticias:observatorio-social--de-olho-nos-gastos-publicos
+- [Open Knowledge](https://br.okfn.org/2014/04/29/open-knowledge-brasil-e-finalista-do-desafio-de-impacto-social-google-brasil/)
+- [ILDA - Dados Abietos](https://idatosabiertos.org/cuidando-2-0-melhorando-a-transparencia-do-orcamento-da-cidade-com-os-pedidos-de-informacao-de-seus-cidadaos/)
+- [Controladoria-Geral da União - Governo Aberto: Membros do Grupo de Trabalho](- http://www.governoaberto.cgu.gov.br/noticias/2015/conheca-os-membros-do-grupo-de-trabalho-da-sociedade-civil)
+- [Associação Comercial, Industrial e Agrícola de Leme - ACIL](- https://www.acileme.com.br/noticias:observatorio-social--de-olho-nos-gastos-publicos)
 
 ### Prêmios:
 - http://www.educacaofiscal.sp.gov.br/pages/Noticias/Registro/Noticia_65.shtm
