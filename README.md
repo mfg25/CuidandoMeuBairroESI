@@ -7,8 +7,8 @@
 - [Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/Caring for my Neighborhood.pdf)
 - [Artigo - Exploring the impacts of web publishing of budgetary information at the sub-national level in Brazil](/Documentos próprios- Publicações/CaringforMyNeighbourhood-Report.pdf)
 - [ Artigo - Caring for My Neighborhood: a platform for public oversight 2](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
-- AMORIM, Ivan Trizi et al. Monitoramento participativo e accountability governamental: o estudo de caso do "cuidando do meu bairro". Confins, [s.l.], n. 39, 2 mar. 2019. OpenEdition. http://dx.doi.org/10.4000/confins.18367. Disponível em: (https://journals.openedition.org/confins/18367)
-- AMORIM, Ivan Trizi. PLATAFORMAS DIGITAIS INDEPENDENTES NA PROMOÇÃO DA ACCOUNTABILITY: “Cuidando do Meu Bairro” (CMB). 2018. 47 f. Especialização - Curso de Especialização em Gestão Pública Municipal, Departamento Acadêmico de Gestão e Economia, Universidade Tecnológica Federal do Paraná, Curitiba, 2018. Disponível em: <http://repositorio.roca.utfpr.edu.br/jspui/handle/1/10475>. Acesso em: 10 jun. 2020.
+- [AMORIM, Ivan Trizi et al. Monitoramento participativo e accountability governamental: o estudo de caso do "cuidando do meu bairro". Confins, [s.l.], n. 39, 2 mar. 2019. OpenEdition](https://journals.openedition.org/confins/18367)
+- [AMORIM, Ivan Trizi. PLATAFORMAS DIGITAIS INDEPENDENTES NA PROMOÇÃO DA ACCOUNTABILITY: “Cuidando do Meu Bairro” (CMB). 2018. 47 f. Especialização - Curso de Especialização em Gestão Pública Municipal, Departamento Acadêmico de Gestão e Economia, Universidade Tecnológica Federal do Paraná, Curitiba, 2018.](http://repositorio.roca.utfpr.edu.br/jspui/handle/1/10475)
 
 ## Menção em documentos: 
 - [Cuidando Meu Bairro - Oficina Ministério Público Federal](/Menção em documentos/Cuidando do meu Bairro-Oficina MPF-Vila Prudente.ppt)
