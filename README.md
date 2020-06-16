@@ -46,7 +46,7 @@
 - [Desenvolvido na EACH, projeto “Cuidando do Meu Bairro” foi o vencedor do Prêmio Nacional de Educação Fiscal 2016](http://www5.each.usp.br/noticias/projeto-cuidando-do-meu-bairro-desenvolvido-na-each-foi-o-vencedor-do-premio-nacional-de-educacao-fiscal-2016/)
 - [Projetos de escola de Goiás e da USP são os vencedores do Prêmio Nacional de Educação Fiscal 2016](http://blogs.correiobraziliense.com.br/servidor/projetos-de-escola-de-goias-e-da-usp-sao-os-vencedores-do-premio-nacional-de-educacao-fiscal-2016/)
 - [Oficina parceria com a prefeitura de São Paulo para Beneficiários do Zeladores Comunitários janeiro/2016](https://www.prefeitura.sp.gov.br/cidade/secretarias/desenvolvimento/noticias/?p=209741)
-- [Notícias - EACH: Projeto “Cuidando do meu bairro” recebe nova premiação - Agosto/2017](- http://www5.each.usp.br/noticias/projeto-cuidando-do-meu-bairro-recebe-nova-premiacao/)
+- [Projeto “Cuidando do meu bairro” recebe nova premiação - Agosto/2017](http://www5.each.usp.br/noticias/projeto-cuidando-do-meu-bairro-recebe-nova-premiacao/)
 - [Oficina CIC-Norte do Jova Rural Novembro/2018](https://www.diariozonanorte.com.br/democracia-e-cidadania-foram-os-temas-debatidos-pelo-observatorio-social-do-brasil-no-cic-norte-do-jova-rural/)
 - [Informações sobre o Projeto Cuidando do Meu Bairro OSB-SP](https://www.osb-saopaulo.org.br/como-funciona/cuidando-do-meu-bairro/)
 
