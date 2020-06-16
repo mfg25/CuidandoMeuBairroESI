@@ -41,42 +41,42 @@
 
 ### Notícias: 
 - [Matéria no Diário de São Paulo - 2014](https://gitlab.com/cuidandodomeubairro/documentos/raw/master/Men%C3%A7%C3%A3o%20em%20documentos/MateriaDiarioSP.pdf) 
+- [Matéria Estadão:Aplicativos sobre os gastos públicos em projeto finalista do Desafio Google - Maio/2014](https://link.estadao.com.br/blogs/codigo-aberto/aplicativos-sobre-os-gastos-publicos-em-projeto-finalista-do-desafio-google/)
 - [Observatório Social do Brasil - SP e Colab USP renovam convênio](https://www.osb-saopaulo.org.br/osb-sp-e-colab-usp-renovam-convenio-de-cooperacao-por-mais-dois-anos/?fbclid=IwAR0nfosY1NfIgsfrlhxXiieCW34Hkj6uuA0sJiPv_CHS4oVRNix2J_jLX-w)
+- [Desenvolvido na EACH, projeto “Cuidando do Meu Bairro” foi o vencedor do Prêmio Nacional de Educação Fiscal 2016](http://www5.each.usp.br/noticias/projeto-cuidando-do-meu-bairro-desenvolvido-na-each-foi-o-vencedor-do-premio-nacional-de-educacao-fiscal-2016/)
+- [Projetos de escola de Goiás e da USP são os vencedores do Prêmio Nacional de Educação Fiscal 2016](http://blogs.correiobraziliense.com.br/servidor/projetos-de-escola-de-goias-e-da-usp-sao-os-vencedores-do-premio-nacional-de-educacao-fiscal-2016/)
+- [Oficina parceria com a prefeitura de São Paulo para Beneficiários do Zeladores Comunitários janeiro/2016](https://www.prefeitura.sp.gov.br/cidade/secretarias/desenvolvimento/noticias/?p=209741)
+- [Notícias - EACH: Projeto “Cuidando do meu bairro” recebe nova premiação - Agosto/2017](- http://www5.each.usp.br/noticias/projeto-cuidando-do-meu-bairro-recebe-nova-premiacao/)
 - [Oficina CIC-Norte do Jova Rural Novembro/2018](https://www.diariozonanorte.com.br/democracia-e-cidadania-foram-os-temas-debatidos-pelo-observatorio-social-do-brasil-no-cic-norte-do-jova-rural/)
 - [Informações sobre o Projeto Cuidando do Meu Bairro OSB-SP](https://www.osb-saopaulo.org.br/como-funciona/cuidando-do-meu-bairro/)
-- [Oficina parceria com a prefeitura de São Paulo para Beneficiários do Zeladores Comunitários janeiro/2016](https://www.prefeitura.sp.gov.br/cidade/secretarias/desenvolvimento/noticias/?p=209741)
 
 ### Parceirias:
 - [Open Knowledge](https://br.okfn.org/2014/04/29/open-knowledge-brasil-e-finalista-do-desafio-de-impacto-social-google-brasil/)
-- [ILDA - Dados Abietos](https://idatosabiertos.org/cuidando-2-0-melhorando-a-transparencia-do-orcamento-da-cidade-com-os-pedidos-de-informacao-de-seus-cidadaos/)
+- [Dados Abietos- ILDA](https://idatosabiertos.org/cuidando-2-0-melhorando-a-transparencia-do-orcamento-da-cidade-com-os-pedidos-de-informacao-de-seus-cidadaos/)
 - [Controladoria-Geral da União - Governo Aberto: Membros do Grupo de Trabalho](http://www.governoaberto.cgu.gov.br/noticias/2015/conheca-os-membros-do-grupo-de-trabalho-da-sociedade-civil)
 - [Associação Comercial, Industrial e Agrícola de Leme - ACIL](https://www.acileme.com.br/noticias:observatorio-social--de-olho-nos-gastos-publicos)
 
 ### Prêmios:
-- http://www.educacaofiscal.sp.gov.br/pages/Noticias/Registro/Noticia_65.shtm
+- [Prêmio de Educação Fiscal 2016, promovido pela Febrafite em parceria com a ESAF](http://www.educacaofiscal.sp.gov.br/pages/Noticias/Registro/Noticia_65.shtm)
 - http://www.avina.net/avina/pt/brasil-proyecto-cuidando-do-meu-bairro-gana-primer-lugar-del-premio-nacional-de-educacion-fiscal/
 - http://www.fiscosul.org.br/noticias/projeto-de-sao-paulo-fica-em-1o-lugar-no-premio-de-educacao-fiscal-2016/38
-- http://www5.each.usp.br/noticias/projeto-cuidando-do-meu-bairro-recebe-nova-premiacao/
-- https://colab.each.usp.br/blog/2016/11/11/cuidando-do-meu-bairro-recebe-primeiro-lugar-de-premio-febrafite-2016/
-- http://www5.each.usp.br/noticias/projeto-cuidando-do-meu-bairro-desenvolvido-na-each-foi-o-vencedor-do-premio-nacional-de-educacao-fiscal-2016/
-- http://afresp.org.br/projeto-de-sao-paulo-fica-em-1o-lugar-no-premio-de-educacao-fiscal-2016/
-- http://blogs.correiobraziliense.com.br/servidor/projetos-de-escola-de-goias-e-da-usp-sao-os-vencedores-do-premio-nacional-de-educacao-fiscal-2016/
+- [COLAB: uidando do Meu Bairro recebe primeiro lugar do Prêmio Febrafite 2016](https://colab.each.usp.br/blog/2016/11/11/cuidando-do-meu-bairro-recebe-primeiro-lugar-de-premio-febrafite-2016/)
+- [Projeto de São Paulo fica em 1º lugar no Prêmio de Educação Fiscal 2016](http://afresp.org.br/projeto-de-sao-paulo-fica-em-1o-lugar-no-premio-de-educacao-fiscal-2016/)
 - http://www.fiscosul.org.br/noticias/conheca-os-dez-finalistas-do-premio-nacional-de-educacao-fiscal-2016/41
-- http://www.premioeducacaofiscal.org.br/premiados
+- [Prêmio Educação Fiscal 2016 - CATEGORIA INSTITUIÇÕES 1º Lugar](http://www.premioeducacaofiscal.org.br/premiados)
 - http://emjornal.com.br/noticias/usp-ermelino-ganha-premio-desafio-impacto-social-google/amp/
 - https://issuu.com/afresp_sp/docs/jornal_da_afresp_395/19
 - http://fundacaoanfip.org.br/site/2016/10/com-apoio-da-anfip-sao-conhecidos-finalistas-do-premio-educacao-fiscal/
 - http://www.affemg.com.br/materia?materiaId=1208&titulo=Conhe%C3%A7a_os_dez_finalistas_do_Pr%C3%AAmio_Nacional_de_Educa%C3%A7%C3%A3o_Fiscal_2016
-- https://link.estadao.com.br/blogs/codigo-aberto/aplicativos-sobre-os-gastos-publicos-em-projeto-finalista-do-desafio-google/
 
 ### Citações em Sites:
-- http://dados.gov.br/aplicativo/cuidando-do-meu-bairro
-- http://outracidade.uol.com.br/usp-mostra-o-mapa-do-tesouro-onde-esta-o-dinheiro-do-meu-imposto/
-- https://democraciadigital.fgv.br/iniciativas/cuidando-do-meu-bairro
-- https://asimplicidadedascoisas.wordpress.com/2016/10/07/projeto-cuidando-do-meu-bairro/amp/
-- https://br.okfn.org/2012/07/04/cuidando-do-meu-bairro/
-- https://br.okfn.org/2013/07/17/gastos-abertos-mapeando-o-seu-dinheiro-na-sua-cidade/
-- http://www.avidaquer.com.br/mapa-mostra-as-despesas-publicas-da-cidade-de-sao-paulo/
+- (http://dados.gov.br/aplicativo/cuidando-do-meu-bairro)
+- (http://outracidade.uol.com.br/usp-mostra-o-mapa-do-tesouro-onde-esta-o-dinheiro-do-meu-imposto/)
+- (https://democraciadigital.fgv.br/iniciativas/cuidando-do-meu-bairro)
+- (https://asimplicidadedascoisas.wordpress.com/2016/10/07/projeto-cuidando-do-meu-bairro/amp/)
+- (https://br.okfn.org/2012/07/04/cuidando-do-meu-bairro/)
+- (https://br.okfn.org/2013/07/17/gastos-abertos-mapeando-o-seu-dinheiro-na-sua-cidade/)
+- (http://www.avidaquer.com.br/mapa-mostra-as-despesas-publicas-da-cidade-de-sao-paulo/)
 
 ### Eventos:
 - http://humanitas360.org/evento-tecnologia-e-mudanca-social/
@@ -144,3 +144,6 @@
 - https://andresmrm.github.io/oficina-cuidando/#cuidando-do-meu-bairro
 - https://colab.each.usp.br/blog/2015/09/03/a-revolucao-dos-dados-esta-chegando-a-iii-conferencia-internacional-de-dados-abertos-publica-o-relatorio-final-tracando-um-roteiro-guia-para-dados-abertos/
 
+### Certificados:
+
+-[Página Cuidando do Meu Bairro na Página da Fundação Banco do Brasil](https://transforma.fbb.org.br/tecnologia-social/cuidando-do-meu-bairro)
