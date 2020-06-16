@@ -1,6 +1,6 @@
 # Documentos sobre o projeto Cuidando do Meu Bairro
-### No decorrer dos anos de elaboração do projeto Cuidando meu Bairro, diversas forma de interação do projeto foram desenvolvidas, seja como por artigos, apresentações, vídeos e etc. 
-### Abaixo segue uma relação dessas produções:
+#### No decorrer dos anos de elaboração do projeto Cuidando meu Bairro, diversas forma de interação do projeto foram desenvolvidas, seja como por artigos, apresentações, vídeos e etc. 
+#### Abaixo segue uma relação dessas produções:
 
 ## Artigos e Relatórios:
 - [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
@@ -146,4 +146,4 @@
 
 ### Certificados:
 
--[Página Cuidando do Meu Bairro na Página da Fundação Banco do Brasil](https://transforma.fbb.org.br/tecnologia-social/cuidando-do-meu-bairro)
+- [Página Cuidando do Meu Bairro na Página da Fundação Banco do Brasil](https://transforma.fbb.org.br/tecnologia-social/cuidando-do-meu-bairro)
