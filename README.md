@@ -60,7 +60,7 @@
 - [Prêmio de Educação Fiscal 2016, promovido pela Febrafite em parceria com a ESAF](http://www.educacaofiscal.sp.gov.br/pages/Noticias/Registro/Noticia_65.shtm)
 - http://www.avina.net/avina/pt/brasil-proyecto-cuidando-do-meu-bairro-gana-primer-lugar-del-premio-nacional-de-educacion-fiscal/
 - http://www.fiscosul.org.br/noticias/projeto-de-sao-paulo-fica-em-1o-lugar-no-premio-de-educacao-fiscal-2016/38
-- [COLAB: uidando do Meu Bairro recebe primeiro lugar do Prêmio Febrafite 2016](https://colab.each.usp.br/blog/2016/11/11/cuidando-do-meu-bairro-recebe-primeiro-lugar-de-premio-febrafite-2016/)
+- [COLAB: Cuidando do Meu Bairro recebe primeiro lugar do Prêmio Febrafite 2016](https://colab.each.usp.br/blog/2016/11/11/cuidando-do-meu-bairro-recebe-primeiro-lugar-de-premio-febrafite-2016/)
 - [Projeto de São Paulo fica em 1º lugar no Prêmio de Educação Fiscal 2016](http://afresp.org.br/projeto-de-sao-paulo-fica-em-1o-lugar-no-premio-de-educacao-fiscal-2016/)
 - http://www.fiscosul.org.br/noticias/conheca-os-dez-finalistas-do-premio-nacional-de-educacao-fiscal-2016/41
 - [Prêmio Educação Fiscal 2016 - CATEGORIA INSTITUIÇÕES 1º Lugar](http://www.premioeducacaofiscal.org.br/premiados)
@@ -70,9 +70,9 @@
 - http://www.affemg.com.br/materia?materiaId=1208&titulo=Conhe%C3%A7a_os_dez_finalistas_do_Pr%C3%AAmio_Nacional_de_Educa%C3%A7%C3%A3o_Fiscal_2016
 
 ### Citações em Sites:
-- (http://dados.gov.br/aplicativo/cuidando-do-meu-bairro)
+- [Portal Brasileiro de Dados Abertos](http://dados.gov.br/aplicativo/cuidando-do-meu-bairro)
 - (http://outracidade.uol.com.br/usp-mostra-o-mapa-do-tesouro-onde-esta-o-dinheiro-do-meu-imposto/)
-- (https://democraciadigital.fgv.br/iniciativas/cuidando-do-meu-bairro)
+- [Democracia Digital FGV](https://democraciadigital.fgv.br/iniciativas/cuidando-do-meu-bairro)
 - (https://asimplicidadedascoisas.wordpress.com/2016/10/07/projeto-cuidando-do-meu-bairro/amp/)
 - (https://br.okfn.org/2012/07/04/cuidando-do-meu-bairro/)
 - (https://br.okfn.org/2013/07/17/gastos-abertos-mapeando-o-seu-dinheiro-na-sua-cidade/)
