@@ -80,16 +80,16 @@
 
 ### Eventos:
 - http://humanitas360.org/evento-tecnologia-e-mudanca-social/
-- http://polis.org.br/noticias/participacao-social-encontro-sao-paulo-aberta-traz-debates-sobre-transparencia-acesso-a-informacao-e-participacao-social/
-- http://www.prsp.mpf.mp.br/sala-de-imprensa/noticias_prsp/28-11-17-mpf-realiza-palestra-em-sao-paulo-sobre-a-importancia-da-participacao-social-no-combate-a-corrupcao
-- https://www3.ethos.org.br/cedoc/programa-cidades-sustentaveis-realiza-dois-seminarios-em-porto-alegre/#.W1SZNcpv80N
-- http://agenciabrasil.ebc.com.br/geral/noticia/2017-12/ativistas-defendem-controle-social-como-ferramenta-de-combate-corrupcao
-- https://www.portal.ufpa.br/index.php/ultimas-noticias2/174-evento-discute-a-tecnologia-como-instrumento-de-mudanca-social
-- http://www.sintracomlondrina.com.br/pesquisadores-defendem-maior-participacao-dos-cidadaos-na-gestao-publica/
-- https://www.sollicita.com.br/Noticia/?p_idNoticia=10125&n=pesquisadores-defendem-maior-participa%C3%A7%C3%A3o-dos-cidad%C3%A3os-na-gest%C3%A3o-p%C3%BAblica
-- http://www.acmd.org.br/programa-cidades-sustentaveis-promove-seminario-para-gestores-das-cidades/
-- https://sengece.org.br/governo-e-sociedade-juntos-para-controlar-contas-e-planejar-politicas-publicas/
+- [Seminário Inovação e Sustentabilidade na Gestão Municipal - Janeiro/2013](http://www.acmd.org.br/programa-cidades-sustentaveis-promove-seminario-para-gestores-das-cidades/)0
+- [Encontro São Paulo Aberta - Outubro/2013](http://polis.org.br/noticias/participacao-social-encontro-sao-paulo-aberta-traz-debates-sobre-transparencia-acesso-a-informacao-e-participacao-social/)
 - [Pariticipação do Evento da Prefeitura São Paulo Aberta - Nov/2013](http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/)
+- [ Seminário Internacional Brasil 100% Digital, em Brasília, Abril/2015](https://sengece.org.br/governo-e-sociedade-juntos-para-controlar-contas-e-planejar-politicas-publicas/)
+- http://www.prsp.mpf.mp.br/sala-de-imprensa/noticias_prsp/28-11-17-mpf-realiza-palestra-em-sao-paulo-sobre-a-importancia-da-participacao-social-no-combate-a-corrupcao
+- [Seminário sobre Controle Social e Transparência - Janeiro/2016](https://www3.ethos.org.br/cedoc/programa-cidades-sustentaveis-realiza-dois-seminarios-em-porto-alegre/#.W1SZNcpv80N)
+- [Seminário internacional chamado “Comunicação e Participação Social na Esfera Pública em Tempos de Cidadão Digital-Dezembro/2016](https://www.sollicita.com.br/Noticia/?p_idNoticia=10125&n=pesquisadores-defendem-maior-participa%C3%A7%C3%A3o-dos-cidad%C3%A3os-na-gest%C3%A3o-p%C3%BAblica)
+- [Evento Tecnologia e Mudança Social - Junho/2017](https://www.portal.ufpa.br/index.php/ultimas-noticias2/174-evento-discute-a-tecnologia-como-instrumento-de-mudanca-social)
+- [Evento sobre o Dia Internacional do Combate à Corrupção - Dezembro/2017](http://agenciabrasil.ebc.com.br/geral/noticia/2017-12/ativistas-defendem-controle-social-como-ferramenta-de-combate-corrupcao)
+- http://www.sintracomlondrina.com.br/pesquisadores-defendem-maior-participacao-dos-cidadaos-na-gestao-publica/
 
 ### Observatório Social do Brasil - São Paulo
 - https://osbrasil.org.br/colab-usp-treinara-observadores-para-o-monitoramento-do-orcamento-publico/
