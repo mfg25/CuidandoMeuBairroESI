@@ -73,9 +73,9 @@
 - [Portal Brasileiro de Dados Abertos](http://dados.gov.br/aplicativo/cuidando-do-meu-bairro)
 - (http://outracidade.uol.com.br/usp-mostra-o-mapa-do-tesouro-onde-esta-o-dinheiro-do-meu-imposto/)
 - [Democracia Digital FGV](https://democraciadigital.fgv.br/iniciativas/cuidando-do-meu-bairro)
-- (https://asimplicidadedascoisas.wordpress.com/2016/10/07/projeto-cuidando-do-meu-bairro/amp/)
-- (https://br.okfn.org/2012/07/04/cuidando-do-meu-bairro/)
-- (https://br.okfn.org/2013/07/17/gastos-abertos-mapeando-o-seu-dinheiro-na-sua-cidade/)
+- [A Simplicidade das Coisas — Augusto Martini](https://asimplicidadedascoisas.wordpress.com/2016/10/07/projeto-cuidando-do-meu-bairro/amp/)
+- [Open Knowledge Brasil - 2012](https://br.okfn.org/2012/07/04/cuidando-do-meu-bairro/)
+- [Open Knowledge Brasil - 2013](https://br.okfn.org/2013/07/17/gastos-abertos-mapeando-o-seu-dinheiro-na-sua-cidade/)
 - (http://www.avidaquer.com.br/mapa-mostra-as-despesas-publicas-da-cidade-de-sao-paulo/)
 
 ### Eventos:
