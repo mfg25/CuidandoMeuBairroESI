@@ -1,6 +1,6 @@
 # Documentos sobre o projeto Cuidando do Meu Bairro
-###No decorrer dos anos de elaboração do projeto Cuidando meu Bairro, diversas forma de interação do projeto foram desenvolvidas, seja como por artigos, apresentações, vídeos e etc. 
-###Abaixo segue uma relação dessas produções:
+### No decorrer dos anos de elaboração do projeto Cuidando meu Bairro, diversas forma de interação do projeto foram desenvolvidas, seja como por artigos, apresentações, vídeos e etc. 
+### Abaixo segue uma relação dessas produções:
 
 ## Artigos e Relatórios:
 - [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
@@ -39,7 +39,7 @@
 
 ## Notícias, Parcerias, Prêmios, Citações em sites, Eventos:
 
-###Notícias: 
+### Notícias: 
 - [Matéria no Diário de São Paulo - 2014](https://gitlab.com/cuidandodomeubairro/documentos/raw/master/Men%C3%A7%C3%A3o%20em%20documentos/MateriaDiarioSP.pdf) 
 - [Observatório Social do Brasil - SP e Colab USP renovam convênio](https://www.osb-saopaulo.org.br/osb-sp-e-colab-usp-renovam-convenio-de-cooperacao-por-mais-dois-anos/?fbclid=IwAR0nfosY1NfIgsfrlhxXiieCW34Hkj6uuA0sJiPv_CHS4oVRNix2J_jLX-w)
 - [Oficina CIC-Norte do Jova Rural Novembro/2018](https://www.diariozonanorte.com.br/democracia-e-cidadania-foram-os-temas-debatidos-pelo-observatorio-social-do-brasil-no-cic-norte-do-jova-rural/)
