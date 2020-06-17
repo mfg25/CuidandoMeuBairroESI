@@ -30,18 +30,18 @@
 - [Aula Orçamento Público/Rede Fé e Polítca- Novembro/2012](https://www.youtube.com/watch?v=qdqj_7AdXDA)
 - [Nossa São Paulo: Cuindando meu bairro - Agosto/2013](https://www.youtube.com/watch?v=LpGmQZ5gpHQ)
 - [VideoCast - Câmara Municipal de São de Paulo - Nov/2014](https://www.youtube.com/watch?v=56FrhkNzvFg)
-- [Entrevista Gisele Craveiro Arquivo Futuro- Emancipação da Cidadania - Outubro/2017](https://www.youtube.com/watch?v=JBRZLzaFJ3k)
-- [Entrevista Gisele Craveiro Arquivo Futuro - Orçamento Dinâmico - Outubro/2017](https://www.youtube.com/watch?v=BWXtdDpIFsM&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=2)	
-- [Entrevista Gisele Craveiro Arquivo Futuro - Perguntas ao Poder Público- Outubro/2017](https://www.youtube.com/watch?v=1EkHwPPqhn4&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=3)	
+- [Entrevista com Gisele Craveiro Arquivo Futuro- Emancipação da Cidadania - Outubro/2017](https://www.youtube.com/watch?v=JBRZLzaFJ3k)
+- [Entrevista com Gisele Craveiro Arquivo Futuro - Orçamento Dinâmico - Outubro/2017](https://www.youtube.com/watch?v=BWXtdDpIFsM&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=2)	
+- [Entrevista com Gisele Craveiro Arquivo Futuro - Perguntas ao Poder Público- Outubro/2017](https://www.youtube.com/watch?v=1EkHwPPqhn4&t=0s&list=PLrNnnxqAQH5QUBLOMZBUtaCuDH3pZy0k0&index=3)	
 - [Observatório Social do Brasil - Árvore do Dinheiro - Cuidando do meu bairro - Agosto/2018](https://www.youtube.com/watch?v=eU18gtlDhaY)	
-- [Entrevista Emilly Espindola USP OSB-SP - parte 1 - Janeiro/2019](https://www.youtube.com/watch?v=73xAxjMzgaY&t=1s)
-- [Entrevista Emilly Espindola USP OSB-SP - parte 2 - Janeiro/2019](https://www.youtube.com/watch?v=bsrjJPnEjO0&t=2s)
+- [Entrevista com Emilly Espindola USP OSB-SP - parte 1 - Janeiro/2019](https://www.youtube.com/watch?v=73xAxjMzgaY&t=1s)
+- [Entrevista com Emilly Espindola USP OSB-SP - parte 2 - Janeiro/2019](https://www.youtube.com/watch?v=bsrjJPnEjO0&t=2s)
 
 ## Notícias, Parcerias, Prêmios, Citações em sites, Eventos:
 
 ### Notícias: 
-- [Matéria no Diário de São Paulo - 2014](https://gitlab.com/cuidandodomeubairro/documentos/raw/master/Men%C3%A7%C3%A3o%20em%20documentos/MateriaDiarioSP.pdf) 
 - [Matéria Estadão:Aplicativos sobre os gastos públicos em projeto finalista do Desafio Google - Maio/2014](https://link.estadao.com.br/blogs/codigo-aberto/aplicativos-sobre-os-gastos-publicos-em-projeto-finalista-do-desafio-google/)
+- [Matéria Diário de São Paulo - Dezembro/2014](https://gitlab.com/cuidandodomeubairro/documentos/raw/master/Men%C3%A7%C3%A3o%20em%20documentos/MateriaDiarioSP.pdf) 
 - [Observatório Social do Brasil - SP e Colab USP renovam convênio](https://www.osb-saopaulo.org.br/osb-sp-e-colab-usp-renovam-convenio-de-cooperacao-por-mais-dois-anos/?fbclid=IwAR0nfosY1NfIgsfrlhxXiieCW34Hkj6uuA0sJiPv_CHS4oVRNix2J_jLX-w)
 - [Desenvolvido na EACH, projeto “Cuidando do Meu Bairro” foi o vencedor do Prêmio Nacional de Educação Fiscal 2016](http://www5.each.usp.br/noticias/projeto-cuidando-do-meu-bairro-desenvolvido-na-each-foi-o-vencedor-do-premio-nacional-de-educacao-fiscal-2016/)
 - [Projetos de escola de Goiás e da USP são os vencedores do Prêmio Nacional de Educação Fiscal 2016](http://blogs.correiobraziliense.com.br/servidor/projetos-de-escola-de-goias-e-da-usp-sao-os-vencedores-do-premio-nacional-de-educacao-fiscal-2016/)
@@ -50,7 +50,7 @@
 - [Oficina CIC-Norte do Jova Rural Novembro/2018](https://www.diariozonanorte.com.br/democracia-e-cidadania-foram-os-temas-debatidos-pelo-observatorio-social-do-brasil-no-cic-norte-do-jova-rural/)
 - [Informações sobre o Projeto Cuidando do Meu Bairro OSB-SP](https://www.osb-saopaulo.org.br/como-funciona/cuidando-do-meu-bairro/)
 
-### Parceirias:
+### Parcerias:
 - [Open Knowledge](https://br.okfn.org/2014/04/29/open-knowledge-brasil-e-finalista-do-desafio-de-impacto-social-google-brasil/)
 - [Dados Abietos- ILDA](https://idatosabiertos.org/cuidando-2-0-melhorando-a-transparencia-do-orcamento-da-cidade-com-os-pedidos-de-informacao-de-seus-cidadaos/)
 - [Controladoria-Geral da União - Governo Aberto: Membros do Grupo de Trabalho](http://www.governoaberto.cgu.gov.br/noticias/2015/conheca-os-membros-do-grupo-de-trabalho-da-sociedade-civil)
@@ -58,16 +58,16 @@
 
 ### Prêmios:
 - [Prêmio de Educação Fiscal 2016, promovido pela Febrafite em parceria com a ESAF](http://www.educacaofiscal.sp.gov.br/pages/Noticias/Registro/Noticia_65.shtm)
-- http://www.avina.net/avina/pt/brasil-proyecto-cuidando-do-meu-bairro-gana-primer-lugar-del-premio-nacional-de-educacion-fiscal/
-- http://www.fiscosul.org.br/noticias/projeto-de-sao-paulo-fica-em-1o-lugar-no-premio-de-educacao-fiscal-2016/38
+- (http://www.avina.net/avina/pt/brasil-proyecto-cuidando-do-meu-bairro-gana-primer-lugar-del-premio-nacional-de-educacion-fiscal/)
+- (http://www.fiscosul.org.br/noticias/projeto-de-sao-paulo-fica-em-1o-lugar-no-premio-de-educacao-fiscal-2016/38)
 - [COLAB: Cuidando do Meu Bairro recebe primeiro lugar do Prêmio Febrafite 2016](https://colab.each.usp.br/blog/2016/11/11/cuidando-do-meu-bairro-recebe-primeiro-lugar-de-premio-febrafite-2016/)
 - [Projeto de São Paulo fica em 1º lugar no Prêmio de Educação Fiscal 2016](http://afresp.org.br/projeto-de-sao-paulo-fica-em-1o-lugar-no-premio-de-educacao-fiscal-2016/)
-- http://www.fiscosul.org.br/noticias/conheca-os-dez-finalistas-do-premio-nacional-de-educacao-fiscal-2016/41
+- (http://www.fiscosul.org.br/noticias/conheca-os-dez-finalistas-do-premio-nacional-de-educacao-fiscal-2016/41)
 - [Prêmio Educação Fiscal 2016 - CATEGORIA INSTITUIÇÕES 1º Lugar](http://www.premioeducacaofiscal.org.br/premiados)
-- http://emjornal.com.br/noticias/usp-ermelino-ganha-premio-desafio-impacto-social-google/amp/
-- https://issuu.com/afresp_sp/docs/jornal_da_afresp_395/19
-- http://fundacaoanfip.org.br/site/2016/10/com-apoio-da-anfip-sao-conhecidos-finalistas-do-premio-educacao-fiscal/
-- http://www.affemg.com.br/materia?materiaId=1208&titulo=Conhe%C3%A7a_os_dez_finalistas_do_Pr%C3%AAmio_Nacional_de_Educa%C3%A7%C3%A3o_Fiscal_2016
+- (http://emjornal.com.br/noticias/usp-ermelino-ganha-premio-desafio-impacto-social-google/amp/)
+- (https://issuu.com/afresp_sp/docs/jornal_da_afresp_395/19)
+- (http://fundacaoanfip.org.br/site/2016/10/com-apoio-da-anfip-sao-conhecidos-finalistas-do-premio-educacao-fiscal/)
+- [Jornal da Afresp- Demzembro/2016](http://www.affemg.com.br/materia?materiaId=1208&titulo=Conhe%C3%A7a_os_dez_finalistas_do_Pr%C3%AAmio_Nacional_de_Educa%C3%A7%C3%A3o_Fiscal_2016)
 
 ### Citações em Sites:
 - [Portal Brasileiro de Dados Abertos](http://dados.gov.br/aplicativo/cuidando-do-meu-bairro)
@@ -79,17 +79,17 @@
 - (http://www.avidaquer.com.br/mapa-mostra-as-despesas-publicas-da-cidade-de-sao-paulo/)
 
 ### Eventos:
-- http://humanitas360.org/evento-tecnologia-e-mudanca-social/
+- (http://humanitas360.org/evento-tecnologia-e-mudanca-social/)
 - [Seminário do Programa Cidades Sustentáveis – Inovação e Sustentabilidade na Gestão Municipal - Janeiro/2013](http://www.acmd.org.br/programa-cidades-sustentaveis-promove-seminario-para-gestores-das-cidades/)
 - [Encontro São Paulo Aberta - Outubro/2013](http://polis.org.br/noticias/participacao-social-encontro-sao-paulo-aberta-traz-debates-sobre-transparencia-acesso-a-informacao-e-participacao-social/)
 - [Pariticipação do Evento da Prefeitura São Paulo Aberta - Nov/2013](http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/)
 - [ Seminário Internacional Brasil 100% Digital, em Brasília, Abril/2015](https://sengece.org.br/governo-e-sociedade-juntos-para-controlar-contas-e-planejar-politicas-publicas/)
-- http://www.prsp.mpf.mp.br/sala-de-imprensa/noticias_prsp/28-11-17-mpf-realiza-palestra-em-sao-paulo-sobre-a-importancia-da-participacao-social-no-combate-a-corrupcao
+- (http://www.prsp.mpf.mp.br/sala-de-imprensa/noticias_prsp/28-11-17-mpf-realiza-palestra-em-sao-paulo-sobre-a-importancia-da-participacao-social-no-combate-a-corrupcao)
 - [Seminário sobre Controle Social e Transparência - Janeiro/2016](https://www3.ethos.org.br/cedoc/programa-cidades-sustentaveis-realiza-dois-seminarios-em-porto-alegre/#.W1SZNcpv80N)
 - [Seminário internacional chamado “Comunicação e Participação Social na Esfera Pública em Tempos de Cidadão Digital-Dezembro/2016](https://www.sollicita.com.br/Noticia/?p_idNoticia=10125&n=pesquisadores-defendem-maior-participa%C3%A7%C3%A3o-dos-cidad%C3%A3os-na-gest%C3%A3o-p%C3%BAblica)
 - [Evento Tecnologia e Mudança Social - Junho/2017](https://www.portal.ufpa.br/index.php/ultimas-noticias2/174-evento-discute-a-tecnologia-como-instrumento-de-mudanca-social)
 - [Evento sobre o Dia Internacional do Combate à Corrupção - Dezembro/2017](http://agenciabrasil.ebc.com.br/geral/noticia/2017-12/ativistas-defendem-controle-social-como-ferramenta-de-combate-corrupcao)
-- http://www.sintracomlondrina.com.br/pesquisadores-defendem-maior-participacao-dos-cidadaos-na-gestao-publica/
+- (http://www.sintracomlondrina.com.br/pesquisadores-defendem-maior-participacao-dos-cidadaos-na-gestao-publica/)
 
 ### Observatório Social do Brasil - São Paulo
 - https://osbrasil.org.br/colab-usp-treinara-observadores-para-o-monitoramento-do-orcamento-publico/
