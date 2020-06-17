@@ -48,7 +48,6 @@
 - [Oficina parceria com a prefeitura de São Paulo para Beneficiários do Zeladores Comunitários janeiro/2016](https://www.prefeitura.sp.gov.br/cidade/secretarias/desenvolvimento/noticias/?p=209741)
 - [Projeto “Cuidando do meu bairro” recebe nova premiação - Agosto/2017](http://www5.each.usp.br/noticias/projeto-cuidando-do-meu-bairro-recebe-nova-premiacao/)
 - [Oficina CIC-Norte do Jova Rural Novembro/2018](https://www.diariozonanorte.com.br/democracia-e-cidadania-foram-os-temas-debatidos-pelo-observatorio-social-do-brasil-no-cic-norte-do-jova-rural/)
-- [Informações sobre o Projeto Cuidando do Meu Bairro OSB-SP](https://www.osb-saopaulo.org.br/como-funciona/cuidando-do-meu-bairro/)
 
 ### Parcerias:
 - [Open Knowledge](https://br.okfn.org/2014/04/29/open-knowledge-brasil-e-finalista-do-desafio-de-impacto-social-google-brasil/)
@@ -76,6 +75,8 @@
 - [Open Knowledge Brasil - 2012](https://br.okfn.org/2012/07/04/cuidando-do-meu-bairro/)
 - [Open Knowledge Brasil - 2013](https://br.okfn.org/2013/07/17/gastos-abertos-mapeando-o-seu-dinheiro-na-sua-cidade/)
 - (http://www.avidaquer.com.br/mapa-mostra-as-despesas-publicas-da-cidade-de-sao-paulo/)
+- [Projeto Cuidando do Meu Bairro - Observatório Social do Brasil de São Paulo OBS/SP](https://www.osb-saopaulo.org.br/como-funciona/cuidando-do-meu-bairro/)
+
 
 ### Eventos:
 - (http://humanitas360.org/evento-tecnologia-e-mudanca-social/)
@@ -89,6 +90,8 @@
 - [Evento Tecnologia e Mudança Social - Junho/2017](https://www.portal.ufpa.br/index.php/ultimas-noticias2/174-evento-discute-a-tecnologia-como-instrumento-de-mudanca-social)
 - [Evento sobre o Dia Internacional do Combate à Corrupção - Dezembro/2017](http://agenciabrasil.ebc.com.br/geral/noticia/2017-12/ativistas-defendem-controle-social-como-ferramenta-de-combate-corrupcao)
 - (http://www.sintracomlondrina.com.br/pesquisadores-defendem-maior-participacao-dos-cidadaos-na-gestao-publica/)
+- [Oficina Cuidando do Meu Bairro no Dia das Boas Ações da Atados em parceria com o Observatório Social do Brasil - SP Abril/2019](https://www.osb-saopaulo.org.br/observatorio-social-do-brasil-sao-paulo-participa-do-maior-evento-de-voluntariado-do-mundo/)
+- [Apresentação do Cuidando do Meu Bairro na Semana da Cidadania do GefeSP - Setembro 2019](https://portal.fazenda.sp.gov.br/Noticias/Paginas/GefeSP-promove-a-Semana-da-Cidadania.aspx) 
 
 ### Observatório Social do Brasil - São Paulo
 - (https://osbrasil.org.br/colab-usp-treinara-observadores-para-o-monitoramento-do-orcamento-publico/)
@@ -132,7 +135,9 @@
 - [Colab-USP treinará cidadãos para monitorar orçamento público: Setembro/2016](http://jornalperspectiva.com.br/noticias/colab-usp-treinara-cidadaos-para-monitorar-orcamento-publico/)
 - (http://dmptsp.org.br/portal/local/6049-acompanhe-a-programacao-das-oficinas-entre-os-dias-17-e-19-de-novembro)
 - [Agentes do Governo Aberto - Cursos: Março e Abril/2016](https://pt.slideshare.net/mobile/juplass/goberno-aberrto-guia-de-oficinasmaro-e-abril)
-- -[Ofina no Atados - Oficina Cuidando Meu Bairro - Abril/2019](https://www.atados.com.br/vaga/cuidando-do-meu-bairro)
+- [Ofina no Atados - Oficina Cuidando Meu Bairro - Abril/2019](https://www.atados.com.br/vaga/cuidando-do-meu-bairro) 
+- [Oficina online em parceria com o OSB-SP e a FEA Pública - 30 de abril de 2020](https://drive.google.com/file/d/1vxRYquRbVMLWLeU_XaoyteiOZ7rXH6Gk/view?fbclid=IwAR0CFvwsjVKDGxezVG31JBnqp0PlW3_rUy3Z1oq7KhKojSAItXHYCX6KL5w)
+
 
 ### Pref
 - (http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/)
