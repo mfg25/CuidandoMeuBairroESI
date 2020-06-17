@@ -140,9 +140,9 @@
 - [Pesquisadores defendem mais participação dos cidadãos na gestão pública - Dezembro/2016](http://www2.camara.leg.br/camaranoticias/radio/materias/RADIOAGENCIA/521488-PESQUISADORES-DEFENDEM-MAIS-PARTICIPACAO-DOS-CIDADAOS-NA-GESTAO-PUBLICA.html)
 
 ### COLAB:
-- https://colab.each.usp.br/blog/tag/cuidando-do-meu-bairro/
-- https://andresmrm.github.io/oficina-cuidando/#cuidando-do-meu-bairro
-- https://colab.each.usp.br/blog/2015/09/03/a-revolucao-dos-dados-esta-chegando-a-iii-conferencia-internacional-de-dados-abertos-publica-o-relatorio-final-tracando-um-roteiro-guia-para-dados-abertos/
+- [Parceria do COLAB com Observatório Social vai capacitar voluntários para monitorar gastos públicos - Fevereiro/2017](https://colab.each.usp.br/blog/tag/cuidando-do-meu-bairro/)
+- [ Github- Cuidando Meu Bairro](https://andresmrm.github.io/oficina-cuidando/#cuidando-do-meu-bairro)
+- [A revolução dos dados está chegando! A III Conferência Internacional de Dados Abertos publica o relatório final, traçando um roteiro guia para Dados Abertos - Setembro/2015](https://colab.each.usp.br/blog/2015/09/03/a-revolucao-dos-dados-esta-chegando-a-iii-conferencia-internacional-de-dados-abertos-publica-o-relatorio-final-tracando-um-roteiro-guia-para-dados-abertos/)
 
 ### Certificados:
 
