@@ -94,8 +94,8 @@
 ### Observatório Social do Brasil - São Paulo
 - https://osbrasil.org.br/colab-usp-treinara-observadores-para-o-monitoramento-do-orcamento-publico/
 - https://osbrasil.org.br/osb-sp-estabelece-parceria-com-faculdade-da-usp-para-fomentar-o-controle-social/
-- https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1027949807303433/?type=3
-- https://www.facebook.com/OSBSP/posts/1388841184547625
+- [Post no facebook:Treinamento no Observatório Social do Brasil - PARTE II e III -Outubro/2016](https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1027949807303433/?type=3)
+- [Post no facebook: Entrevista Gisele Craveiro -](https://www.facebook.com/OSBSP/posts/1388841184547625)
 - [Post no facebook:Oficina "Cuidando do Meu Bairro" no Observatório Social do Brasil - Agosto/2018](https://www.facebook.com/OSBSP/posts/1309999869098424)
 - [Post no facebook:Treinamento no Observatório Social do Brasil - PARTE I -Setembro/2016](https://www.facebook.com/OSBSP/posts/1014249702006777)
 - [Post no facebook:Prêmio recebido pelo Projeto "Cuidando do Meu Bairro" -Agosto/2017](https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1331850760246668/?type=3)
