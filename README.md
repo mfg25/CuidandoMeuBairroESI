@@ -125,14 +125,14 @@
 - http://saopaulo.osbrasil.org.br/observatorio-social-e-each-usp-firmam-convenio-para-monitorar-orcamento-de-sao-paulo/
 
 ### Oficinas:
-- http://www.jornal3idade.com.br/?p=9987
-- http://www.fecap.br/portal/noticias/detalhes.php?id=378
-- http://www.apf.org.br/fundacoes/index.php/noticias/todas-as-noticias/2614-colab-usp-treinara-cidadaos-para-o-monitoramento-do-orcamento-publico-da-cidade-de-sao-paulo.html
-- http://www.revistacircuito.com/arquivos/11955
-- http://www.krisos.com.br/blog/bairro-butanta/oficina-apresenta-aplicativo-de-monitoramento-das-politicas-publicas-no-butanta/
-- http://jornalperspectiva.com.br/noticias/colab-usp-treinara-cidadaos-para-monitorar-orcamento-publico/
-- http://dmptsp.org.br/portal/local/6049-acompanhe-a-programacao-das-oficinas-entre-os-dias-17-e-19-de-novembro
-- https://pt.slideshare.net/mobile/juplass/goberno-aberrto-guia-de-oficinasmaro-e-abril
+- [Treinamento sobre Orçamento Público - Setembro/2016](http://www.jornal3idade.com.br/?p=9987)
+- (http://www.fecap.br/portal/noticias/detalhes.php?id=378)
+- [Colab-USP treinará cidadãos para o monitoramento do orçamento público da cidade de São Paulo](http://www.apf.org.br/fundacoes/index.php/noticias/todas-as-noticias/2614-colab-usp-treinara-cidadaos-para-o-monitoramento-do-orcamento-publico-da-cidade-de-sao-paulo.html)
+- (http://www.revistacircuito.com/arquivos/11955)
+- [Oficina apresenta aplicativo de monitoramento das políticas públicas no Butantã - Março/2016](http://www.krisos.com.br/blog/bairro-butanta/oficina-apresenta-aplicativo-de-monitoramento-das-politicas-publicas-no-butanta/)
+- [Colab-USP treinará cidadãos para monitorar orçamento público: Setembro/2016](http://jornalperspectiva.com.br/noticias/colab-usp-treinara-cidadaos-para-monitorar-orcamento-publico/)
+- (http://dmptsp.org.br/portal/local/6049-acompanhe-a-programacao-das-oficinas-entre-os-dias-17-e-19-de-novembro)
+- [Agentes do Governo Aberto - Cursos: Março e Abril/2016](https://pt.slideshare.net/mobile/juplass/goberno-aberrto-guia-de-oficinasmaro-e-abril)
 
 ### Pref
 - (http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/)
