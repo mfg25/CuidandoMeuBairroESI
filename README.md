@@ -95,14 +95,14 @@
 - https://osbrasil.org.br/colab-usp-treinara-observadores-para-o-monitoramento-do-orcamento-publico/
 - https://osbrasil.org.br/osb-sp-estabelece-parceria-com-faculdade-da-usp-para-fomentar-o-controle-social/
 - [Post no facebook:Treinamento no Observatório Social do Brasil - PARTE II e III -Outubro/2016](https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1027949807303433/?type=3)
-- [Post no facebook: Entrevista Gisele Craveiro -](https://www.facebook.com/OSBSP/posts/1388841184547625)
+- [Post no facebook:Entrevista Gisele Craveiro - Novembro/2017](https://www.facebook.com/OSBSP/posts/1388841184547625)
 - [Post no facebook:Oficina "Cuidando do Meu Bairro" no Observatório Social do Brasil - Agosto/2018](https://www.facebook.com/OSBSP/posts/1309999869098424)
 - [Post no facebook:Treinamento no Observatório Social do Brasil - PARTE I -Setembro/2016](https://www.facebook.com/OSBSP/posts/1014249702006777)
 - [Post no facebook:Prêmio recebido pelo Projeto "Cuidando do Meu Bairro" -Agosto/2017](https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1331850760246668/?type=3)
 - [Post no facebook:Atividade do Observatório Social do Brasil São Paulo- a Oficina do Projeto "Cuidando do Meu Bairro" - Agosto/2017](https://www.facebook.com/OSBSP/posts/1331207083644369)
 - [Post no facebook:Oficina no Observatório Social do Brasil- APRENDA A MONITORAR - Novembro/2016](https://www.facebook.com/OSBSP/posts/1055001291264951)
-- https://www.facebook.com/OSBSP/posts/1010093285755752
-- https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1421171834647893/?type=3
+- [Post no facebook:Iniciativa do Observatório Social do Brasil São Paulo e COLAB - Colaboratório de Desenvolvimento e Participação foi destaque na Rádio CBN e no Quem Inova do Catraca Livre](https://www.facebook.com/OSBSP/posts/1010093285755752)
+- [Post no facebook: Misnistério Público Federal -Web, Aplicativos e Trabalho Voluntário: mecanismos sociais de combate à corrupção](https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1421171834647893/?type=3)
 - http://saopaulo.osbrasil.org.br/observatorio-social-e-each-usp-firmam-convenio-para-monitorar-orcamento-de-sao-paulo/
 - https://queminova.catracalivre.com.br/influencia/curso-gratuito-e-online-mostra-como-cuidar-do-seu-bairro/
 - https://www.facebook.com/OSBSP/posts/1080825178682562
