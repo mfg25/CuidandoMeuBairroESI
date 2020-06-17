@@ -65,9 +65,8 @@
 - (http://www.fiscosul.org.br/noticias/conheca-os-dez-finalistas-do-premio-nacional-de-educacao-fiscal-2016/41)
 - [Prêmio Educação Fiscal 2016 - CATEGORIA INSTITUIÇÕES 1º Lugar](http://www.premioeducacaofiscal.org.br/premiados)
 - (http://emjornal.com.br/noticias/usp-ermelino-ganha-premio-desafio-impacto-social-google/amp/)
-- (https://issuu.com/afresp_sp/docs/jornal_da_afresp_395/19)
 - (http://fundacaoanfip.org.br/site/2016/10/com-apoio-da-anfip-sao-conhecidos-finalistas-do-premio-educacao-fiscal/)
-- [Jornal da Afresp- Demzembro/2016](http://www.affemg.com.br/materia?materiaId=1208&titulo=Conhe%C3%A7a_os_dez_finalistas_do_Pr%C3%AAmio_Nacional_de_Educa%C3%A7%C3%A3o_Fiscal_2016)
+- [Jornal da Afresp- Dezembro/2016](http://www.affemg.com.br/materia?materiaId=1208&titulo=Conhe%C3%A7a_os_dez_finalistas_do_Pr%C3%AAmio_Nacional_de_Educa%C3%A7%C3%A3o_Fiscal_2016)
 
 ### Citações em Sites:
 - [Portal Brasileiro de Dados Abertos](http://dados.gov.br/aplicativo/cuidando-do-meu-bairro)
@@ -92,8 +91,8 @@
 - (http://www.sintracomlondrina.com.br/pesquisadores-defendem-maior-participacao-dos-cidadaos-na-gestao-publica/)
 
 ### Observatório Social do Brasil - São Paulo
-- https://osbrasil.org.br/colab-usp-treinara-observadores-para-o-monitoramento-do-orcamento-publico/
-- https://osbrasil.org.br/osb-sp-estabelece-parceria-com-faculdade-da-usp-para-fomentar-o-controle-social/
+- (https://osbrasil.org.br/colab-usp-treinara-observadores-para-o-monitoramento-do-orcamento-publico/)
+- (https://osbrasil.org.br/osb-sp-estabelece-parceria-com-faculdade-da-usp-para-fomentar-o-controle-social/)
 - [Treinamento no Observatório Social do Brasil - PARTE II e III -Outubro/2016](https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1027949807303433/?type=3)
 - [Entrevista Gisele Craveiro - Novembro/2017](https://www.facebook.com/OSBSP/posts/1388841184547625)
 - [Oficina "Cuidando do Meu Bairro" no Observatório Social do Brasil - Agosto/2018](https://www.facebook.com/OSBSP/posts/1309999869098424)
@@ -107,22 +106,22 @@
 - (https://queminova.catracalivre.com.br/influencia/curso-gratuito-e-online-mostra-como-cuidar-do-seu-bairro/)
 - [Cuidando do Meu Bairro", do COLAB - Colaboratório de Desenvolvimento e Participação, ganhou o 1° lugar no "Prêmio Nacional de Educação Fiscal 2016"](https://www.facebook.com/OSBSP/posts/1080825178682562)
 - [Seminário Controle dos Gastos Públicos com a Terceira Idade](https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1238113762953702/?type=3)
-- http://saopaulo.osbrasil.org.br/em-acao-osb-sp-e-colab-usp-comecam-a-colocar-em-pratica-os-projetos-para-2017/)
+- (http://saopaulo.osbrasil.org.br/em-acao-osb-sp-e-colab-usp-comecam-a-colocar-em-pratica-os-projetos-para-2017/)
 - [Treinamento no Observatório Social do Brasil - PARTE II e III -Outubro/2016](https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1031466510285096/?type=3)
 - [OFICINA DA PLATAFORMA “CUIDANDO DO MEU BAIRRO” - FECAP/LIBERDADE Junho/2018](https://www.facebook.com/OSBSP/photos/a.802431233188626.1073741829.788660834565666/1652871018144639/?type=3)
-- http://saopaulo.osbrasil.org.br/conviteoficina-projeto-cuidando-do-meu-bairro/)
-- http://saopaulo.osbrasil.org.br/oficina-projeto-cuidando-do-meu-bairro/)
-- http://saopaulo.osbrasil.org.br/apresentacoes-divulgam-os-trabalhos-do-osb-sao-paulo/)
-- http://saopaulo.osbrasil.org.br/noticia-evento-de-apresentacao-do-osb-sp-na-camara-municipal/)
-- http://saopaulo.osbrasil.org.br/noticia-secundaria-1/)
-- http://saopaulo.osbrasil.org.br/boletim-osb-sp-colab-usp-ensina-a-monitorar-o-orcamento-publico-de-sao-paulo/
-- http://saopaulo.osbrasil.org.br/controle-social-incremento-a-transparencia/
-- http://saopaulo.osbrasil.org.br/reuniao-de-apresentacao-osb-sp/
-- http://saopaulo.osbrasil.org.br/palestra-e-oficina-durante-evento-com-mpf-e-defensoria-publica-de-sp/
-- http://saopaulo.osbrasil.org.br/noticias-palestra-e-oficina-durante-evento-com-mpf-e-defensoria-publica-de-sp/
-- http://saopaulo.osbrasil.org.br/projetos/
-- http://saopaulo.osbrasil.org.br/em-acao-osb-sp-e-colab-usp-comecam-a-colocar-em-pratica-os-projetos-para-2017/
-- http://saopaulo.osbrasil.org.br/observatorio-social-e-each-usp-firmam-convenio-para-monitorar-orcamento-de-sao-paulo/
+- (http://saopaulo.osbrasil.org.br/conviteoficina-projeto-cuidando-do-meu-bairro/)
+- (http://saopaulo.osbrasil.org.br/oficina-projeto-cuidando-do-meu-bairro/)
+- (http://saopaulo.osbrasil.org.br/apresentacoes-divulgam-os-trabalhos-do-osb-sao-paulo/)
+- (http://saopaulo.osbrasil.org.br/noticia-evento-de-apresentacao-do-osb-sp-na-camara-municipal/)
+- (http://saopaulo.osbrasil.org.br/noticia-secundaria-1/)
+- (http://saopaulo.osbrasil.org.br/boletim-osb-sp-colab-usp-ensina-a-monitorar-o-orcamento-publico-de-sao-paulo/)
+- (http://saopaulo.osbrasil.org.br/controle-social-incremento-a-transparencia/)
+- (http://saopaulo.osbrasil.org.br/reuniao-de-apresentacao-osb-sp/)
+- (http://saopaulo.osbrasil.org.br/palestra-e-oficina-durante-evento-com-mpf-e-defensoria-publica-de-sp/)
+- (http://saopaulo.osbrasil.org.br/noticias-palestra-e-oficina-durante-evento-com-mpf-e-defensoria-publica-de-sp/)
+- (http://saopaulo.osbrasil.org.br/projetos/)
+- (http://saopaulo.osbrasil.org.br/em-acao-osb-sp-e-colab-usp-comecam-a-colocar-em-pratica-os-projetos-para-2017/)
+- (http://saopaulo.osbrasil.org.br/observatorio-social-e-each-usp-firmam-convenio-para-monitorar-orcamento-de-sao-paulo/)
 
 ### Oficinas:
 - [Treinamento sobre Orçamento Público - Setembro/2016](http://www.jornal3idade.com.br/?p=9987)
@@ -133,6 +132,7 @@
 - [Colab-USP treinará cidadãos para monitorar orçamento público: Setembro/2016](http://jornalperspectiva.com.br/noticias/colab-usp-treinara-cidadaos-para-monitorar-orcamento-publico/)
 - (http://dmptsp.org.br/portal/local/6049-acompanhe-a-programacao-das-oficinas-entre-os-dias-17-e-19-de-novembro)
 - [Agentes do Governo Aberto - Cursos: Março e Abril/2016](https://pt.slideshare.net/mobile/juplass/goberno-aberrto-guia-de-oficinasmaro-e-abril)
+- -[Ofina no Atados - Oficina Cuidando Meu Bairro - Abril/2019](https://www.atados.com.br/vaga/cuidando-do-meu-bairro)
 
 ### Pref
 - (http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/)
