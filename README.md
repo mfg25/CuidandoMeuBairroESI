@@ -135,9 +135,9 @@
 - https://pt.slideshare.net/mobile/juplass/goberno-aberrto-guia-de-oficinasmaro-e-abril
 
 ### Pref
-- http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/
-- http://www.prefeitura.sp.gov.br/cidade/secretarias/controladoria_geral/noticias/?p=143483&amp
-- http://www2.camara.leg.br/camaranoticias/radio/materias/RADIOAGENCIA/521488-PESQUISADORES-DEFENDEM-MAIS-PARTICIPACAO-DOS-CIDADAOS-NA-GESTAO-PUBLICA.html
+- (http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/)
+- [Professora da USP mostra projeto de transparência com mapas à Controladoria Geral do Múnicipio - Fevereiro/2013](http://www.prefeitura.sp.gov.br/cidade/secretarias/controladoria_geral/noticias/?p=143483&amp)
+- [Pesquisadores defendem mais participação dos cidadãos na gestão pública - Dezembro/2016](http://www2.camara.leg.br/camaranoticias/radio/materias/RADIOAGENCIA/521488-PESQUISADORES-DEFENDEM-MAIS-PARTICIPACAO-DOS-CIDADAOS-NA-GESTAO-PUBLICA.html)
 
 ### COLAB:
 - https://colab.each.usp.br/blog/tag/cuidando-do-meu-bairro/
