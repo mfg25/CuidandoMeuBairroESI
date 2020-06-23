@@ -19,7 +19,6 @@
 
 
 ## Apresentações e Guias:
-
 - [Inovações na relação entre Estado e Sociedade - Semana de Ouvidoria e Acesso à Informação](/Documentos próprios- Publicações/2-gisele-craveiro.pdf)
 - [ Apresentação Cuidando - Atualizada](/Documentos próprios- Publicações/apresentacao cuidando atualizada.pptx)
 - [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
@@ -139,7 +138,7 @@
 - [Oficina online em parceria com o OSB-SP e a FEA Pública - 30 de abril de 2020](https://drive.google.com/file/d/1vxRYquRbVMLWLeU_XaoyteiOZ7rXH6Gk/view?fbclid=IwAR0CFvwsjVKDGxezVG31JBnqp0PlW3_rUy3Z1oq7KhKojSAItXHYCX6KL5w)
 
 
-### Pref
+### Prefeitura:
 - (http://cafehacker.prefeitura.sp.gov.br/sao-paulo-aberta-atividades-do-dia-2310/)
 - [Professora da USP mostra projeto de transparência com mapas à Controladoria Geral do Múnicipio - Fevereiro/2013](http://www.prefeitura.sp.gov.br/cidade/secretarias/controladoria_geral/noticias/?p=143483&amp)
 - [Pesquisadores defendem mais participação dos cidadãos na gestão pública - Dezembro/2016](http://www2.camara.leg.br/camaranoticias/radio/materias/RADIOAGENCIA/521488-PESQUISADORES-DEFENDEM-MAIS-PARTICIPACAO-DOS-CIDADAOS-NA-GESTAO-PUBLICA.html)
