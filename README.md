@@ -3,12 +3,12 @@
 #### Abaixo segue uma relação dessas produções:
 
 ## Artigos e Relatórios:
-- [ Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
-- [Artigo - Caring for My Neighborhood: a platform for public oversight](/Documentos próprios- Publicações/Caring for my Neighborhood.pdf)
-- [Artigo - Exploring the impacts of web publishing of budgetary information at the sub-national level in Brazil](/Documentos próprios- Publicações/CaringforMyNeighbourhood-Report.pdf)
-- [ Artigo - Caring for My Neighborhood: a platform for public oversight 2](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
 - [AMORIM, Ivan Trizi et al. Monitoramento participativo e accountability governamental: o estudo de caso do "cuidando do meu bairro". Confins, [s.l.], n. 39, 2 mar. 2019. OpenEdition](https://journals.openedition.org/confins/18367)
 - [AMORIM, Ivan Trizi. PLATAFORMAS DIGITAIS INDEPENDENTES NA PROMOÇÃO DA ACCOUNTABILITY: “Cuidando do Meu Bairro” (CMB). 2018. 47 f. Especialização - Curso de Especialização em Gestão Pública Municipal, Departamento Acadêmico de Gestão e Economia, Universidade Tecnológica Federal do Paraná, Curitiba, 2018.](http://repositorio.roca.utfpr.edu.br/jspui/handle/1/10475)
+- [Apresentação Cuidando](/Documentos próprios- Publicações/Apresentando__Cuidando_do_Meu_Bairro.pdf)
+- [CRAVEIRO G.S., MARTANO A.M.R. (2015) Caring for My Neighborhood: A Platform for Public Oversight. In: Koch F., Meneguzzi F., Lakkaraju K. (eds) Agent Technology for Intelligent Mobile Services and Smart Societies. AVSA 2014, CARE 2014. Communications in Computer and Information Science, vol 498. Springer, Berlin, Heidelberg](/Documentos próprios- Publicações/Caring for my Neighborhood.pdf)
+- [CRAVEIRO, G. S., MACHADO J. A. S., MARTANO A. M. R., and SOUZA T. J. (2015) Exploring the impacts of web publishing of budgetary information at the sub-national level in Brazil](/Documentos próprios- Publicações/CaringforMyNeighbourhood-Report.pdf)
+- [CRAVEIRO G.S., MARTANO A.M.R. (2015) Caring for My Neighborhood: A Platform for Public Oversight. In: Koch F., Meneguzzi F., Lakkaraju K. (eds) Agent Technology for Intelligent Mobile Services and Smart Societies. AVSA 2014, CARE 2014. Communications in Computer and Information Science, vol 498. Springer, Berlin, Heidelberg](/Documentos próprios- Publicações/smartlife2014_submission_2.pdf)
 
 ## Menção em documentos: 
 - [Cuidando Meu Bairro - Oficina Ministério Público Federal](/Menção em documentos/Cuidando do meu Bairro-Oficina MPF-Vila Prudente.ppt)
