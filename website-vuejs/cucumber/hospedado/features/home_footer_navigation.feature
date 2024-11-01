@@ -1,3 +1,4 @@
+@footer
 Feature: Navegar para outras interfaces a partir do rodapé na página inicial
 
   Scenario: Clicar em Termos de Uso no rodapé
