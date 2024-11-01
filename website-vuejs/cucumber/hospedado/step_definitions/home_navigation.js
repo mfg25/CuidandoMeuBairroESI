@@ -7,7 +7,13 @@ Given('que estou na página inicial', async function () {
 });
 
 When('clico no link {string} na navbar', async function (linkName) {
-  const link = await this.driver.findElement(By.css(`a[href="${linkName === "Sobre" ? '/sobre' : '/glossario'}"]`)); 
+  const linkMap = {
+    'Sobre': '/sobre',
+    'Aprenda+': '/glossario',
+    'Análises': '/analises' 
+  };
+
+  const link = await this.driver.findElement(By.css(`a[href="${linkMap[linkName]}"]`)); 
   await link.click();
 });
 

@@ -9,3 +9,8 @@ Feature: Navegar para outras páginas a partir do menu de navegação na página
     Given que estou na página inicial
     When clico no link "Aprenda+" na navbar
     Then sou direcionado para a URL "https://cuidando.vc/glossario"
+
+  Scenario: Clicar em Análises na navbar
+    Given que estou na página inicial
+    When clico no link "Análises" na navbar
+    Then sou direcionado para a URL "https://cuidando.vc/analises"
