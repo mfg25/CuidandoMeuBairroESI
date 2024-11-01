@@ -1,0 +1,11 @@
+{
+    "default": {
+      "require": [
+        "support/hooks.js",
+        "support/world.js",
+        "step_definitions/**/*.js"
+      ],
+      "paths": ["features/**/*.feature"]
+    }
+  }
+  
