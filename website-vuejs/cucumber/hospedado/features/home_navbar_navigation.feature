@@ -1,4 +1,4 @@
-@navbar
+@navbar-navigation
 Feature: Navegar para outras interfaces a partir da navbar
 
   Scenario: Clicar em Sobre na navbar

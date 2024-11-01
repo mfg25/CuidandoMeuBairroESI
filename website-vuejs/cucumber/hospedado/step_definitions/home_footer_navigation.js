@@ -9,7 +9,7 @@ Given("que estou na página inicial do rodapé", async function () {
 When("clico no link {string} no rodapé", async function (linkName) {
   const linkMap = {
     "Termos de Uso": "/termos-de-uso",
-    Gitlab: "https://gitlab.com/cuidandodomeubairro", // Adicionei o link do GitLab aqui
+    Gitlab: "https://gitlab.com/cuidandodomeubairro",
   };
 
   const link = await this.driver.findElement(
