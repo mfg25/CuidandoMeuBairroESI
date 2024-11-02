@@ -1,5 +1,5 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
-const { By } = require("selenium-webdriver");
+const { By, until } = require("selenium-webdriver");
 const assert = require("assert");
 
 Given("que estou na página inicial da navbar", async function () {
@@ -32,3 +32,19 @@ Then(
     assert.strictEqual(currentUrl, expectedUrl);
   }
 );
+
+When("clico no botão de ano", async function () {
+  const button = await this.driver.findElement(
+    By.css('button[data-dropdown-toggle="dropdownYear"]')
+  );
+  await button.click();
+});
+
+Then("a lista de anos é exibida", async function () {
+  const dropdown = await this.driver.wait(
+    until.elementLocated(By.css(".scroll-year-select")),
+    5000
+  );
+  const isVisible = await dropdown.isDisplayed();
+  assert.strictEqual(isVisible, true, "A lista de anos não foi exibida.");
+});
