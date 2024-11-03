@@ -14,19 +14,17 @@ When("coloco o mouse sobre o link {string}", async function (linkName) {
 
   if (linkName !== "Entrar") {
     const linkMap = {
-      Sobre: "/sobre",
+      "Sobre": "/sobre",
       "Aprenda +": "/glossario",
-      Análises: "/analises",
-      Blog: "http://blog.cuidando.vc",
+      "Análises": "/analises",
+      "Blog": "http://blog.cuidando.vc",
     };
     link = await this.driver.wait(
       until.elementLocated(By.css(`a[href="${linkMap[linkName]}"]`)),
       5000
     );
 
-    // Simula o hover movendo o mouse sobre o link
     await this.driver.actions().move({ origin: link }).perform();
-    // Delay para que o efeito hover tenha tempo de ser aplicado
     await this.driver.sleep(1000);
   }
 });
@@ -36,10 +34,10 @@ Then("o estilo do link {string} deve mudar", async function (linkName) {
 
   if (linkName !== "Entrar") {
     const linkMap = {
-      Sobre: "/sobre",
+      "Sobre": "/sobre",
       "Aprenda +": "/glossario",
-      Análises: "/analises",
-      Blog: "http://blog.cuidando.vc",
+      "Análises": "/analises",
+      "Blog": "http://blog.cuidando.vc",
     };
     link = await this.driver.wait(
       until.elementLocated(By.css(`a[href="${linkMap[linkName]}"]`)),
